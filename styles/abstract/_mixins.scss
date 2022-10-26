@@ -1,0 +1,57 @@
+@use './variables';
+
+@mixin btn-movebike($width:205px, $height:42px) {
+    border-radius: 1000px;
+    border: none;
+    width: $width;
+    height: $height;
+
+    &.contained {
+        background-color: variables.$orange-900;
+        color: variables.$white;
+        filter: drop-shadow(0px 4px 18px rgba(0, 0, 0, 0.18));
+        &:hover{
+            background-color: transparent;
+            color: variables.$black-700;
+            border: 1px solid variables.$orange-900;
+        }
+    }
+}
+
+@mixin responsive($breakpoint) {
+    @if ($breakpoint ==variables.$small) {
+        @media screen and (min-width: variables.$small) {
+            @content;
+        }
+    }
+
+    @if ($breakpoint ==variables.$medium) {
+        @media screen and (min-width: variables.$medium) {
+            @content;
+        }
+    }
+
+    @if ($breakpoint ==variables.$large) {
+        @media screen and (min-width: variables.$large) {
+            @content;
+        }
+    }
+
+    @if ($breakpoint ==variables.$extra-large) {
+        @media screen and (min-width: variables.$extra-large) {
+            @content;
+        }
+    }
+
+    @if ($breakpoint ==variables.$extra-extra-large) {
+        @media screen and (min-width: variables.$extra-extra-large) {
+            @content;
+        }
+    }
+
+    @if ($breakpoint ==variables.$extra-4k) {
+        @media screen and (min-width: variables.$extra-4k) {
+            @content;
+        }
+    }
+}
