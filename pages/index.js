@@ -1,4 +1,5 @@
 import Layouts from '../components/Layouts'
+import CardsExperience from '../components/CardsExperience'
 
 export default function Home() {
   return (
@@ -11,6 +12,7 @@ export default function Home() {
         ¡Reserva Ahora!
       </button>
       </section>
+      <CardsExperience />
     </Layouts>
     </>
   )
