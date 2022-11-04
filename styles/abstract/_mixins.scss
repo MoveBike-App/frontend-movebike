@@ -7,7 +7,7 @@
     &.contained {
         background-color: variables.$orange-900;
         color: variables.$white!important;
-        filter: drop-shadow(0px 4px 18px rgba(0, 0, 0, 0.18));
+        //filter: drop-shadow(0px 4px 18px rgba(0, 0, 0, 0.18));
         &:hover{
             background-color: transparent;
             color: variables.$orange-900!important;

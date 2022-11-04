@@ -17,12 +17,38 @@
     background: radial-gradient(84.08% 95.9% at 32.79% 12.64%, rgba(238, 113, 21, 0.56) 40.58%, rgba(0, 0, 0, 0) 92.65%), url(/assets/home/hero/bg-home-movebike.webp);
     background-size: 100%;
     background-repeat: no-repeat;
-    width: 100vw;
+    //width: 100vw;
     height: 720px;
   }
 
   &__content {
     margin-top: 128px;
+
+    .btn-cta{
+      margin-top: 16px;
+      @include mixins.responsive(variables.$large) {
+        width: 205px;
+        margin-top: 24px;
+
+        &:hover {
+          color: variables.$white!important;
+        }
+      }
+
+    }
+
+    @include mixins.responsive(variables.$large) {
+      margin-top: 168px;
+    }
+
+    &--title {
+      @include mixins.responsive(variables.$large) {
+        font-weight: 800;
+        font-size: 48px;
+        line-height: 58px;
+        letter-spacing: 0.01em;
+      }
+    }
 
     &--subtitle {
       font-family: variables.$font-quicksand;
@@ -31,6 +57,12 @@
       font-size: 14px;
       line-height: 18px;
       color: variables.$white;
+
+      @include mixins.responsive(variables.$large) {
+        font-weight: 500;
+        font-size: 18px;
+        line-height: 22px;
+      }
     }
   }
 
@@ -39,16 +71,62 @@
     //background: rgba(255, 255, 255, 0.4);
     border-radius: 16px;
 
+    @include mixins.responsive(variables.$large) {
+      margin-top: 84px;
+    }
+
     &__card {
       background: rgba(255, 255, 255, 0.4);
       border-radius: 16px;
-      //max-width: 241px;
+      padding: 18px 24px;
+
+      @include mixins.responsive(variables.$large) {}
+
+      &--search-inputs {
+        @include mixins.responsive(variables.$large) {
+
+          border-radius: 16px;
+          display: flex;
+          flex-direction: row;
+          justify-content: space-around;
+          align-items: center;
+          background-color: variables.$white;
+          padding: 12px 30px;
+        }
+
+        .separator {
+          background-color: variables.$gray-500;
+          width: 1px;
+          height: 23px;
+          margin-left: 82px;
+          margin-right: 82px;
+        }
+      }
     }
 
-    .datepicker{
+    .datepicker {
       background-color: variables.$white;
       border: none;
       border-radius: 4px;
+      height: fit-content;
+      //width: 200px!important;
+
+      @include mixins.responsive(variables.$large) {
+        //width: 200px;
+        border: none!important;
+      }
+    }
+
+    .btn-datapicker {
+      height: 48px;
+      max-width: 250px;
+      &:hover {
+        color: variables.$white!important;
+      }
+
+      @include mixins.responsive(variables.$large) {
+        margin-top: 0;
+      }
     }
   }
 }
