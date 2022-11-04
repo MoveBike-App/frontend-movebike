@@ -1,0 +1,10 @@
+@use './variables';
+@use './mixins';
+.mv-h1{
+    font-family: variables.$font-lato;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 36px;
+    line-height: 43px;
+    color: variables.$white;
+}
