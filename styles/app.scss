@@ -1,11 +1,14 @@
 @use './abstract/variables';
 @use './abstract/animations';
 @use './abstract/mixins';
+@use './abstract/utilities';
 
 @use './abstract/base';
 
 // Components
 @use './components/buttons';
+@use './utilities/navbar';
 
 //Pages
 @use './home';
+@use './pages/Home/hero';
