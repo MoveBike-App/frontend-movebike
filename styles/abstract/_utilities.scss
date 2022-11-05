@@ -8,3 +8,13 @@
     line-height: 43px;
     color: variables.$white;
 }
+
+.swiper {
+    padding-top: 36px;
+    padding-bottom: 60px;
+    @include mixins.responsive(variables.$large){
+        
+    padding-left: 40px;
+    padding-right: 40px;
+    }
+}

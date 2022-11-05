@@ -1,6 +1,11 @@
 import Layouts from '../components/Layouts'
 import CardsExperience from '../components/CardsExperience'
 import Hero from '../components/Home/Hero'
+import dynamic from 'next/dynamic'
+import { Suspense } from 'react'
+const FloteBikes = dynamic(() => import('../components/Home/FloteBikes'), {
+  ssr: true,
+})
 
 export default function Home() {
   return (
@@ -12,6 +17,9 @@ export default function Home() {
       </section>
       <section className='container-fluid expCard'>
         <CardsExperience />
+      </section>
+      <section className='container-fluid flotebikes'>
+        <FloteBikes />
       </section>
     </Layouts>
     </>
