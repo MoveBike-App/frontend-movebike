@@ -2,7 +2,7 @@
 @use '../abstract/mixins';
 
 .footer {
-    background: variables.$gray-background;
+    background: variables.$white-background;
     padding-top: 42px;
     padding-bottom: 42px;
 
@@ -12,10 +12,13 @@
         font-weight: 400;
         font-size: 14px;
         line-height: 15px;
-        text-align: justify;
         @include mixins.responsive(variables.$medium) {
             margin-top: 18px;
             font-size: 16px;
+        }
+
+        @include mixins.responsive(variables.$large) {
+            line-height: 20px;
         }
     }
 

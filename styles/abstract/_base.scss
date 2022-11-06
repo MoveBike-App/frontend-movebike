@@ -19,8 +19,23 @@
  h6 {
     font-family: variables.$font-lato;
     font-style: normal;
+    margin-bottom: 0;
+ }
+
+ h2,
+ h3,
+ h4,
+ h5,
+ h6{
+   color: variables.$black-700;
  }
 
  p, a {
     font-family: variables.$font-quicksand;
+ }
+
+ a{
+   &:hover{
+      color: variables.$orange-900!important;
+   }
  }

@@ -14,8 +14,13 @@ export default function FloteBikes() {
       <div className="row">
         <div className="col-12">
           <h2 className="text-center flotebikes__title">
-            Motocicletas <br /> disponibles
+            Motocicletas <br className="d-lg-none" /> disponibles
           </h2>
+        </div>
+        <div className="flotebikes__switch mx-auto">
+          <button className="btn btn-movebike link">Scooters</button>
+          <div className="separator"></div>
+          <button className="btn btn-movebike link text-black">Motos</button>
         </div>
       </div>
       <div className="row flotebikes__swiper-bikes">
@@ -38,7 +43,7 @@ export default function FloteBikes() {
               spaceBetween: 20,
             },
             992: {
-              slidesPerView: 3,
+              slidesPerView: 2,
               spaceBetween: 15,
             },
             1200: {

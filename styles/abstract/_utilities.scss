@@ -9,12 +9,11 @@
     color: variables.$white;
 }
 
-.swiper {
-    padding-top: 36px;
-    padding-bottom: 60px;
-    @include mixins.responsive(variables.$large){
-        
-    padding-left: 40px;
-    padding-right: 40px;
-    }
+.mv-h2{
+    font-style: normal;
+    font-weight: 700;
+    font-size: 36px;
+    line-height: 43px;
+    color: variables.$black-700;
 }
+

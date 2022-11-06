@@ -31,10 +31,35 @@
 
 
 .expCard{
+    padding-top: 20px;
+    padding-bottom: 25px;
     background-color: variables.$white-background;
     
-    @include mixins.responsive(variables.$medium){
+    @include mixins.responsive(variables.$large){
+        padding-top: 44px;
+        padding-bottom: 44px;
+    }
 
+    .arrow-orange {
+        right: 20px;
+        transform: rotate(71.81deg);
+
+        @include mixins.responsive(variables.$large) {
+            top: 50%;
+            right: -40px;
+            transform: translateY(-50%);
+        }
+
+    }
+
+    .arrow-left {
+        transform: rotate(13.1deg);
+
+        @include mixins.responsive(variables.$large) {
+            top: 50%;
+            right: -40px;
+            transform: translateY(-50%);
+        }
     }
 
 }
