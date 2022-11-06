@@ -65,7 +65,7 @@ export default function Hero() {
                       <MenuItem value={20}>Tulúm, Quintana, Roo.</MenuItem>
                     </Select>
                   </FormControl>
-                  <div className="separator"></div>
+                  <div className="separator d-none d-md-flex"></div>
                   <LocalizationProvider dateAdapter={AdapterDayjs}>
                     <FormControl fullWidth>
                       <DatePicker
@@ -82,7 +82,7 @@ export default function Hero() {
                         )}
                       />
                     </FormControl>
-                    <div className="separator"></div>
+                    <div className="separator d-none d-md-flex"></div>
                     <FormControl fullWidth>
                       <DatePicker
                       label={"Check Out"}
@@ -98,7 +98,7 @@ export default function Hero() {
                   </LocalizationProvider>
                 </div>
               </div>
-              <div className="col-12">
+              <div className="col-12 mt-lg-5">
                 <button className="btn btn-movebike contained btn-datapicker w-50 mt-3 mt-lg-0">
                   Buscar
                 </button>

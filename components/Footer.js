@@ -7,21 +7,21 @@ export default function Footer() {
     <div className="container-fluid footer">
       <div className="container">
         <div className="row">
-          <div className="col-12 d-flex flex-column justify-content-center col-md-4">
+          <div className="col-12 d-flex flex-column justify-content-center col-lg-4">
             <Image
-              className="text-center mx-auto mx-md-0"
+              className="text-center mx-auto mx-lg-0"
               src={"/assets/logos/logo-movebike-black.webp"}
               alt={"Logo footer"}
               layout={"fill"}
               width={210}
               height={57}
             />
-            <p className="text-center footer__subtitle text-md-start">
-              Una lista de los 75 mejores lugares <br className="d-md-none" /> turísticos del mundo
+            <p className="text-center footer__subtitle text-lg-start">
+              Una lista de los 75 mejores lugares <br className="d-md-none" /> turísticos <br className="d-none d-lg-flex" /> del mundo
               para unas <br className="d-md-none" />
               vacaciones o un viaje perfecto
             </p>
-            <div className="footer__social mx-auto mx-md-0">
+            <div className="footer__social mx-auto mx-lg-0">
               <Image
                 src={"/assets/icons/icon-facebook-movebike.webp"}
                 alt={"Facebook Movebike"}
@@ -48,9 +48,9 @@ export default function Footer() {
               />
             </div>
           </div>
-          <div className="col-12 col-md-4 footer__navigation ">
-            <p className="text-center footer__navigation--title">Navegación</p>
-            <ul className="navbar-nav text-center">
+          <div className="col-12 col-lg-4 footer__navigation ">
+            <p className="text-center footer__navigation--title text-lg-start">Navegación</p>
+            <ul className="navbar-nav text-center text-lg-start">
               <li className="nav-item">
                 <Link className="nav-link" href={"/"}>
                   Inicio
@@ -68,9 +68,9 @@ export default function Footer() {
               </li>
             </ul>
           </div>
-          <div className="col-12 col-md-4 footer__legals">
-            <p className="text-center footer__legals--title">Legales</p>
-            <ul className="navbar-nav text-center">
+          <div className="col-12 col-lg-4 footer__legals">
+            <p className="text-center footer__legals--title text-lg-start">Legales</p>
+            <ul className="navbar-nav text-center text-lg-start">
               <li className="nav-item">
                 <Link className="nav-link" href={"/"}>
                   Políticas de privacidad

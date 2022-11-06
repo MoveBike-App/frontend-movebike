@@ -24,7 +24,20 @@
             background-color: variables.$orange-900;
             color: variables.$white!important;
         }
+    }
 
+    &.link {
+        border: none;
+        font-family: variables.$font-quicksand;
+        background-color: transparent;
+        color: variables.$orange-600;
+        font-family: 20px;
+        font-weight: 600;
+        line-height: 27px;
+
+        &:hover {
+            color: variables.$black-800;
+        }
     }
 }
 
