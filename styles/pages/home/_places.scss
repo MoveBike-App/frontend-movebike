@@ -115,6 +115,7 @@
             }
 
             &--subtitle {
+                margin-top: 8px;
                 font-family: variables.$font-quicksand;
                 font-style: normal;
                 font-weight: 400;
@@ -143,8 +144,11 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        width: 150px;
+        
         height: 32px;
+        border-radius: 1000px;
+        width: 50%;
+        max-width: 180px;
     }
 
     .swiper {

@@ -12,10 +12,10 @@ export default function Places() {
       <dic className="row">
         <div className="col-12 col-lg-4 d-flex flex-column justify-content-center">
           <div>
-            <h2 className="places-section__title">
+            <h2 className="text-center text-lg-start places-section__title">
               ¡Encuentra tu sitio ideal!
             </h2>
-            <p className="places-section__subtitle">
+            <p className="text-center text-lg-start places-section__subtitle">
               Una lista de los 75 mejores lugares turísticos del mundo para una
               experiencia única
             </p>
