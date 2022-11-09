@@ -4,15 +4,16 @@ import React, { useState } from "react";
 import { useRouter } from "next/router";
 import { useRef } from "react";
 import { useEffect } from "react";
+import LoginModal from "./Utilities/LoginModal";
 
 export default function Nav() {
   const [isToggle, setIsToggle] = useState(false);
-  const [idiom, setIdiom] = useState("es");
   const router = useRouter();
-  const { locale: activeLocale } = router;
+  const [login, setLogin] = useState(false);
+  const handleClose = () => setLogin(false);
+  const handleLogin = () => setLogin(true);
 
   const [navBackground, setNavBackground] = useState(false);
-  const [familyLandrada, setFamilyLandrada] = useState(false);
 
   const navRef = useRef();
   navRef.current = navBackground;
@@ -178,10 +179,17 @@ export default function Nav() {
                     </Link>
                   </li>
                   <li className="option">
-                    <Link href="/familia-landrada">Iniciar sesión</Link>
+                    <button
+                      className="btn btn-movebike link"
+                      onClick={() => setLogin(true)}
+                    >
+                      Iniciar sesión
+                    </button>
                   </li>
                   <li className="option text-center">
-                    <Link className="btn btn-movebike contained" href="">Crear cuenta</Link>
+                    <Link className="btn btn-movebike contained" href="">
+                      Crear cuenta
+                    </Link>
                   </li>
                 </ul>
               </nav>
@@ -211,7 +219,7 @@ export default function Nav() {
                   aria-labelledby="dropdownMenuButton1"
                 >
                   <li className="dropdown-item mb-1">
-                    <Link className="text-capitalize text-white" href={'/'}>
+                    <Link className="text-capitalize text-white" href={"/"}>
                       ES
                       <img
                         className="flag"
@@ -221,7 +229,7 @@ export default function Nav() {
                     </Link>
                   </li>
                   <li className="dropdown-item">
-                    <Link className="text-capitalize text-white" href={'/'}>
+                    <Link className="text-capitalize text-white" href={"/"}>
                       EN
                       <img
                         className="flag"
@@ -236,6 +244,14 @@ export default function Nav() {
           </div>
         </div>
       </nav>
+
+      <LoginModal
+        show={login}
+        ialogClassName="modal-90w"
+        onHide={() => setLogin(false)}
+        handleClick={handleClose}
+        handleClose={handleClose}
+      />
     </>
   );
 }

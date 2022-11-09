@@ -1,41 +1,56 @@
 @use './mixins';
 @use './variables';
 
- * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
- }
+* {
+   margin: 0;
+   padding: 0;
+   box-sizing: border-box;
+}
 
- body {
-    font-family: variables.$font-quicksand;
- }
+body {
+   font-family: variables.$font-quicksand;
+}
 
- h1,
- h2,
- h3,
- h4,
- h5,
- h6 {
-    font-family: variables.$font-lato;
-    font-style: normal;
-    margin-bottom: 0;
- }
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+   font-family: variables.$font-lato;
+   font-style: normal;
+   margin-bottom: 0;
+}
 
- h2,
- h3,
- h4,
- h5,
- h6{
+h2,
+h3,
+h4,
+h5,
+h6 {
    color: variables.$black-700;
- }
+}
 
- p, a {
-    font-family: variables.$font-quicksand;
- }
+p,
+a {
+   font-family: variables.$font-quicksand;
+}
 
- a{
-   &:hover{
-      color: variables.$orange-900!important;
+a {
+   &:hover {
+      color: variables.$orange-900 !important;
    }
- }
+}
+
+.form-control,
+.form-check-input {
+   &:focus {
+      border-color: variables.$orange-900;
+      box-shadow: 0 0 0 0.25rem rgba(254, 95, 59, 0.25);
+   }
+}
+
+.form-check-input {
+   &:checked{
+      background-color: variables.$orange-900;
+   }
+}
