@@ -11,9 +11,10 @@ export default function LoginModal({
   handleShow,
 }) {
   return (
-    <Modal show={show} onHide={handleClose} centered>
-      <Modal.Body className="login">
-        <h4 className="login__title">{title}</h4>
+    <Modal show={show} onHide={handleClose} centered className="login">
+      <Modal.Header className="login__header"> <h4 className="login__title">{title}</h4></Modal.Header>
+      <Modal.Body >
+        
         {body}
       </Modal.Body>
     </Modal>
