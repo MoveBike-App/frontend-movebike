@@ -10,8 +10,9 @@ export default function Nav() {
   const [isToggle, setIsToggle] = useState(false);
   const router = useRouter();
   const [login, setLogin] = useState(false);
+  const [register, setRegister] = useState(false);
   const handleClose = () => setLogin(false);
-  const handleLogin = () => setLogin(true);
+  const handleCloseRegister = () => setRegister(true);
 
   const [navBackground, setNavBackground] = useState(false);
 
@@ -187,9 +188,9 @@ export default function Nav() {
                     </button>
                   </li>
                   <li className="option text-center">
-                    <Link className="btn btn-movebike contained" href="">
+                    <button className="btn btn-movebike contained" onClick={() => setRegister(true)}>
                       Crear cuenta
-                    </Link>
+                    </button>
                   </li>
                 </ul>
               </nav>
@@ -249,8 +250,149 @@ export default function Nav() {
         show={login}
         ialogClassName="modal-90w"
         onHide={() => setLogin(false)}
+        title="Login"
+        body={
+          <>
+            <form className="row g-3">
+              <div className="col-12">
+                <label
+                  for="validationServer01"
+                  className="form-label login__label"
+                >
+                  Usuario
+                </label>
+                <input
+                  type="text"
+                  className="form-control login__input"
+                  id="validationServer01"
+                  placeholder="Ingresa tu usuario"
+                  required
+                />
+              </div>
+              <div className="col-12">
+                <label
+                  for="validationServer02"
+                  className="form-label login__label"
+                >
+                  Contraseña
+                </label>
+                <input
+                  type="password"
+                  className="form-control login__input"
+                  id="validationServer02"
+                  placeholder="Ingresa tu contraseña"
+                  required
+                />
+              </div>
+
+              <div className="col-12 d-flex justify-content-between login__remember">
+                <div className="form-check">
+                  <input
+                    className="form-check-input"
+                    type="checkbox"
+                    value=""
+                    id="invalidCheck3"
+                    aria-describedby="invalidCheck3Feedback"
+                    required
+                  />
+                  <label className="form-check-label" for="invalidCheck3">
+                    Recuérdame
+                  </label>
+                </div>
+                <div>
+                  <Link className="login__forgot text-black-800" href={"/"}>
+                    Olvide mi contraseña
+                  </Link>
+                </div>
+              </div>
+              <div className="col-12 text-center">
+                <button
+                  className="btn btn-movebike contained w-50 mx-auto"
+                  type="submit"
+                >
+                  Ingresar
+                </button>
+              </div>
+            </form>
+          </>
+        }
         handleClick={handleClose}
         handleClose={handleClose}
+      />
+
+      <LoginModal
+        show={register}
+        ialogClassName="modal-90w"
+        onHide={() => setRegister(false)}
+        title="Crear cuenta"
+        body={
+          <>
+            <form className="row g-3">
+              {/* <div className="col-12">
+                <label
+                  className="form-label login__label"
+                >
+                  Usuario
+                </label>
+                <input
+                  type="text"
+                  className="form-control login__input"
+                  placeholder="Ingresa tu usuario"
+                  required
+                />
+              </div> */}
+              <div className="col-12">
+                <label className="form-label login__label">Correo electrónico</label>
+                <input type="email" className="form-control login__input" placeholder="Ingresa tu correo" />
+              </div>
+              <div className="col-12">
+                <label
+                  className="form-label login__label"
+                >
+                  Contraseña
+                </label>
+                <input
+                  type="password"
+                  className="form-control login__input"
+                  placeholder="Ingresa tu contraseña"
+                  required
+                />
+              </div>
+              <div className="col-12">
+                <label
+                  className="form-label login__label"
+                >
+                  Confirma tu contraseña
+                </label>
+                <input
+                  type="password"
+                  className="form-control login__input"
+                  placeholder="Ingresa tu contraseña"
+                  required
+                />
+              </div>
+              <div className="col-12">
+                <label htmlFsor="formFileMultiple" className="form-label login__label">Pasaporte/INE</label>
+                <input className="form-control login__input" type="file" id="formFileMultiple" multiple />
+              </div>
+              <div className="col-12 mb-2">
+                <label className="form-label login__label">Teléfono</label>
+                <input type="tel" className="form-control login__input" placeholder="Ingresa tu teléfono" />
+              </div>
+
+              <div className="col-12 text-center">
+                <button
+                  className="btn btn-movebike contained w-50 mx-auto"
+                  type="submit"
+                >
+                  Registrarse
+                </button>
+              </div>
+            </form>
+          </>
+        }
+        handleClick={handleCloseRegister}
+        handleClose={handleCloseRegister}
       />
     </>
   );
