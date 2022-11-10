@@ -4,21 +4,26 @@ import React, { useState } from "react";
 import { useRouter } from "next/router";
 import { useRef } from "react";
 import { useEffect } from "react";
+import LoginModal from "./Utilities/LoginModal";
+import VerifyModal from "./Utilities/VerifyModal";
 
 export default function Nav() {
   const [isToggle, setIsToggle] = useState(false);
-  const [idiom, setIdiom] = useState("es");
   const router = useRouter();
-  const { locale: activeLocale } = router;
+  const [login, setLogin] = useState(false);
+  const [register, setRegister] = useState(false);
+  const [verify, setVerify] = useState(false);
+  const handleClose = () => setLogin(false);
+  const handleCloseRegister = () => setRegister(false);
+  const handleCloseVerify = () => setVerify(false);
 
   const [navBackground, setNavBackground] = useState(false);
-  const [familyLandrada, setFamilyLandrada] = useState(false);
 
   const navRef = useRef();
   navRef.current = navBackground;
   useEffect(() => {
     if (router.pathname !== "/") {
-      setFamilyLandrada(true);
+      return
     }
 
     const handleScroll = () => {
@@ -35,7 +40,7 @@ export default function Nav() {
   }, []);
   return (
     <>
-      <nav className="navbar mb-navbar fixed-top bg-white shadow">
+      <nav className="navbar mb-navbar fixed-top bg-white shadow" id="nav-movebike">
         <section
           role="navigation "
           className="offcanvas offcanvas-start "
@@ -178,10 +183,20 @@ export default function Nav() {
                     </Link>
                   </li>
                   <li className="option">
-                    <Link href="/familia-landrada">Iniciar sesión</Link>
+                    <button
+                      className="btn btn-movebike link"
+                      onClick={() => setLogin(true)}
+                    >
+                      Iniciar sesión
+                    </button>
                   </li>
                   <li className="option text-center">
-                    <Link className="btn btn-movebike contained" href="">Crear cuenta</Link>
+                    <button
+                      className="btn btn-movebike contained"
+                      onClick={() => setRegister(true)}
+                    >
+                      Crear cuenta
+                    </button>
                   </li>
                 </ul>
               </nav>
@@ -211,7 +226,7 @@ export default function Nav() {
                   aria-labelledby="dropdownMenuButton1"
                 >
                   <li className="dropdown-item mb-1">
-                    <Link className="text-capitalize text-white" href={'/'}>
+                    <Link className="text-capitalize text-white" href={"/"}>
                       ES
                       <img
                         className="flag"
@@ -221,7 +236,7 @@ export default function Nav() {
                     </Link>
                   </li>
                   <li className="dropdown-item">
-                    <Link className="text-capitalize text-white" href={'/'}>
+                    <Link className="text-capitalize text-white" href={"/"}>
                       EN
                       <img
                         className="flag"
@@ -236,6 +251,187 @@ export default function Nav() {
           </div>
         </div>
       </nav>
+
+      <LoginModal
+        show={login}
+        dialogClassName="modal-90w"
+        onHide={() => setLogin(false)}
+        title="Login"
+        body={
+          <>
+            <form className="row g-3">
+              <div className="col-12">
+                <label
+                  for="validationServer01"
+                  className="form-label login__label"
+                >
+                  Usuario
+                </label>
+                <input
+                  type="text"
+                  className="form-control login__input"
+                  id="validationServer01"
+                  placeholder="Ingresa tu usuario"
+                  required
+                />
+              </div>
+              <div className="col-12">
+                <label
+                  for="validationServer02"
+                  className="form-label login__label"
+                >
+                  Contraseña
+                </label>
+                <input
+                  type="password"
+                  className="form-control login__input"
+                  id="validationServer02"
+                  placeholder="Ingresa tu contraseña"
+                  required
+                />
+              </div>
+
+              <div className="col-12 d-flex justify-content-between login__remember">
+                <div className="form-check">
+                  <input
+                    className="form-check-input"
+                    type="checkbox"
+                    value=""
+                    id="invalidCheck3"
+                    aria-describedby="invalidCheck3Feedback"
+                    required
+                  />
+                  <label className="form-check-label" for="invalidCheck3">
+                    Recuérdame
+                  </label>
+                </div>
+                <div>
+                  <Link className="login__forgot text-black-800" href={"/"}>
+                    Olvide mi contraseña
+                  </Link>
+                </div>
+              </div>
+              <div className="col-12 text-center">
+                <button
+                  className="btn btn-movebike contained w-50 mx-auto"
+                  type="submit"
+                >
+                  Ingresar
+                </button>
+              </div>
+            </form>
+          </>
+        }
+        handleClick={handleClose}
+        handleClose={handleClose}
+      />
+
+      <LoginModal
+        show={register}
+        dialogClassName="modal-90w"
+        onHide={() => setRegister(false)}
+        title="Crear cuenta"
+        body={
+          <>
+            <form className="row g-3">
+              {/* <div className="col-12">
+                <label
+                  className="form-label login__label"
+                >
+                  Usuario
+                </label>
+                <input
+                  type="text"
+                  className="form-control login__input"
+                  placeholder="Ingresa tu usuario"
+                  required
+                />
+              </div> */}
+              <div className="col-12">
+                <label className="form-label login__label">
+                  Correo electrónico
+                </label>
+                <input
+                  type="email"
+                  className="form-control login__input"
+                  placeholder="Ingresa tu correo"
+                />
+              </div>
+              <div className="col-12">
+                <label className="form-label login__label">Contraseña</label>
+                <input
+                  type="password"
+                  className="form-control login__input"
+                  placeholder="Ingresa tu contraseña"
+                  required
+                />
+              </div>
+              <div className="col-12">
+                <label className="form-label login__label">
+                  Confirma tu contraseña
+                </label>
+                <input
+                  type="password"
+                  className="form-control login__input"
+                  placeholder="Ingresa tu contraseña"
+                  required
+                />
+              </div>
+              <div className="col-12">
+                <label
+                  htmlFsor="formFileMultiple"
+                  className="form-label login__label"
+                >
+                  Pasaporte/INE
+                </label>
+                <input
+                  className="form-control login__input"
+                  type="file"
+                  id="formFileMultiple"
+                  multiple
+                />
+              </div>
+              <div className="col-12 mb-2">
+                <label className="form-label login__label">Teléfono</label>
+                <input
+                  type="tel"
+                  className="form-control login__input"
+                  placeholder="Ingresa tu teléfono"
+                />
+              </div>
+
+              <div className="col-12 text-center">
+                <button
+                  className="btn btn-movebike contained w-50 mx-auto"
+                  type="submit"
+                >
+                  Registrarse
+                </button>
+              </div>
+            </form>
+          </>
+        }
+        handleClick={handleCloseRegister}
+        handleClose={handleCloseRegister}
+      />
+
+      <VerifyModal
+        show={verify}
+        onHide={() => setVerify(false)}
+        title={"¡Verifica tu cuenta!"}
+        body={
+          <>
+            <div className="col-12">
+              <p className="mb-0 login__paragraph">
+                Revisa tu correo y realiza la validación de tu cuenta, para
+                poder seguir con tu reserva
+              </p>
+            </div>
+          </>
+        }
+        handleClick={handleCloseVerify}
+        handleClose={handleCloseVerify}
+      />
     </>
   );
 }
