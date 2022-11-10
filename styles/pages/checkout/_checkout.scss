@@ -1,0 +1,58 @@
+@use '../../abstract/variables';
+@use '../../abstract/mixins';
+
+.checkout {
+    background-color: #F5F5F5;
+    //height: 100vh;
+    padding-bottom: 80px;
+
+    &__card {
+        background: #FFFFFF;
+        box-shadow: 0px 12px 24px -4px rgba(145, 158, 171, 0.12);
+        border-radius: 8px;
+        padding: 36px 28px;
+
+        &--delivery {
+            font-family: variables.$font-quicksand;
+            font-style: normal;
+            font-weight: 500;
+            font-size: 20px;
+            line-height: 25px;
+            color: variables.$black-600;
+        }
+
+        &--article {
+            background-color: #F5F5F5;
+            ;
+            border-radius: 16px;
+            padding: 16px 24px;
+            margin-bottom: 36px;
+        }
+
+        &-details {
+            margin-left: 16px;
+        }
+
+        &-price {
+            font-style: normal;
+            font-weight: 700;
+            font-size: 20px;
+            line-height: 24px;
+        }
+
+        &--bold {
+            color: variables.$gray-600;
+        }
+
+        &--options {
+            
+        }
+        .option {
+            font-family: variables.$font-quicksand;
+            font-weight: 500;
+            font-size: 16px;
+            line-height: 25px;
+            color: variables.$black-600;
+        }
+    }
+}

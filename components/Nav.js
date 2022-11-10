@@ -40,7 +40,7 @@ export default function Nav() {
   }, []);
   return (
     <>
-      <nav className="navbar mb-navbar fixed-top bg-white shadow" id="nav-movebike">
+      <nav className="navbar mb-navbar fixed-top bg-white" id="nav-movebike">
         <section
           role="navigation "
           className="offcanvas offcanvas-start "

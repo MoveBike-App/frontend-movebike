@@ -11,6 +11,11 @@
 
     &__header {
         justify-content: center;
+        border-bottom: none;
+
+        &--bottom{
+            border-bottom: 3px solid #FE5F3B;
+        }
     }
 
     &__title {
@@ -30,12 +35,6 @@
         line-height: 19px;
     }
 
-    &__input {
-        border: 1px solid #FE5F3B;
-        //box-shadow: 3px 2px 9px rgba(0, 0, 0, 0.16);
-        border-radius: 50px;
-    }
-
     &__remember {
         margin-top: 18px;
         margin-bottom: 18px;
@@ -46,13 +45,10 @@
         padding-bottom: 65px;
     }
 
-    .modal-header{
-        border-bottom: 3px solid #FE5F3B;
-    }
-
-    .modal-footer {
+    &__footer {
         border-top: 3px solid #FE5F3B;
     }
+
     .btn-close{
         width: 32px!important;
         height: 32px!important;
