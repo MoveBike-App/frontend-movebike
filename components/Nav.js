@@ -23,7 +23,7 @@ export default function Nav() {
   navRef.current = navBackground;
   useEffect(() => {
     if (router.pathname !== "/") {
-      setFamilyLandrada(true);
+      return
     }
 
     const handleScroll = () => {
@@ -40,7 +40,7 @@ export default function Nav() {
   }, []);
   return (
     <>
-      <nav className="navbar mb-navbar fixed-top bg-white shadow">
+      <nav className="navbar mb-navbar fixed-top bg-white shadow" id="nav-movebike">
         <section
           role="navigation "
           className="offcanvas offcanvas-start "
