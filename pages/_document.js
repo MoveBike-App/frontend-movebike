@@ -13,6 +13,12 @@ export default function Document() {
           href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&display=swap"
           rel="stylesheet"
         />
+        <link
+            rel='stylesheet'
+            href='https://use.fontawesome.com/releases/v5.8.1/css/all.css'
+            integrity='sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf'
+            crossOrigin='anonymous'
+          />
       </Head>
       <body>
         <Main />

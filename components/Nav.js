@@ -15,6 +15,7 @@ export default function Nav() {
   const [verify, setVerify] = useState(false);
   const handleClose = () => setLogin(false);
   const handleCloseRegister = () => setRegister(false);
+  const handleClickRegister = () => setRegister(true)
   const handleCloseVerify = () => setVerify(false);
 
   const [navBackground, setNavBackground] = useState(false);
@@ -82,8 +83,8 @@ export default function Nav() {
                   <Link
                     href={
                       router.pathname !== "/"
-                        ? "/#our-develpments"
-                        : "#our-develpments"
+                        ? "/#steps"
+                        : "#steps"
                     }
                   >
                     Beneficios
@@ -122,10 +123,10 @@ export default function Nav() {
                   </Link>
                 </li>
                 <li className="option">
-                  <Link href="/familia-landrada">Iniciar sesión</Link>
+                  <button className="btn btn-movebike link" onClick={() => setLogin(true)}>Iniciar sesión</button>
                 </li>
                 <li className="option">
-                  <Link href="">Crear cuenta</Link>
+                  <button onClick={() => setRegister(true)} className="btn btn-movebike contained">Crear cuenta</button>
                 </li>
               </ul>
             </nav>
@@ -168,8 +169,8 @@ export default function Nav() {
                     <Link
                       href={
                         router.pathname !== "/"
-                          ? "/#our-develpments"
-                          : "#our-develpments"
+                          ? "/#steps"
+                          : "#steps"
                       }
                     >
                       Beneficios
@@ -177,7 +178,7 @@ export default function Nav() {
                   </li>
                   <li className="option">
                     <Link
-                      href={router.pathname !== "/" ? "/#joinus" : "#joinus"}
+                      href={router.pathname !== "/" ? "/#places" : "#places"}
                     >
                       Rutas
                     </Link>
@@ -262,7 +263,7 @@ export default function Nav() {
             <form className="row g-3">
               <div className="col-12">
                 <label
-                  for="validationServer01"
+                  htmlFor="validationServer01"
                   className="form-label login__label"
                 >
                   Usuario
@@ -277,7 +278,7 @@ export default function Nav() {
               </div>
               <div className="col-12">
                 <label
-                  for="validationServer02"
+                  htmlFor="validationServer02"
                   className="form-label login__label"
                 >
                   Contraseña
@@ -301,7 +302,7 @@ export default function Nav() {
                     aria-describedby="invalidCheck3Feedback"
                     required
                   />
-                  <label className="form-check-label" for="invalidCheck3">
+                  <label className="form-check-label" htmlFor="invalidCheck3">
                     Recuérdame
                   </label>
                 </div>
@@ -379,7 +380,7 @@ export default function Nav() {
               </div>
               <div className="col-12">
                 <label
-                  htmlFsor="formFileMultiple"
+                  htmlFor="formFileMultiple"
                   className="form-label login__label"
                 >
                   Pasaporte/INE
@@ -404,6 +405,10 @@ export default function Nav() {
                 <button
                   className="btn btn-movebike contained w-50 mx-auto"
                   type="submit"
+                  onClick={() => {
+                    setRegister(false)
+                    setVerify(true)
+                  }}
                 >
                   Registrarse
                 </button>
