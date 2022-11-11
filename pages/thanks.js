@@ -6,10 +6,10 @@ import Layout from '../components/Layouts'
 export default function Thanks() {
   return (
     <Layout>
-        <main class="cotainer-fluid thanks">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-9 mx-auto">
+        <main className="cotainer-fluid thanks">
+            <div className="container">
+                <div className="row">
+                    <div className="col-md-9 mx-auto">
                         <article className='thanks__card text-center'>
                             <Image src={'/assets/icons/icon-check-thanks.webp'} alt='Icon check thanks' layout={'fill'} width={56} height={56} />
                             <h1 className='thanks__card-title'>¡Gracias por preferirnos!</h1>

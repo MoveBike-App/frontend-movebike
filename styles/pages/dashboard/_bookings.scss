@@ -1,0 +1,28 @@
+@use '../../abstract/variables';
+@use '../../abstract/mixins';
+
+.bookings {
+
+    &__title {
+        font-family: variables.$font-lato;
+        font-style: normal;
+        font-weight: 500;
+        font-size: 32px;
+        line-height: 38px;
+        color: variables.$black-700;
+        margin-bottom: 25px;
+        margin-top: 21px;
+    }
+
+    .gridjs-container {
+        @include mixins.responsive(variables.$large) {
+            width: auto !important;
+        }
+    }
+
+    .gridjs-table {
+        @include mixins.responsive(variables.$large) {
+            width: 100%;
+        }
+    }
+}
