@@ -224,7 +224,7 @@ export default function Nav () {
                   </li>
                   {
 
-                    isLogged && <p className='text-danger'>Bienvenido </p>
+                    isLogged && <li>Bienvenido</li>
                   }
                 </ul>
               </nav>
