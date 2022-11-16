@@ -1,5 +1,6 @@
 import Image from 'next/image'
 import React from 'react'
+const card1 = '/assets/home/calendar.png'
 
 export default function CardsExperience () {
   return (
@@ -9,7 +10,7 @@ export default function CardsExperience () {
           <h2 className='mv-h2'>¡Una gran aventura en solo 3 pasos!</h2>
           <div className='col-12 col-md-4 position-relative'>
             <Image
-              src='/assets/home/calendar.png'
+              src={card1}
               alt='Experience image'
               layout='fill'
               width={122}
