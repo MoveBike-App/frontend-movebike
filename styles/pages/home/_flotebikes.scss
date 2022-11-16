@@ -1,0 +1,189 @@
+@use '../../abstract/variables';
+@use '../../abstract/mixins';
+
+.flotebikes {
+
+    &__title {
+        margin-top: 32px;
+        font-style: normal;
+        font-weight: 700;
+        font-size: 24px;
+        line-height: 29px;
+    }
+
+    &__switch {
+        margin-top: 24px;
+        padding: 9px 20px;
+        background-color: variables.$white-background;
+        width: 211px;
+        height: 56px;
+        display: flex;
+        justify-content: space-between;
+        box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.05);
+        border-radius: 50px;
+
+        .separator{
+            height: 100%;
+            width: 2px;
+            background-color: variables.$gray-600;
+        }
+    }
+
+    &__card {
+        background: variables.$white;
+        border-radius: 8px;
+        width: 295px !important;
+        height: 473px !important;
+        padding: 12px 16px;
+        margin: 0 auto;
+        filter: drop-shadow(2px 4px 8px rgba(0, 0, 0, 0.16));
+
+        &--image-bike {
+            background: rgba(217, 217, 217, 0.13);
+            border-radius: 8px;
+        }
+
+        &-body {
+            &__model {
+                margin-top: 5px;
+                font-style: normal;
+                font-weight: 400;
+                font-size: 12px;
+                line-height: 12px;
+            }
+
+            &__name {
+                margin-top: 14px;
+                font-style: normal;
+                font-weight: 700;
+                font-size: 16px;
+                line-height: 19px;
+            }
+
+            &--features {
+                margin-top: 26px;
+                margin-bottom: 30px;
+
+                .feature {
+                    font-family: variables.$font-quicksand;
+                    font-style: normal;
+                    font-weight: 400;
+                    font-size: 14px;
+                    line-height: 12px;
+                    margin-left: 8px;
+                }
+            }
+
+            &-info {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+
+                &--rentFrom {
+                    font-family: variables.$font-quicksand;
+                    font-style: normal;
+                    font-weight: 700;
+                    font-size: 12.5949px;
+                    line-height: 16px;
+                }
+
+                &--price {
+                    font-family: variables.$font-quicksand;
+                    font-style: normal;
+                    font-weight: 700;
+                    font-size: 20.9915px;
+                    line-height: 26px;
+                    color: variables.$orange-900;
+                }
+            }
+        }
+
+        &-footer {
+            margin-top: 32px;
+
+            .btn-booking {
+                width: 100%;
+            }
+        }
+
+
+
+
+    }
+
+
+    .swiper {
+        padding-top: 36px;
+        padding-bottom: 60px;
+
+        @include mixins.responsive(variables.$large) {
+
+            padding-left: 60px;
+            padding-right: 60px;
+        }
+    }
+
+    .swiper-pagination-bullet-active {
+        background-color: variables.$orange-900;
+    }
+
+    .swiper-horizontal>.swiper-pagination-bullets,
+    .swiper-pagination-bullets.swiper-pagination-horizontal {
+
+        @include mixins.responsive(variables.$extra-large) {
+            display: none;
+        }
+    }
+
+    .swiper-button-next,
+    .swiper-button-prev {
+        display: none !important;
+
+        @include mixins.responsive(variables.$extra-large) {
+            position: absolute;
+            padding: 4px !important;
+            width: 32px !important;
+            height: 32px !important;
+            display: flex !important;
+            background: variables.$orange-900;
+            border-radius: 4px;
+            box-shadow: 2px 4px 24px rgba(0, 0, 0, 0.16);
+        }
+    }
+
+    .swiper-button-prev:after {
+        width: 24px;
+        height: 24px;
+        font-size: large;
+        content: url("/assets/icons/icon-arrow-left.webp");
+    }
+
+    .swiper-button-next:after {
+        width: 24px;
+        height: 24px;
+        font-size: large;
+        content: url("/assets/icons/icon-arrow-right.webp");
+    }
+
+    .swiper-button-next {
+        @include mixins.responsive(variables.$large) {
+            z-index: 999;
+            right: 41px;
+
+            &:active {
+                box-shadow: 4px 8px 16px rgba(26, 26, 26, 0.12);
+            }
+        }
+    }
+
+    .swiper-button-prev {
+        @include mixins.responsive(variables.$large) {
+            z-index: 999;
+            left: 41px;
+
+            &:active {
+                box-shadow: 4px 8px 16px rgba(26, 26, 26, 0.12);
+            }
+        }
+    }
+}

@@ -1,15 +1,32 @@
 import Layouts from '../components/Layouts'
+import CardsExperience from '../components/CardsExperience'
+import Hero from '../components/Home/Hero'
+import dynamic from 'next/dynamic'
+import { Suspense } from 'react'
+const FloteBikes = dynamic(() => import('../components/Home/FloteBikes'), {
+  ssr: true,
+})
+
+const Places = dynamic(() => import('../components/Home/Places'), {
+  ssr: true,
+})
 
 export default function Home() {
   return (
     <>
     <Layouts title={'MoveBike | Scooter & Bikes rental service'}>
-      <section className='text-center mt-5 mb-5'>
-      <h1>Explora Cancún con MoveBike</h1>
-      <p>Donde la belleza y la cultura se encuentran</p>
-      <button className='btn btn-movebike contained '>
-        ¡Reserva Ahora!
-      </button>
+      {/** Hero */}
+      <section className='container-fluid hero-section' id='hero'>
+        <Hero />
+      </section>
+      <section className='container-fluid expCard' id='steps'>
+        <CardsExperience />
+      </section>
+      <section className='container-fluid flotebikes' id='flotebikes'>
+        <FloteBikes />
+      </section>
+      <section className='container-fluid places-section' id={'places'}>
+        <Places />
       </section>
     </Layouts>
     </>

@@ -1,0 +1,66 @@
+@use '../abstract/variables';
+@use '../abstract/mixins';
+
+.footer {
+    background: variables.$white-background;
+    padding-top: 42px;
+    padding-bottom: 42px;
+
+    &__subtitle {
+        margin-top: 28px;
+        font-style: normal;
+        font-weight: 400;
+        font-size: 14px;
+        line-height: 15px;
+        @include mixins.responsive(variables.$medium) {
+            margin-top: 18px;
+            font-size: 16px;
+        }
+
+        @include mixins.responsive(variables.$large) {
+            line-height: 20px;
+        }
+    }
+
+    &__social {
+        margin-top: 48px;
+        @include mixins.responsive(variables.$medium) {
+            margin-top: 16px;
+        }
+
+        &--instagram {
+            margin-left: 12px;
+            margin-right: 12px;
+        }
+    }
+
+    &__navigation {
+        margin-top: 48px;
+
+        @include mixins.responsive(variables.$medium) {
+            margin-top: 29px;
+        }
+
+        &--title {
+            font-family: variables.$font-lato;
+            font-style: normal;
+            font-weight: 700;
+            font-size: 16px;
+            line-height: 19px;
+        }
+    }
+
+    &__legals {
+        margin-top: 48px;
+        @include mixins.responsive(variables.$medium) {
+            margin-top: 29px;
+        }
+        &--title {
+            font-family: variables.$font-lato;
+            font-style: normal;
+            font-weight: 700;
+            font-size: 16px;
+            line-height: 19px;
+        }
+    }
+}

@@ -1,8 +1,22 @@
 @use './abstract/variables';
 @use './abstract/animations';
 @use './abstract/mixins';
+@use './abstract/utilities';
 
 @use './abstract/base';
 
 // Components
 @use './components/buttons';
+@use './utilities/navbar';
+@use './components/footer';
+@use './utilities/login';
+
+//Pages
+@use './home';
+@use './pages/Home/hero';
+@use './pages/home/flotebikes';
+@use './pages/home/places';
+@use './pages/checkout/checkout';
+@use './pages/dashboard/bookings';
+@use './pages/thanks';
+@use './pages/bookings/reserve';

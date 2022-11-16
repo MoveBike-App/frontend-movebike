@@ -1,0 +1,65 @@
+
+@use './abstract/variables';
+@use './abstract/mixins';
+
+.landing{
+    &__title{
+        font-size: 24px;
+        font-weight: 900;
+        @include mixins.responsive(variables.$medium){
+            font-size: 36px;    
+        }
+    }
+
+    &__subtitle{
+        font-weight: bold;
+        font-size: 20px;
+        
+        @include mixins.responsive(variables.$medium){
+            font-size: 20px;    
+        }
+        
+    }
+    &__text{
+        font-size: 16px;    
+
+        @include mixins.responsive(variables.$medium){
+            font-size: 18px;    
+        }
+    }
+}
+
+
+.expCard{
+    padding-top: 20px;
+    padding-bottom: 25px;
+    background-color: variables.$white-background;
+    
+    @include mixins.responsive(variables.$large){
+        padding-top: 44px;
+        padding-bottom: 44px;
+    }
+
+    .arrow-orange {
+        right: 20px;
+        transform: rotate(71.81deg);
+
+        @include mixins.responsive(variables.$large) {
+            top: 50%;
+            right: -40px;
+            transform: translateY(-50%);
+        }
+
+    }
+
+    .arrow-left {
+        transform: rotate(13.1deg);
+
+        @include mixins.responsive(variables.$large) {
+            top: 50%;
+            right: -40px;
+            transform: translateY(-50%);
+        }
+    }
+
+}

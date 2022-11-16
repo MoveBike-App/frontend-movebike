@@ -1,0 +1,76 @@
+@use '../../abstract/variables';
+@use '../../abstract/mixins';
+.reserve {
+    background-color: #F5F5F5;
+    padding-bottom: 42px;
+
+    &__number {
+        padding: 5px 16px;
+        font-size: 18px;
+        background: #F6F6F6;
+        border-radius: 1000px;
+        filter: drop-shadow(0px 4px 16px rgba(0, 0, 0, 0.08));
+        //max-width: 305px;
+    }
+
+    &__tracking {
+        max-width: 305px;
+        margin-top: 36px;
+
+        .round-step {
+            position: relative;
+            width: 35px;
+            height: 35px;
+            border-radius: 1000px;
+           
+    
+            .msg-status {
+                left: -90px;
+                font-style: normal;
+                font-weight: 500;
+                font-size: 16px;
+                line-height: 20px;
+                color: variables.$gray-500;
+    
+                @include mixins.responsive(variables.$medium) {
+                    top: -80%;
+                    left: -60%;
+                }
+            }
+    
+            &--fill {
+                background: linear-gradient(180deg, rgba(254, 95, 59, 0.83) 0%, rgba(247, 66, 66, 0.83) 100%);
+                box-shadow: 2px 4px 22px rgba(0, 0, 0, 0.16);
+            }
+    
+            &--border {
+                background-color: transparent;
+                border: 2px solid variables.$orange-900;
+                filter: drop-shadow(2px 4px 22px rgba(0, 0, 0, 0.16));
+            }
+    
+            &--disabled {
+                border: 3px solid rgba(0, 0, 0, 0.2);
+            }
+        }
+    
+        .conector {
+            background-color: variables.$orange-900;
+            width: 2px;
+            height: 24px;
+    
+    
+            &--disabled {
+                background-color: variables.$gray-600;
+            }
+    
+            @include mixins.responsive(variables.$medium) {
+                min-width: 55px;
+                height: 2px;
+            }
+        }
+
+    }
+
+    
+}
