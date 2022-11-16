@@ -15,7 +15,7 @@ export default function Checkout () {
               <section className='checkout__card'>
                 <article className='checkout__card--article d-flex flex-column flex-md-row justify-content-center align-items-center'>
                   <Image
-                    src='/assets/home/flotebikers/vitalia-125.webp'
+                    src='/assets/landing/flotebikers/vitalia-125.webp'
                     alt='Scooter Vitalia 125'
                     layout='fill'
                     width={130}
@@ -51,7 +51,7 @@ export default function Checkout () {
                 </article>
                 <article className='checkout__card--article d-flex flex-column flex-md-row justify-content-center align-items-center'>
                   <Image
-                    src='/assets/home/flotebikers/vitalia-150.webp'
+                    src='/assets/landing/flotebikers/vitalia-150.webp'
                     alt='Scooter Vitalia 125'
                     layout='fill'
                     width={130}

@@ -49,7 +49,7 @@ export default function Dashboard () {
                   <tr>
                     <td>
                       <Image
-                        src='/assets/home/flotebikers/vitalia-150.webp'
+                        src='/assets/landing/flotebikers/vitalia-150.webp'
                         alt='Vitalia 150'
                         layout='fill'
                         width={100}
@@ -68,7 +68,7 @@ export default function Dashboard () {
                   <tr>
                     <td>
                       <Image
-                        src='/assets/home/flotebikers/vitalia-125.webp'
+                        src='/assets/landing/flotebikers/vitalia-125.webp'
                         alt='Vitalia 150'
                         layout='fill'
                         width={100}
@@ -87,7 +87,7 @@ export default function Dashboard () {
                   <tr>
                     <td>
                       <Image
-                        src='/assets/home/flotebikers/ws-sport-150.webp'
+                        src='/assets/landing/flotebikers/ws-sport-150.webp'
                         alt='Vitalia 150'
                         layout='fill'
                         width={100}
