@@ -1,21 +1,21 @@
-import React, { useEffect, useRef } from "react";
-import { Grid } from "gridjs";
-import "gridjs/dist/theme/mermaid.css";
+import React, { useEffect, useRef } from 'react'
+import { Grid } from 'gridjs'
+import 'gridjs/dist/theme/mermaid.css'
 
-import Layouts from "../components/Layouts";
-import Image from "next/image";
+import Layouts from '../components/Layouts'
+import Image from 'next/image'
 
-export default function Dashboard() {
-  const tableRef = useRef(null);
-  const wrapperRef = useRef(null);
+export default function Dashboard () {
+  const tableRef = useRef(null)
+  const wrapperRef = useRef(null)
 
   useEffect(() => {
     const grid = new Grid({
       sort: true,
       pagination: true,
       fixedHeader: true,
-      style: { 
-        table: { 
+      style: {
+        table: {
           'white-space': 'nowrap'
         }
       },
@@ -23,18 +23,18 @@ export default function Dashboard() {
         selector: (cell, rowIndex, cellIndex) => cellIndex === 0 ? cell.Moto : cell
       },
       from: tableRef.current
-    }).render(wrapperRef.current);
-  });
+    }).render(wrapperRef.current)
+  })
 
   return (
     <Layouts>
-      <main className="container-fluid bookings">
-        <div className="container">
-          <div className="row">
-            <div className="col-12">
-              <h1 className="bookings__title">Mis reservas</h1>
+      <main className='container-fluid bookings'>
+        <div className='container'>
+          <div className='row'>
+            <div className='col-12'>
+              <h1 className='bookings__title'>Mis reservas</h1>
             </div>
-            <div className="col-md-12 mx-auto">
+            <div className='col-md-12 mx-auto'>
               <table ref={tableRef}>
                 <thead>
                   <tr>
@@ -42,16 +42,16 @@ export default function Dashboard() {
                     <th>Moto</th>
                     <th>Status</th>
                     <th>Fechas</th>
-                    <th></th>
+                    <th />
                   </tr>
                 </thead>
                 <tbody>
                   <tr>
                     <td>
                       <Image
-                        src={"/assets/home/flotebikers/vitalia-150.webp"}
-                        alt={"Vitalia 150"}
-                        layout={"fill"}
+                        src='/assets/home/flotebikers/vitalia-150.webp'
+                        alt='Vitalia 150'
+                        layout='fill'
                         width={100}
                         height={75}
                       />
@@ -60,7 +60,7 @@ export default function Dashboard() {
                     <td>Reservada</td>
                     <td>27-10-2022 | 30-10-2022</td>
                     <td>
-                      <button className="btn btn-movebike contained">
+                      <button className='btn btn-movebike contained'>
                         Ver reserva
                       </button>
                     </td>
@@ -68,9 +68,9 @@ export default function Dashboard() {
                   <tr>
                     <td>
                       <Image
-                        src={"/assets/home/flotebikers/vitalia-125.webp"}
-                        alt={"Vitalia 150"}
-                        layout={"fill"}
+                        src='/assets/home/flotebikers/vitalia-125.webp'
+                        alt='Vitalia 150'
+                        layout='fill'
                         width={100}
                         height={75}
                       />
@@ -79,7 +79,7 @@ export default function Dashboard() {
                     <td>Reservada</td>
                     <td>27-10-2022 | 30-10-2022</td>
                     <td>
-                      <button className="btn btn-movebike contained">
+                      <button className='btn btn-movebike contained'>
                         Ver reserva
                       </button>
                     </td>
@@ -87,9 +87,9 @@ export default function Dashboard() {
                   <tr>
                     <td>
                       <Image
-                        src={"/assets/home/flotebikers/ws-sport-150.webp"}
-                        alt={"Vitalia 150"}
-                        layout={"fill"}
+                        src='/assets/home/flotebikers/ws-sport-150.webp'
+                        alt='Vitalia 150'
+                        layout='fill'
                         width={100}
                         height={75}
                       />
@@ -98,7 +98,7 @@ export default function Dashboard() {
                     <td>Reservada</td>
                     <td>27-10-2022 | 30-10-2022</td>
                     <td>
-                      <button className="btn btn-movebike contained">
+                      <button className='btn btn-movebike contained'>
                         Ver reserva
                       </button>
                     </td>
@@ -111,5 +111,5 @@ export default function Dashboard() {
         </div>
       </main>
     </Layouts>
-  );
+  )
 }
