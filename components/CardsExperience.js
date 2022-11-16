@@ -1,6 +1,6 @@
 import Image from 'next/image'
 import React from 'react'
-const card1 = '/assets/home/calendar.png'
+const card1 = '/assets/icons/calendar.png'
 
 export default function CardsExperience () {
   return (
