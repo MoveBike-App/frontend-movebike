@@ -1,90 +1,113 @@
-import Image from "next/image";
-import Link from "next/link";
-import React, { useState } from "react";
-import { useRouter } from "next/router";
-import { useRef } from "react";
-import { useEffect } from "react";
-import LoginModal from "./Utilities/LoginModal";
-import VerifyModal from "./Utilities/VerifyModal";
+import Image from 'next/image'
+import Link from 'next/link'
+import React, { useEffect, useState, useContext } from 'react'
+import { useRouter } from 'next/router'
+import { useForm } from 'react-hook-form'
+import * as dotenv from 'dotenv'
 
-export default function Nav() {
-  const [isToggle, setIsToggle] = useState(false);
-  const router = useRouter();
-  const [login, setLogin] = useState(false);
-  const [register, setRegister] = useState(false);
-  const [verify, setVerify] = useState(false);
-  const handleClose = () => setLogin(false);
-  const handleCloseRegister = () => setRegister(false);
-  const handleClickRegister = () => setRegister(true)
-  const handleCloseVerify = () => setVerify(false);
+import LoginModal from './Utilities/LoginModal'
+import VerifyModal from './Utilities/VerifyModal'
 
-  const [navBackground, setNavBackground] = useState(false);
+import { userContext } from '../pages'
+const axios = require('axios')
 
-  const navRef = useRef();
-  navRef.current = navBackground;
+dotenv.config()
+
+export default function Nav () {
+  const [isToggle, setIsToggle] = useState(false)
+  const router = useRouter()
+  const [isLogged, setIsLogged] = useState(false)
+  const [login, setLogin] = useState(false)
+  const [registerModal, setRegisterModal] = useState(false)
+  const [verify, setVerify] = useState(false)
+  const handleClose = () => setLogin(false)
+  const handleCloseRegister = () => setRegisterModal(false)
+  const handleClickRegister = () => setRegisterModal(true)
+  const handleCloseVerify = () => setVerify(false)
+
+  const API_URL = 'https://api.movebike.mx/'
+
   useEffect(() => {
-    if (router.pathname !== "/") {
-      return
-    }
-
-    const handleScroll = () => {
-      const show = window.scrollY > 625;
-      if (navRef.current !== show) {
-        setNavBackground(show);
+    if (typeof window !== 'undefined') {
+      const userCurrent = localStorage.getItem('userCurrent')
+      if (userCurrent) {
+        setIsLogged(true)
       }
-    };
+    }
+  }, [])
 
-    document.addEventListener("scroll", handleScroll);
-    return () => {
-      document.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
+  const {
+    register,
+    formState: { errors },
+    handleSubmit
+  } = useForm()
+
+  const onLogin = ({ email, password }) => {
+    axios.post(`${API_URL}auth/login`, {
+      email,
+      password
+    })
+      .then((response) => {
+        const token = response.data.token
+        console.log(token)
+        const { id, name, role } = response.data.userCurrent
+        const userCurrent = { id, username: name, role }
+        localStorage.setItem('token', token)
+        localStorage.setItem('userCurrent', JSON.stringify(userCurrent))
+        setLogin(false)
+        setIsLogged(true)
+      })
+      .catch((error) => {
+      //
+      })
+  }
+
   return (
     <>
-      <nav className="navbar mb-navbar fixed-top bg-white" id="nav-movebike">
+      <nav className='navbar mb-navbar fixed-top bg-white' id='nav-movebike'>
         <section
-          role="navigation "
-          className="offcanvas offcanvas-start "
-          data-bs-scroll="true"
-          tabIndex="-1"
-          id="offcanvasWithBothOptions"
-          aria-labelledby="offcanvasWithBothOptionsLabel"
+          role='navigation '
+          className='offcanvas offcanvas-start '
+          data-bs-scroll='true'
+          tabIndex='-1'
+          id='offcanvasWithBothOptions'
+          aria-labelledby='offcanvasWithBothOptionsLabel'
         >
-          <div className="offcanvas-body">
-            <div className="offcanvas-brand d-flex">
+          <div className='offcanvas-body'>
+            <div className='offcanvas-brand d-flex'>
               <Image
-                data-bs-toggle="offcanvas"
-                data-bs-target="#offcanvasWithBothOptions"
-                className="d-lg-none menu icon-burger"
-                src="/assets/icons/icon-burger-orange.webp"
-                alt="menú"
-                layout="fill"
+                data-bs-toggle='offcanvas'
+                data-bs-target='#offcanvasWithBothOptions'
+                className='d-lg-none menu icon-burger'
+                src='/assets/icons/icon-burger-orange.webp'
+                alt='menú'
+                layout='fill'
                 width={24}
                 height={24}
               />
 
-              <a href="#">
+              <a href='#'>
                 <Image
-                  className="img-fluid logo-canvas"
-                  src="/assets/logos/logo-movebike-orange.webp"
-                  alt="Landrada"
-                  layout="fill"
+                  className='img-fluid logo-canvas'
+                  src='/assets/logos/logo-movebike-orange.webp'
+                  alt='Movebike'
+                  layout='fill'
                   width={128}
                   height={28}
                 />
               </a>
             </div>
             <nav>
-              <ul className="options">
-                <li className="option">
-                  <Link href="/">Inicio</Link>
+              <ul className='options'>
+                <li className='option'>
+                  <Link href='/'>Inicio</Link>
                 </li>
-                <li className="option">
+                <li className='option'>
                   <Link
                     href={
-                      router.pathname !== "/"
-                        ? "/#steps"
-                        : "#steps"
+                      router.pathname !== '/'
+                        ? '/#steps'
+                        : '#steps'
                     }
                   >
                     Beneficios
@@ -111,138 +134,142 @@ export default function Nav() {
                       </Link>
                     </li>
                     <li>
-                      <Link className="dropdown-item" target={"_blank"} href={"https://cotizador.landrada.mx/"}>
+                      <Link className="dropdown-item" target={"_blank"} href={"/"}>
                         Crear cuenta
                       </Link>
                     </li>
                   </ul>
                 </li> */}
-                <li className="option">
-                  <Link href={router.pathname !== "/" ? "/#joinus" : "#joinus"}>
+                <li className='option'>
+                  <Link href={router.pathname !== '/' ? '/#places' : '#places'}>
                     Rutas
                   </Link>
                 </li>
-                <li className="option">
-                  <button className="btn btn-movebike link" onClick={() => setLogin(true)}>Iniciar sesión</button>
+                <li className='option'>
+                  <button className='btn btn-movebike link' onClick={() => setLogin(true)}>Iniciar sesión</button>
                 </li>
-                <li className="option">
-                  <button onClick={() => setRegister(true)} className="btn btn-movebike contained">Crear cuenta</button>
+                <li className='option'>
+                  <button onClick={() => setRegisterModal(true)} className='btn btn-movebike contained'>Crear cuenta</button>
                 </li>
               </ul>
             </nav>
           </div>
         </section>
 
-        <div className="nav-desktop container">
-          <section className="navbar-logo d-flex align-items-center">
+        <div className='nav-desktop container'>
+          <section className='navbar-logo d-flex align-items-center'>
             <Image
-              data-bs-toggle="offcanvas"
-              data-bs-target="#offcanvasWithBothOptions"
-              className="d-lg-none menu icon-burger"
-              src="/assets/icons/icon-burger-orange.webp"
-              alt="menú"
-              layout="fill"
+              data-bs-toggle='offcanvas'
+              data-bs-target='#offcanvasWithBothOptions'
+              className='d-lg-none menu icon-burger'
+              src='/assets/icons/icon-burger-orange.webp'
+              alt='menú'
+              layout='fill'
               width={24}
               height={24}
             />
 
-            <Link className="ms-3" href="/">
+            <Link className='ms-3' href='/'>
               <Image
-                className="logo"
-                src="/assets/logos/logo-movebike-orange.webp"
-                alt="MoveBike App"
-                layout="fill"
+                className='logo'
+                src='/assets/logos/logo-movebike-orange.webp'
+                alt='MoveBike App'
+                layout='fill'
                 width={130}
                 height={30}
               />
             </Link>
           </section>
 
-          <div className="nav-lista d-flex justify-content-center">
-            <section className="navbar-options d-none d-lg-flex align-items-center">
-              <nav className="wrapper">
-                <ul className={`options d-flex`}>
-                  <li className="option">
-                    <Link href="/">Inicio</Link>
+          <div className='nav-lista d-flex justify-content-center'>
+            <section className='navbar-options d-none d-lg-flex align-items-center'>
+              <nav className='wrapper'>
+                <ul className='options d-flex'>
+                  <li className='option'>
+                    <Link href='/'>Inicio</Link>
                   </li>
-                  <li className="option">
+                  <li className='option'>
                     <Link
                       href={
-                        router.pathname !== "/"
-                          ? "/#steps"
-                          : "#steps"
+                        router.pathname !== '/'
+                          ? '/#steps'
+                          : '#steps'
                       }
                     >
                       Beneficios
                     </Link>
                   </li>
-                  <li className="option">
+                  <li className='option'>
                     <Link
-                      href={router.pathname !== "/" ? "/#places" : "#places"}
+                      href={router.pathname !== '/' ? '/#places' : '#places'}
                     >
                       Rutas
                     </Link>
                   </li>
-                  <li className="option">
+                  <li className='option'>
                     <button
-                      className="btn btn-movebike link"
+                      className='btn btn-movebike link'
                       onClick={() => setLogin(true)}
                     >
                       Iniciar sesión
                     </button>
                   </li>
-                  <li className="option text-center">
+                  <li className='option text-center'>
                     <button
-                      className="btn btn-movebike contained"
-                      onClick={() => setRegister(true)}
+                      className='btn btn-movebike contained'
+                      onClick={() => setRegisterModal(true)}
                     >
                       Crear cuenta
                     </button>
                   </li>
+                  {
+
+                    isLogged && <li>Bienvenido</li>
+                  }
                 </ul>
               </nav>
             </section>
 
-            <section className={`navbar-internationalization`}>
-              <dl className="dropdown">
+            <section className='navbar-internationalization'>
+              <dl className='dropdown'>
                 <dt
-                  className="btn dropdown-options"
+                  className='btn dropdown-options'
                   onClick={() => setIsToggle(!isToggle)}
                 >
-                  <span className="text-uppercase">
-                    {router.locale === "en" ? "en" : "es"}{" "}
+                  <span className='text-uppercase'>
+                    {router.locale === 'en' ? 'en' : 'es'}{' '}
                   </span>
-                  <img src="/assets/icons/icon_web.svg" alt="icon web" />
+                  <img src='/assets/icons/icon_web.svg' alt='icon web' />
 
                   <img
-                    className="arrow"
-                    src="/assets/icons/icon_arrow_down.svg"
-                    alt="arrow"
+                    className='arrow'
+                    src='/assets/icons/icon_arrow_down.svg'
+                    alt='arrow'
                   />
                 </dt>
                 <ul
                   className={
-                    isToggle ? "dropdown-menu active" : "dropdown-menu"
+                    isToggle ? 'dropdown-menu active' : 'dropdown-menu'
                   }
-                  aria-labelledby="dropdownMenuButton1"
+                  aria-labelledby='dropdownMenuButton1'
                 >
-                  <li className="dropdown-item mb-1">
-                    <Link className="text-capitalize text-white" href={"/"}>
+                  <li className='dropdown-item mb-1'>
+                    <Link className='text-capitalize text-white' href='/'>
                       ES
                       <img
-                        className="flag"
-                        src={`/assets/icons/icon_flag_es-MX.svg`}
-                        alt="Icono bandera MX"
+                        className='flag'
+                        src='/assets/icons/icon_flag_es-MX.svg'
+                        alt='Icono bandera MX'
                       />
                     </Link>
                   </li>
-                  <li className="dropdown-item">
-                    <Link className="text-capitalize text-white" href={"/"}>
+                  <li className='dropdown-item'>
+                    <Link className='text-capitalize text-white' href='/'>
                       EN
                       <img
-                        className="flag"
-                        src={`/assets/icons/icon_flag_en.svg`}
-                        alt="Icono bandera MX"
+                        className='flag'
+                        src='/assets/icons/icon_flag_en.svg'
+                        alt='Icono bandera MX'
                       />
                     </Link>
                   </li>
@@ -255,67 +282,69 @@ export default function Nav() {
 
       <LoginModal
         show={login}
-        dialogClassName="modal-90w"
+        dialogClassName='modal-90w'
         onHide={() => setLogin(false)}
-        title="Login"
+        title='Login'
         body={
           <>
-            <form className="row g-3">
-              <div className="col-12">
+            <form onSubmit={handleSubmit(onLogin)} className='row g-3'>
+              <div className='col-12'>
                 <label
-                  htmlFor="validationServer01"
-                  className="form-label login__label"
+                  htmlFor='validationServer01'
+                  className='form-label login__label'
                 >
-                  Usuario
+                  Email
                 </label>
                 <input
-                  type="text"
-                  className="form-control login__input"
-                  id="validationServer01"
-                  placeholder="Ingresa tu usuario"
-                  required
+                  type='text'
+                  className='form-control login__input'
+                  placeholder='Ingresa tu email'
+                  {...register('email', { required: 'El email es obligatorio' })}
+                  aria-invalid={errors.email ? 'true' : 'false'}
                 />
+                {errors.email && <p className='text-danger' role='alert'>{errors.email?.message}</p>}
               </div>
-              <div className="col-12">
+              <div className='col-12'>
                 <label
-                  htmlFor="validationServer02"
-                  className="form-label login__label"
+                  htmlFor='validationServer02'
+                  className='form-label login__label'
                 >
                   Contraseña
                 </label>
                 <input
-                  type="password"
-                  className="form-control login__input"
-                  id="validationServer02"
-                  placeholder="Ingresa tu contraseña"
-                  required
+                  type='password'
+                  className='form-control login__input'
+                  id='validationServer02'
+                  placeholder='Ingresa tu contraseña'
+                  {...register('password', { required: 'La contraseña es obligatoria' })}
+                  aria-invalid={errors.password ? 'true' : 'false'}
                 />
+                {errors.password && <p className='text-danger' role='alert'>{errors.password?.message}</p>}
               </div>
 
-              <div className="col-12 d-flex justify-content-between login__remember">
-                <div className="form-check">
+              <div className='col-12 d-flex justify-content-between login__remember'>
+                <div className='form-check'>
                   <input
-                    className="form-check-input"
-                    type="checkbox"
-                    value=""
-                    id="invalidCheck3"
-                    aria-describedby="invalidCheck3Feedback"
-                    required
+                    className='form-check-input'
+                    type='checkbox'
+                    value=''
+                    id='invalidCheck3'
+                    aria-describedby='invalidCheck3Feedback'
                   />
-                  <label className="form-check-label" htmlFor="invalidCheck3">
+                  <label className='form-check-label' htmlFor='invalidCheck3'>
                     Recuérdame
                   </label>
                 </div>
                 <div>
-                  <Link className="login__forgot text-black-800" href={"/"}>
+                  <Link className='login__forgot text-black-800' href='/'>
                     Olvide mi contraseña
                   </Link>
                 </div>
               </div>
-              <div className="col-12 text-center">
+              <div className='col-12 text-center'>
                 <button
-                  className="btn btn-movebike contained w-50 mx-auto"
-                  type="submit"
+                  className='btn btn-movebike contained w-50 mx-auto'
+                  type='submit'
                 >
                   Ingresar
                 </button>
@@ -328,13 +357,13 @@ export default function Nav() {
       />
 
       <LoginModal
-        show={register}
-        dialogClassName="modal-90w"
-        onHide={() => setRegister(false)}
-        title="Crear cuenta"
+        show={registerModal}
+        dialogClassName='modal-90w'
+        onHide={() => setRegisterModal(false)}
+        title='Crear cuenta'
         body={
           <>
-            <form className="row g-3">
+            <form className='row g-3'>
               {/* <div className="col-12">
                 <label
                   className="form-label login__label"
@@ -348,65 +377,65 @@ export default function Nav() {
                   required
                 />
               </div> */}
-              <div className="col-12">
-                <label className="form-label login__label">
+              <div className='col-12'>
+                <label className='form-label login__label'>
                   Correo electrónico
                 </label>
                 <input
-                  type="email"
-                  className="form-control login__input"
-                  placeholder="Ingresa tu correo"
+                  type='email'
+                  className='form-control login__input'
+                  placeholder='Ingresa tu correo'
                 />
               </div>
-              <div className="col-12">
-                <label className="form-label login__label">Contraseña</label>
+              <div className='col-12'>
+                <label className='form-label login__label'>Contraseña</label>
                 <input
-                  type="password"
-                  className="form-control login__input"
-                  placeholder="Ingresa tu contraseña"
+                  type='password'
+                  className='form-control login__input'
+                  placeholder='Ingresa tu contraseña'
                   required
                 />
               </div>
-              <div className="col-12">
-                <label className="form-label login__label">
+              <div className='col-12'>
+                <label className='form-label login__label'>
                   Confirma tu contraseña
                 </label>
                 <input
-                  type="password"
-                  className="form-control login__input"
-                  placeholder="Ingresa tu contraseña"
+                  type='password'
+                  className='form-control login__input'
+                  placeholder='Ingresa tu contraseña'
                   required
                 />
               </div>
-              <div className="col-12">
+              <div className='col-12'>
                 <label
-                  htmlFor="formFileMultiple"
-                  className="form-label login__label"
+                  htmlFor='formFileMultiple'
+                  className='form-label login__label'
                 >
                   Pasaporte/INE
                 </label>
                 <input
-                  className="form-control login__input"
-                  type="file"
-                  id="formFileMultiple"
+                  className='form-control login__input'
+                  type='file'
+                  id='formFileMultiple'
                   multiple
                 />
               </div>
-              <div className="col-12 mb-2">
-                <label className="form-label login__label">Teléfono</label>
+              <div className='col-12 mb-2'>
+                <label className='form-label login__label'>Teléfono</label>
                 <input
-                  type="tel"
-                  className="form-control login__input"
-                  placeholder="Ingresa tu teléfono"
+                  type='tel'
+                  className='form-control login__input'
+                  placeholder='Ingresa tu teléfono'
                 />
               </div>
 
-              <div className="col-12 text-center">
+              <div className='col-12 text-center'>
                 <button
-                  className="btn btn-movebike contained w-50 mx-auto"
-                  type="submit"
+                  className='btn btn-movebike contained w-50 mx-auto'
+                  type='submit'
                   onClick={() => {
-                    setRegister(false)
+                    setRegisterModal(false)
                     setVerify(true)
                   }}
                 >
@@ -423,11 +452,11 @@ export default function Nav() {
       <VerifyModal
         show={verify}
         onHide={() => setVerify(false)}
-        title={"¡Verifica tu cuenta!"}
+        title='¡Verifica tu cuenta!'
         body={
           <>
-            <div className="col-12">
-              <p className="mb-0 login__paragraph">
+            <div className='col-12'>
+              <p className='mb-0 login__paragraph'>
                 Revisa tu correo y realiza la validación de tu cuenta, para
                 poder seguir con tu reserva
               </p>
@@ -438,5 +467,5 @@ export default function Nav() {
         handleClose={handleCloseVerify}
       />
     </>
-  );
+  )
 }
