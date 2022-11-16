@@ -63,7 +63,7 @@ export default function FloteBikes () {
               <article className='flotebikes__card'>
                 <header className='flotebikes__card--image-bike text-center'>
                   <Image
-                    src='/assets/home/flotebikers/vitalia-150.webp'
+                    src='/assets/landing/flotebikers/vitalia-150.webp'
                     alt='Scooter Vitalia 150'
                     layout='filla'
                     width={160}
@@ -147,7 +147,7 @@ export default function FloteBikes () {
               <article className='flotebikes__card'>
                 <header className='flotebikes__card--image-bike text-center'>
                   <Image
-                    src='/assets/home/flotebikers/vitalia-125.webp'
+                    src='/assets/landing/flotebikers/vitalia-125.webp'
                     alt='Scooter Vitalia 150'
                     layout='filla'
                     width={160}
@@ -231,7 +231,7 @@ export default function FloteBikes () {
               <article className='flotebikes__card'>
                 <header className='flotebikes__card--image-bike text-center'>
                   <Image
-                    src='/assets/home/flotebikers/ws-sport-150.webp'
+                    src='/assets/landing/flotebikers/ws-sport-150.webp'
                     alt='Scooter Ws Sport 150'
                     layout='filla'
                     width={160}
@@ -315,7 +315,7 @@ export default function FloteBikes () {
               <article className='flotebikes__card'>
                 <header className='flotebikes__card--image-bike text-center'>
                   <Image
-                    src='/assets/home/flotebikers/vitalia-150.webp'
+                    src='/assets/landing/flotebikers/vitalia-150.webp'
                     alt='Scooter Vitalia 150'
                     layout='filla'
                     width={160}
@@ -399,7 +399,7 @@ export default function FloteBikes () {
               <article className='flotebikes__card'>
                 <header className='flotebikes__card--image-bike text-center'>
                   <Image
-                    src='/assets/home/flotebikers/vitalia-125.webp'
+                    src='/assets/landing/flotebikers/vitalia-125.webp'
                     alt='Scooter Vitalia 125'
                     layout='filla'
                     width={160}
@@ -483,7 +483,7 @@ export default function FloteBikes () {
               <article className='flotebikes__card'>
                 <header className='flotebikes__card--image-bike text-center'>
                   <Image
-                    src='/assets/home/flotebikers/ws-sport-150.webp'
+                    src='/assets/landing/flotebikers/ws-sport-150.webp'
                     alt='Scooter Ws Sport 150'
                     layout='filla'
                     width={160}

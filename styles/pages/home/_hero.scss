@@ -2,7 +2,7 @@
 @use '../../abstract/variables';
 
 .hero-section {
-  background: radial-gradient(208.75% 66.05% at 0% 0%, rgba(238, 113, 21, 0.32) 69.42%, rgba(0, 0, 0, 0) 100%), url(/assets/home/hero/bg-home-movebike.jpg  );
+  background: radial-gradient(208.75% 66.05% at 0% 0%, rgba(238, 113, 21, 0.32) 69.42%, rgba(0, 0, 0, 0) 100%), url(/assets/landing/hero/bg-home-movebike.jpg  );
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center top;
@@ -14,7 +14,7 @@
   padding-bottom: 41px;
 
   @include mixins.responsive(variables.$extra-large) {
-    background: radial-gradient(84.08% 95.9% at 32.79% 12.64%, rgba(238, 113, 21, 0.56) 40.58%, rgba(0, 0, 0, 0) 92.65%), url(/assets/home/hero/bg-home-movebike.jpg  );
+    background: radial-gradient(84.08% 95.9% at 32.79% 12.64%, rgba(238, 113, 21, 0.56) 40.58%, rgba(0, 0, 0, 0) 92.65%), url(/assets/landing/hero/bg-home-movebike.jpg  );
     background-size: 100%;
     background-repeat: no-repeat;
     //width: 100vw;
