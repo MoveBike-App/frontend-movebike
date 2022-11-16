@@ -27,7 +27,7 @@ export default function CardsExperience () {
           </div>
           <div className='col-12 col-md-4 position-relative'>
             <Image
-              src='/assets/home/moto.png'
+              src='/assets/landing/moto.png'
               alt='Experience image'
               layout='fill'
               width={122}
@@ -43,7 +43,7 @@ export default function CardsExperience () {
           </div>
           <div className='col-12 col-md-4'>
             <Image
-              src='/assets/home/umbrella.png'
+              src='/assets/landing/umbrella.png'
               alt='Experience image'
               layout='fill'
               width={122}
