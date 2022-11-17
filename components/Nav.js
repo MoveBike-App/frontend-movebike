@@ -39,7 +39,7 @@ export default function Nav () {
         serUsername(username)
       }
     }
-  }, [])
+  })
 
   const {
     register,
@@ -153,27 +153,23 @@ export default function Nav () {
                   </Link>
                 </li>
                 {isLogged ? (
-                  <>
-                    <div className="dropdown">
+                  <li className='nav-link'>
+                    <div className="dropdown dropup">
                       <button
                         type="button"
-                        className="btn btn-sm p-1 wrapper-avatar c-btn dropdown-toggle"
+                        className="btn btn-sm wrapper-avatar c-btn dropdown-toggle d-flex align-items-center justify-content-between dropdown-toggle-split"
                         data-bs-toggle="dropdown"
                         aria-expanded="false"
                       >
-                        <span className="btn-avatar">
-                          <img
-                            className="img-avatar"
-                            src="./assets/home/avatar-home.webp"
-                            alt="Avatar Session"
-                          />
-                        </span>
+                        <div className="btn-avatar d-flex align-items-center justify-content-center">
+                          JA
+                        </div>
                       </button>
-                      <ul className="dropdown-menu translate-middle-x">
+                      <ul className="dropdown-menu mm-2">
                         <li>
                           <a className="dropdown-item" href="#">
-                            <p className="mb-0 fw-bold">Jonatan Arevalo</p>
-                            <span>{role}</span>
+                            <p className="mb-0 fw-bold">{username}</p>
+                            <span className='text-capitalize'>{role}</span>
                           </a>
                         </li>
                         <li>
@@ -181,10 +177,10 @@ export default function Nav () {
                         </li>
                         <li>
                           <Link className="dropdown-item" href="/dashboard">
-                            Dashboard
+                            Mis reservas
                           </Link>
                         </li>
-                        <li>
+                        {/* <li>
                           <a className="dropdown-item" href="#">
                             Create Post
                           </a>
@@ -193,7 +189,7 @@ export default function Nav () {
                           <a className="dropdown-item" href="#">
                             Reading List
                           </a>
-                        </li>
+                        </li> */}
                         <li>
                           <Link className="dropdown-item" href="/settings">
                             Settings
@@ -212,7 +208,7 @@ export default function Nav () {
                         </li>
                       </ul>
                     </div>
-                  </>
+                  </li>
                 ) : (
                   <>
                     <li className="option">
@@ -353,7 +349,7 @@ export default function Nav () {
               </div>
             </section>
             {isLogged && (
-              <section>
+              <section className='d-none d-lg-block'>
                 <div className="dropdown">
                   <button
                     type="button"

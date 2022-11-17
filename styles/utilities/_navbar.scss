@@ -128,6 +128,42 @@
                     }
 
                 }
+
+                .dropdown-item.active,
+            .dropdown-item:active {
+                background-color: #ff9268;
+                color: variables.$white !important;
+            }
+
+            .dropdown-menu[data-bs-popper]{
+                left: 10%!important;
+            }
+
+            .wrapper-avatar {
+                margin-left: 20px;
+                width: 77px;
+                height: 44px;
+                border: 2px solid #ff9268;
+                //background-color: #ff9268;
+                color: variables.$white;
+                border-radius: 1000px;
+                padding: 4px 8px 4px 2px;
+
+                &::after {
+                    color: #fe5f3b;
+                }
+
+
+                .btn-avatar {
+                    width: 38px !important;
+                    height: 38px !important;
+                    padding: 12px 8px;
+                    background-color: #fe5f3b;
+                    color: variables.$white;
+                    border-radius: 50%;
+                    font-weight: 700;
+                }
+            }
             }
         }
 
