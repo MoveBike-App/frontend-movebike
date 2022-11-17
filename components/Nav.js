@@ -54,7 +54,6 @@ export default function Nav () {
     })
       .then((response) => {
         const token = response.data.token
-        console.log(token)
         const { id, name, role } = response.data.userCurrent
         const userCurrent = { id, username: name, role }
         localStorage.setItem('token', token)
