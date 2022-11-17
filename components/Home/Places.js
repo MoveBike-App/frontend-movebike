@@ -9,7 +9,7 @@ import { Mousewheel, Navigation, Pagination, Autoplay } from 'swiper'
 export default function Places () {
   return (
     <div className='container'>
-      <dic className='row'>
+      <div className='row'>
         <div className='col-12 col-lg-4 d-flex flex-column justify-content-center'>
           <div>
             <h2 className='text-center text-lg-start places-section__title'>
@@ -201,7 +201,7 @@ export default function Places () {
             Reservar ahora
           </button>
         </div>
-      </dic>
+      </div>
     </div>
   )
 }
