@@ -58,7 +58,7 @@ export default function Nav () {
         const userCurrent = { id, username: name, role }
         localStorage.setItem('token', token)
         localStorage.setItem('userCurrent', JSON.stringify(userCurrent))
-        setLogin(false)
+        setLogin(false) 
         setIsLogged(true)
       })
       .catch((error) => {
