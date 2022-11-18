@@ -60,7 +60,8 @@ export default function FloteBikes () {
         >
           <SwiperSlide>
             <div className='col-12'>
-              <article className='flotebikes__card'>
+              <div class="scene">
+              <article className='flotebikes__card fadeIn flotebikes__face--front'>
                 <header className='flotebikes__card--image-bike text-center'>
                   <Image
                     src='/assets/landing/flotebikers/vitalia-150.webp'
@@ -140,6 +141,10 @@ export default function FloteBikes () {
                   </button>
                 </footer>
               </article>
+              <article className='flotebikes__card d-none flotebikes__face--back'>
+
+              </article>
+              </div>
             </div>
           </SwiperSlide>
           <SwiperSlide>

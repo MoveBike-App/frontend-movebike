@@ -37,6 +37,7 @@
         padding: 12px 16px;
         margin: 0 auto;
         filter: drop-shadow(2px 4px 8px rgba(0, 0, 0, 0.16));
+        transition: all 250ms ease-out;
 
         &--image-bike {
             background: rgba(217, 217, 217, 0.13);
@@ -107,6 +108,10 @@
         }
 
 
+        &:hover{
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgb(0 0 0 / 10%);
+        }
 
 
     }

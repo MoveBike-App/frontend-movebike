@@ -37,8 +37,8 @@ export default function Nav () {
   const API_URL = 'https://api.movebike.mx/'
 
   useEffect(() => {
-    setUsername(user.username)
-    setRole(user.role)
+    setUsername(user?.username)
+    setRole(user?.role)
   }, [user])
 
   // useEffect(() => {
@@ -179,7 +179,7 @@ export default function Nav () {
                       <ul className="dropdown-menu mm-2">
                         <li>
                           <a className="dropdown-item" href="#">
-                            <p className="mb-0 fw-bold">{user.username}</p>
+                            <p className="mb-0 fw-bold">{username}</p>
                             <span className='text-capitalize'>{role}</span>
                           </a>
                         </li>
