@@ -4,6 +4,10 @@ import React, { useEffect, useState, useContext } from 'react'
 import { useRouter } from 'next/router'
 import { useForm } from 'react-hook-form'
 import * as dotenv from 'dotenv'
+import AuthContext from '../context/AuthContext'
+
+/* Hooks */
+import { useAuthUser } from '../hooks/auth-user'
 
 import LoginModal from './Utilities/LoginModal'
 import VerifyModal from './Utilities/VerifyModal'
@@ -14,14 +18,17 @@ const axios = require('axios')
 dotenv.config()
 
 export default function Nav () {
+  const { user, isLogged, setIsLogged } = useContext(AuthContext)
+  //const { user, isLoggedd, setIsLoggedd } = useAuthUser()
+
   const [isToggle, setIsToggle] = useState(false)
   const router = useRouter()
-  const [isLogged, setIsLogged] = useState(false)
+  //const [isLogged, setIsLogged] = useState(false)
   const [login, setLogin] = useState(false)
   const [registerModal, setRegisterModal] = useState(false)
   const [verify, setVerify] = useState(false)
   const [role, setRole] = useState('')
-  const [username, serUsername] = useState('')
+  const [username, setUsername] = useState('')
   const handleClose = () => setLogin(false)
   const handleCloseRegister = () => setRegisterModal(false)
   const handleClickRegister = () => setRegisterModal(true)
@@ -30,16 +37,21 @@ export default function Nav () {
   const API_URL = 'https://api.movebike.mx/'
 
   useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const userCurrent = localStorage.getItem('userCurrent')
-      if (userCurrent) {
-        const { role, username } = JSON.parse(userCurrent)
-        setIsLogged(true)
-        setRole(role)
-        serUsername(username)
-      }
-    }
-  })
+    setUsername(user.username)
+    setRole(user.role)
+  }, [user])
+
+  // useEffect(() => {
+  //   if (typeof window !== 'undefined') {
+  //     const userCurrent = localStorage.getItem('userCurrent')
+  //     if (userCurrent) {
+  //       const { role, username } = JSON.parse(userCurrent)
+  //       setIsLogged(true)
+  //       setRole(role)
+  //       serUsername(username)
+  //     }
+  //   }
+  // })
 
   const {
     register,
@@ -167,7 +179,7 @@ export default function Nav () {
                       <ul className="dropdown-menu mm-2">
                         <li>
                           <a className="dropdown-item" href="#">
-                            <p className="mb-0 fw-bold">{username}</p>
+                            <p className="mb-0 fw-bold">{user.username}</p>
                             <span className='text-capitalize'>{role}</span>
                           </a>
                         </li>
