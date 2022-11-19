@@ -16,7 +16,7 @@ export default function Hero () {
   const mes = dateIniciatal.getMonth() + 1
   const day = dateIniciatal.getDate()
   const [checkIn, setCheckIn] = useState(dayjs(`${mes}-${day}-${year}`))
-  const [checkOut, setCheckOut] = useState(dayjs('2022-11-04'))
+  const [checkOut, setCheckOut] = useState()
   const [dateNow, setDateNow] = useState('')
   useEffect(() => {
     const date = Date.now()
