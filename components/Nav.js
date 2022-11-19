@@ -5,6 +5,9 @@ import { useRouter } from 'next/router'
 import { useForm } from 'react-hook-form'
 import * as dotenv from 'dotenv'
 import AuthContext from '../context/AuthContext'
+import Toast from 'react-bootstrap/Toast';
+import ToastContainer from 'react-bootstrap/ToastContainer';
+import { authLogin, authLogins } from '../services/users/auth'
 
 /* Hooks */
 import { useAuthUser } from '../hooks/auth-user'
@@ -19,63 +22,69 @@ dotenv.config()
 
 export default function Nav () {
   const { user, isLogged, setIsLogged } = useContext(AuthContext)
-  //const { user, isLoggedd, setIsLoggedd } = useAuthUser()
 
   const [isToggle, setIsToggle] = useState(false)
   const router = useRouter()
-  //const [isLogged, setIsLogged] = useState(false)
   const [login, setLogin] = useState(false)
   const [registerModal, setRegisterModal] = useState(false)
   const [verify, setVerify] = useState(false)
   const [role, setRole] = useState('')
   const [username, setUsername] = useState('')
+  const [isError, setIsError] = useState(false)
+  const [messageError, setMessageError] = useState('')
   const handleClose = () => setLogin(false)
   const handleCloseRegister = () => setRegisterModal(false)
   const handleClickRegister = () => setRegisterModal(true)
   const handleCloseVerify = () => setVerify(false)
 
-  const API_URL = 'https://api.movebike.mx/'
+  const [showA, setShowA] = useState(false);
+  const toggleShowA = () => setShowA(!showA);
 
   useEffect(() => {
     setUsername(user?.username)
     setRole(user?.role)
   }, [user])
 
-  // useEffect(() => {
-  //   if (typeof window !== 'undefined') {
-  //     const userCurrent = localStorage.getItem('userCurrent')
-  //     if (userCurrent) {
-  //       const { role, username } = JSON.parse(userCurrent)
-  //       setIsLogged(true)
-  //       setRole(role)
-  //       serUsername(username)
-  //     }
-  //   }
-  // })
 
   const {
     register,
+    resetField,
     formState: { errors },
     handleSubmit
-  } = useForm()
+  } = useForm({
+    mode: "onSubmit",
+    defaultValues: {
+      email: '',
+      password: ''
+    }
+  })
 
-  const onLogin = ({ email, password }) => {
-    axios.post(`${API_URL}auth/login`, {
-      email,
-      password
-    })
-      .then((response) => {
-        const token = response.data.token
-        const { id, name, role } = response.data.userCurrent
-        const userCurrent = { id, username: name, role }
-        localStorage.setItem('token', token)
-        localStorage.setItem('userCurrent', JSON.stringify(userCurrent))
-        setLogin(false) 
-        setIsLogged(true)
-      })
-      .catch((error) => {
-      //
-      })
+  const onLogin = async({ email, password }) => {
+    
+    try {
+      const response = await authLogin(email, password)
+      const token = response.data.token
+      const { id, name, role } = response.data.userCurrent
+      const userCurrent = { id, username: name, role }
+      localStorage.setItem('token', token)
+      localStorage.setItem('userCurrent', JSON.stringify(userCurrent))
+      setLogin(false) 
+      setIsLogged(true)
+      setShowA(response.data.success)
+      setIsError(response.data.success)
+      setMessageError(response.data.message)
+      toggleShowA()
+      resetField("email")
+      resetField("password")
+    } catch (error) {
+      const {success, message}  = error.response.data
+      setIsError(success)
+      if(success === false){
+        toggleShowA()
+      }
+      setMessageError(message)
+    }
+
   }
 
 
@@ -88,6 +97,16 @@ export default function Nav () {
 
   return (
     <>
+      <ToastContainer position='top-end' className='mt-2 me-2'>
+        <Toast onClose={() => setShowA(false)} show={showA} delay={3000} autohide >
+          <Toast.Header>
+            <strong className={`me-auto ${isError ? 'text-success' : 'text-danger'}`}>{isError ? 'Succesull!' : 'Invalid credentials!'} </strong>
+            
+          </Toast.Header>
+          <Toast.Body>{messageError}</Toast.Body>
+        </Toast>
+      </ToastContainer>
+      
       <nav className="navbar mb-navbar fixed-top bg-white" id="nav-movebike">
         <section
           role="navigation "
@@ -187,20 +206,10 @@ export default function Nav () {
                           <hr className="dropdown-divider" />
                         </li>
                         <li>
-                          <Link className="dropdown-item" href="/dashboard">
+                          <a className="dropdown-item" href={`${router.basePath}/dashboard`}>
                             Mis reservas
-                          </Link>
-                        </li>
-                        {/* <li>
-                          <a className="dropdown-item" href="#">
-                            Create Post
                           </a>
                         </li>
-                        <li>
-                          <a className="dropdown-item" href="#">
-                            Reading List
-                          </a>
-                        </li> */}
                         <li>
                           <Link className="dropdown-item" href="/settings">
                             Settings
@@ -383,9 +392,9 @@ export default function Nav () {
                       <hr className="dropdown-divider" />
                     </li>
                     <li>
-                      <Link className="dropdown-item" href="/dashboard">
+                      <a className="dropdown-item" href={`${router.basePath}/dashboard`}>
                         Mis reservas
-                      </Link>
+                      </a>
                     </li>
                     {/* <li>
                       <a className="dropdown-item" href="#">
@@ -442,6 +451,7 @@ export default function Nav () {
                   placeholder="Ingresa tu email"
                   {...register("email", {
                     required: "El email es obligatorio",
+                    pattern: /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/,
                   })}
                   aria-invalid={errors.email ? "true" : "false"}
                 />
@@ -449,6 +459,11 @@ export default function Nav () {
                   <p className="text-danger" role="alert">
                     {errors.email?.message}
                   </p>
+                )}
+                {errors.email?.type === "pattern" && (
+                  <p className="text-danger" role="alert">
+                  Ingese un email válido!
+                </p>
                 )}
               </div>
               <div className="col-12">

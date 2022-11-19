@@ -42,7 +42,7 @@ export default function Dashboard () {
                     <th>Moto</th>
                     <th>Status</th>
                     <th>Fechas</th>
-                    <th />
+                    <th>Acciones</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -60,9 +60,9 @@ export default function Dashboard () {
                     <td>Reservada</td>
                     <td>27-10-2022 | 30-10-2022</td>
                     <td>
-                      <button className='btn btn-movebike contained'>
+                      {<button onClick={() => console.log('Click reserva')} className='btn btn-movebike contained'>
                         Ver reserva
-                      </button>
+                      </button>}
                     </td>
                   </tr>
                   <tr>
