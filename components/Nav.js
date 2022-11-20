@@ -26,6 +26,7 @@ export default function Nav () {
   const handleCloseRegister = () => setRegisterModal(false)
   const handleClickRegister = () => setRegisterModal(true)
   const handleCloseVerify = () => setVerify(false)
+  
 
   const API_URL = 'https://api.movebike.mx/'
 
@@ -48,7 +49,7 @@ export default function Nav () {
   } = useForm()
 
   const onLogin = ({ email, password }) => {
-    axios.post(`${API_URL}auth/login`, {
+    axios.post('http://localhost:8080/auth/login', {
       email,
       password
     })
@@ -62,7 +63,7 @@ export default function Nav () {
         setIsLogged(true)
       })
       .catch((error) => {
-      //
+        alert(error)
       })
   }
 
