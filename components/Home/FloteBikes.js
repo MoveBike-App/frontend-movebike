@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { useRouter } from "next/router";
-import Link from "next/link";
+import Link from 'next/link';
 import Image from "next/image";
 // import required modules
 import { Navigation, Pagination } from "swiper";
@@ -16,7 +16,7 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
-import { getAllMotos } from "../../services/bikes/motos";
+import { getAllMotos } from "services/bikes/motos";
 
 const myLoader = ({ src }) => {
   return `https://movebike-users-imgs.s3.us-east-1.amazonaws.com/${src}`;
@@ -37,7 +37,7 @@ export default function FloteBikes() {
   useEffect(() => {
     const date = Date.now();
     setDateNow(date);
-  }, [dateNow]);
+  }, []);
 
   const getMotos = async () => {
     try {
@@ -124,7 +124,7 @@ export default function FloteBikes() {
                     loader={myLoader}
                     src={`${moto?.keyImage}`}
                     alt="Scooter Vitalia 150"
-                    layout="fill"
+                    
                     width={160}
                     height={140}
                   />
@@ -142,7 +142,7 @@ export default function FloteBikes() {
                         <Image
                           src="/assets/icons/icon_web.svg"
                           alt="Icon max confort"
-                          layout="filla"
+                          
                           width={20}
                           height={20}
                         />
@@ -154,7 +154,7 @@ export default function FloteBikes() {
                         <Image
                           src="/assets/icons/icon_web.svg"
                           alt="Icon max confort"
-                          layout="filla"
+                          
                           width={20}
                           height={20}
                         />
@@ -166,7 +166,7 @@ export default function FloteBikes() {
                         <Image
                           src="/assets/icons/icon_web.svg"
                           alt="Icon max confort"
-                          layout="filla"
+                          
                           width={20}
                           height={20}
                         />
@@ -178,7 +178,7 @@ export default function FloteBikes() {
                         <Image
                           src="/assets/icons/icon_web.svg"
                           alt="Icon max confort"
-                          layout="filla"
+                          
                           width={20}
                           height={20}
                         />
@@ -196,12 +196,12 @@ export default function FloteBikes() {
                   </section>
                 </main>
                 <footer className="flotebikes__card-footer text-center ">
-                  <button
-                    className="btn btn-movebike outlined shadow btn-booking "
-                    onClick={() => handleClickBook(moto._id)}
+                  <Link
+                    href={`/motos/${moto._id}`}
+                    className="btn btn-movebike outlined shadow btn-booking"
                   >
                     Reservar ahora
-                  </button>
+                  </Link>
                 </footer>
 
                 <div
@@ -215,7 +215,7 @@ export default function FloteBikes() {
                     <Image
                       src={"/assets/icons/icon-close.webp"}
                       alt={"Icon close"}
-                      layout={"fill"}
+                      
                       width={32}
                       height={32}
                     />{" "}

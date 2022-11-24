@@ -17,7 +17,7 @@ export default function SlideMotos({name, model, price, setIsClickBook, isClickB
             <Image
               src="/assets/landing/flotebikers/vitalia-150.webp"
               alt="Scooter Vitalia 150"
-              layout="filla"
+              
               width={160}
               height={140}
             />
@@ -35,7 +35,7 @@ export default function SlideMotos({name, model, price, setIsClickBook, isClickB
                   <Image
                     src="/assets/icons/icon_web.svg"
                     alt="Icon max confort"
-                    layout="filla"
+                    
                     width={20}
                     height={20}
                   />
@@ -47,7 +47,7 @@ export default function SlideMotos({name, model, price, setIsClickBook, isClickB
                   <Image
                     src="/assets/icons/icon_web.svg"
                     alt="Icon max confort"
-                    layout="filla"
+                    
                     width={20}
                     height={20}
                   />
@@ -59,7 +59,7 @@ export default function SlideMotos({name, model, price, setIsClickBook, isClickB
                   <Image
                     src="/assets/icons/icon_web.svg"
                     alt="Icon max confort"
-                    layout="filla"
+                    
                     width={20}
                     height={20}
                   />
@@ -71,7 +71,7 @@ export default function SlideMotos({name, model, price, setIsClickBook, isClickB
                   <Image
                     src="/assets/icons/icon_web.svg"
                     alt="Icon max confort"
-                    layout="filla"
+                    
                     width={20}
                     height={20}
                   />
@@ -107,7 +107,7 @@ export default function SlideMotos({name, model, price, setIsClickBook, isClickB
             <Image
               src={"/assets/icons/icon-close.webp"}
               alt={"Icon close"}
-              layout={"fill"}
+              
               width={32}
               height={32}
             />{" "}

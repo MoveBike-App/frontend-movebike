@@ -21,7 +21,7 @@ export default function Hero () {
   useEffect(() => {
     const date = Date.now()
     setDateNow(date)
-  }, [dateNow])
+  }, [])
 
   const [age, setAge] = useState('')
 

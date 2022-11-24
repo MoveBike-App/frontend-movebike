@@ -12,7 +12,6 @@ export default function CardsExperience () {
             <Image
               src={card1}
               alt='Experience image'
-              layout='fill'
               width={122}
               height={122}
             />
@@ -21,7 +20,7 @@ export default function CardsExperience () {
               ¿Cuántos días deseas vivir la <br className='' /> experiencia?
             </p>
             <div className='position-absolute arrow-orange d-md-none d-lg-flex'>
-              <Image src='/assets/landing/cards/arrow-orang.webp' alt='Arrow left experience' layout='fill' width={80} height={80} />
+              <Image src='/assets/landing/cards/arrow-orang.webp' alt='Arrow left experience'  width={80} height={80} />
             </div>
 
           </div>
@@ -29,7 +28,7 @@ export default function CardsExperience () {
             <Image
               src='/assets/landing/moto.png'
               alt='Experience image'
-              layout='fill'
+              
               width={122}
               height={122}
             />
@@ -38,14 +37,14 @@ export default function CardsExperience () {
               Realiza tu pago y espera la <br /> llegada de tu vehículo!
             </p>
             <div className='position-absolute arrow-left d-md-none d-lg-flex'>
-              <Image src='/assets/landing/cards/arrow-left-cardexpe.webp' alt='Arrow left experience' layout='fill' width={80} height={80} />
+              <Image src='/assets/landing/cards/arrow-left-cardexpe.webp' alt='Arrow left experience'  width={80} height={80} />
             </div>
           </div>
           <div className='col-12 col-md-4'>
             <Image
               src='/assets/landing/umbrella.png'
               alt='Experience image'
-              layout='fill'
+              
               width={122}
               height={122}
             />

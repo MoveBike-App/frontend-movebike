@@ -1,6 +1,6 @@
 import Image from 'next/image'
 import React from 'react'
-import Layout from '../components/Layouts'
+import Layout from 'components/Layouts'
 
 export default function Checkout () {
   return (
@@ -17,7 +17,7 @@ export default function Checkout () {
                   <Image
                     src='/assets/landing/flotebikers/vitalia-125.webp'
                     alt='Scooter Vitalia 125'
-                    layout='fill'
+                    
                     width={130}
                     height={95}
                   />
@@ -53,7 +53,7 @@ export default function Checkout () {
                   <Image
                     src='/assets/landing/flotebikers/vitalia-150.webp'
                     alt='Scooter Vitalia 125'
-                    layout='fill'
+                    
                     width={130}
                     height={95}
                   />

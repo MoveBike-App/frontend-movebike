@@ -1,15 +1,12 @@
-import Layouts from '../components/Layouts'
-import CardsExperience from '../components/CardsExperience'
-import Hero from '../components/Home/Hero'
+import Layouts from 'components/Layouts'
+import CardsExperience from 'components/CardsExperience'
+import Hero from 'components/Home/Hero'
 import dynamic from 'next/dynamic'
-import { createContext, Suspense, useEffect, useState } from 'react'
-import { AuthContext } from '../context/AuthContext'
-import { render } from 'preact'
-const FloteBikes = dynamic(() => import('../components/Home/FloteBikes'), {
+const FloteBikes = dynamic(() => import('components/Home/FloteBikes'), {
   ssr: true
 })
 
-const Places = dynamic(() => import('../components/Home/Places'), {
+const Places = dynamic(() => import('components/Home/Places'), {
   ssr: true
 })
 
@@ -28,7 +25,7 @@ export default function Home () {
           <FloteBikes />
         </section>
         <section className='container-fluid places-section' id='places'>
-          <Places />
+          {/* <Places /> */}
         </section>
       </Layouts>
     </>
