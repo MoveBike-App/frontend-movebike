@@ -36,6 +36,7 @@ export default function Nav () {
   const handleCloseRegister = () => setRegisterModal(false)
   const handleClickRegister = () => setRegisterModal(true)
   const handleCloseVerify = () => setVerify(false)
+  
 
   const [showA, setShowA] = useState(false);
   const toggleShowA = () => setShowA(!showA);

@@ -1,5 +1,6 @@
 import Image from 'next/image'
 import React from 'react'
+import CheckoutCard from 'components/CheckoutCard'
 import Layout from 'components/Layouts'
 
 export default function Checkout () {
@@ -100,7 +101,7 @@ export default function Checkout () {
                       value='option1'
                       checked
                     />
-                    <label className='form-check-label option' for='exampleRadios1'>
+                    <label className='form-check-label option' htmlFor='exampleRadios1'>
                       Mi hotel
                     </label>
                   </div>
@@ -112,7 +113,7 @@ export default function Checkout () {
                       id='exampleRadios2'
                       value='option2'
                     />
-                    <label className='form-check-label option' for='exampleRadios2'>
+                    <label className='form-check-label option' htmlFor='exampleRadios2'>
                       En sucursal
                     </label>
                   </div>
@@ -127,7 +128,9 @@ export default function Checkout () {
               </section>
 
               <section className='checkout__card mt-3'>
-                <h2>Aquí va ir Stripe</h2>
+
+                <CheckoutCard />
+
               </section>
             </div>
           </div>
