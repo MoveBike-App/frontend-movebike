@@ -56,17 +56,17 @@ export default function FloteBikes() {
     setAge(event.target.value);
   };
 
-  const handleClickBook = (id) => {
-    console.log('SE EJECUTA', id);
-    let overlayblack = document.getElementById(`${id}`);
-    console.log(overlayblack);
-    overlayblack.classList.add('active')
-  };
+  // const handleClickBook = (id) => {
+  //   console.log('SE EJECUTA', id);
+  //   let overlayblack = document.getElementById(`${id}`);
+  //   console.log(overlayblack);
+  //   overlayblack.classList.add('active')
+  // };
 
-  const handleCloseBook = (id) => {
-    let overlayblack = document.getElementById(`${id}`);
-    overlayblack.classList.remove('active')
-  };
+  // const handleCloseBook = (id) => {
+  //   let overlayblack = document.getElementById(`${id}`);
+  //   overlayblack.classList.remove('active')
+  // };
 
   return (
     <>
