@@ -5,7 +5,6 @@ import Link from "next/link";
 import Image from "next/image";
 // import required modules
 import { Mousewheel, Navigation, Pagination, Autoplay } from "swiper";
-import { Router } from "express";
 
 export default function Places() {
   const router = useRouter();
