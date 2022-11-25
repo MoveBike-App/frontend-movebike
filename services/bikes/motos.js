@@ -6,6 +6,13 @@ function getAllMotos(){
     return axios.get(URL)
 }
 
+function getById(id) {
+    const URL = `${URL_BASE}motos/${id}`
+
+    return axios.get(URL)
+}
+
 export {
-    getAllMotos
+    getAllMotos,
+    getById
 }

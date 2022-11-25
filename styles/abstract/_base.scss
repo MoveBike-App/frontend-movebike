@@ -61,3 +61,10 @@ a {
       border-color: variables.$orange-600
    }
 }
+
+.img-not-found {
+   @include mixins.responsive(variables.$large){
+      max-width: 800px;
+      margin: 0 auto;
+   }
+}
