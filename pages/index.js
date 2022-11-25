@@ -13,7 +13,7 @@ const Places = dynamic(() => import('components/home/Places'), {
 export default function Home () {
   return (
     <>
-      <Layouts title='MoveBike | Scooter & Bikes rental service'>
+      <Layouts title='MoveBike | Scooter & Bikes rental service' >
         {/** Hero */}
         <section className='container-fluid hero-section' id='hero'>
           <Hero />
