@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from 'react'
 import { Grid } from 'gridjs'
 import 'gridjs/dist/theme/mermaid.css'
 
-import Layouts from '../components/Layouts'
+import Layouts from 'components/Layouts'
 import Image from 'next/image'
 
 export default function Dashboard () {
@@ -42,7 +42,7 @@ export default function Dashboard () {
                     <th>Moto</th>
                     <th>Status</th>
                     <th>Fechas</th>
-                    <th />
+                    <th>Acciones</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -51,7 +51,7 @@ export default function Dashboard () {
                       <Image
                         src='/assets/landing/flotebikers/vitalia-150.webp'
                         alt='Vitalia 150'
-                        layout='fill'
+                        
                         width={100}
                         height={75}
                       />
@@ -60,9 +60,9 @@ export default function Dashboard () {
                     <td>Reservada</td>
                     <td>27-10-2022 | 30-10-2022</td>
                     <td>
-                      <button className='btn btn-movebike contained'>
+                      {<button onClick={() => console.log('Click reserva')} className='btn btn-movebike contained'>
                         Ver reserva
-                      </button>
+                      </button>}
                     </td>
                   </tr>
                   <tr>
@@ -70,7 +70,7 @@ export default function Dashboard () {
                       <Image
                         src='/assets/landing/flotebikers/vitalia-125.webp'
                         alt='Vitalia 150'
-                        layout='fill'
+                        
                         width={100}
                         height={75}
                       />
@@ -89,7 +89,7 @@ export default function Dashboard () {
                       <Image
                         src='/assets/landing/flotebikers/ws-sport-150.webp'
                         alt='Vitalia 150'
-                        layout='fill'
+                        
                         width={100}
                         height={75}
                       />
