@@ -12,7 +12,7 @@ export default function Footer () {
               className='text-center mx-auto mx-lg-0'
               src='/assets/logos/logo-movebike-black.webp'
               alt='Logo footer'
-              layout='fill'
+              
               width={210}
               height={57}
             />
@@ -25,7 +25,7 @@ export default function Footer () {
               <Image
                 src='/assets/icons/icon-facebook-movebike.webp'
                 alt='Facebook Movebike'
-                layout='fill'
+                
                 width={32}
                 height={32}
                 className='footer__social--facebook'
@@ -33,7 +33,7 @@ export default function Footer () {
               <Image
                 src='/assets/icons/icon-instagram-movebike.webp'
                 alt='Instagram Movebike'
-                layout='fill'
+                
                 width={32}
                 height={32}
                 className='footer__social--instagram'
@@ -41,7 +41,7 @@ export default function Footer () {
               <Image
                 src='/assets/icons/icon-whatsapp-movebike.webp'
                 alt='Whatsapp Movebike'
-                layout='fill'
+                
                 width={32}
                 height={32}
                 className='footer__social--whatsapp'

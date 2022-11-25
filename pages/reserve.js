@@ -1,6 +1,6 @@
 import Image from 'next/image'
 import React from 'react'
-import Layouts from '../components/Layouts'
+import Layouts from 'components/Layouts'
 
 export default function bookings () {
   return (
@@ -17,7 +17,7 @@ export default function bookings () {
                   <Image
                     src='/assets/landing/flotebikers/vitalia-125.webp'
                     alt='Scooter Vitalia 125'
-                    layout='fill'
+                    
                     width={130}
                     height={95}
                   />
@@ -53,7 +53,7 @@ export default function bookings () {
                   <Image
                     src='/assets/landing/flotebikers/vitalia-150.webp'
                     alt='Scooter Vitalia 125'
-                    layout='fill'
+                    
                     width={130}
                     height={95}
                   />
@@ -98,7 +98,7 @@ export default function bookings () {
                     <Image
                       src='/assets/icons/icon-check-step.webp'
                       alt='Icon check step'
-                      layout='fill'
+                      
                       width={32}
                       height={32}
                     />
