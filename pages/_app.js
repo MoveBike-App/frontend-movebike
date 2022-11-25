@@ -3,9 +3,9 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
-import "../styles/app.scss";
+import "styles/app.scss";
 
-import AuthContext from "../context/AuthContext";
+import AuthContext from "context/AuthContext";
 import { useEffect, useState } from "react";
 
 function MyApp({ Component, pageProps }) {

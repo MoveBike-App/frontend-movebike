@@ -4,10 +4,10 @@ import React, { useEffect, useState, useContext } from 'react'
 import { useRouter } from 'next/router'
 import { useForm } from 'react-hook-form'
 import * as dotenv from 'dotenv'
-import AuthContext from '../context/AuthContext'
+import AuthContext from 'context/AuthContext'
 import Toast from 'react-bootstrap/Toast';
 import ToastContainer from 'react-bootstrap/ToastContainer';
-import { authLogin, authLogins } from '../services/users/auth'
+import { authLogin, authLogins } from 'services/users/auth'
 
 /* Hooks */
 import { useAuthUser } from '../hooks/auth-user'
@@ -124,7 +124,6 @@ export default function Nav () {
                 className="d-lg-none menu icon-burger"
                 src="/assets/icons/icon-burger-orange.webp"
                 alt="menú"
-                layout="fill"
                 width={24}
                 height={24}
               />
@@ -134,7 +133,6 @@ export default function Nav () {
                   className="img-fluid logo-canvas"
                   src="/assets/logos/logo-movebike-orange.webp"
                   alt="Movebike"
-                  layout="fill"
                   width={128}
                   height={28}
                 />
@@ -262,7 +260,6 @@ export default function Nav () {
               className="d-lg-none menu icon-burger"
               src="/assets/icons/icon-burger-orange.webp"
               alt="menú"
-              layout="fill"
               width={24}
               height={24}
             />
@@ -272,7 +269,6 @@ export default function Nav () {
                 className="logo"
                 src="/assets/logos/logo-movebike-orange.webp"
                 alt="MoveBike App"
-                layout="fill"
                 width={130}
                 height={30}
               />
