@@ -1,12 +1,12 @@
 import Layouts from 'components/Layouts'
 import CardsExperience from 'components/CardsExperience'
-import Hero from 'components/Home/Hero'
+import Hero from 'components/home/Hero'
 import dynamic from 'next/dynamic'
-const FloteBikes = dynamic(() => import('components/Home/FloteBikes'), {
+const FloteBikes = dynamic(() => import('components/home/FloteBikes'), {
   ssr: true
 })
 
-const Places = dynamic(() => import('components/Home/Places'), {
+const Places = dynamic(() => import('components/home/Places'), {
   ssr: true
 })
 
@@ -25,7 +25,7 @@ export default function Home () {
           <FloteBikes />
         </section>
         <section className='container-fluid places-section' id='places'>
-          {/* <Places /> */}
+          <Places />
         </section>
       </Layouts>
     </>
