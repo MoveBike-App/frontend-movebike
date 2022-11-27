@@ -99,7 +99,7 @@ export default function Checkout () {
                       name='exampleRadios'
                       id='exampleRadios1'
                       value='option1'
-                      checked
+                      defaultChecked
                     />
                     <label className='form-check-label option' htmlFor='exampleRadios1'>
                       Mi hotel
