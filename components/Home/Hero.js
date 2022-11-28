@@ -9,6 +9,7 @@ import InputLabel from '@mui/material/InputLabel'
 import MenuItem from '@mui/material/MenuItem'
 import FormControl from '@mui/material/FormControl'
 import Select from '@mui/material/Select'
+import Link from 'next/link'
 
 export default function Hero () {
   const dateIniciatal = new Date()
@@ -99,9 +100,9 @@ export default function Hero () {
                 </div>
               </div>
               <div className='col-12 mt-lg-5'>
-                <button className='btn btn-movebike contained btn-datapicker w-50 mt-3 mt-lg-0'>
+                <Link href={'/motos'} className='btn btn-movebike contained btn-datapicker w-50 mt-3 mt-lg-0'>
                   Buscar
-                </button>
+                </Link>
               </div>
             </form>
           </div>

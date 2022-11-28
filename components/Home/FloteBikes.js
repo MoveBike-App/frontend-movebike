@@ -5,17 +5,7 @@ import Link from 'next/link';
 import Image from "next/image";
 // import required modules
 import { Navigation, Pagination } from "swiper";
-
-import { LocalizationProvider } from "@mui/x-date-pickers";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-import { TextField } from "@mui/material";
 import dayjs from "dayjs";
-
-import InputLabel from "@mui/material/InputLabel";
-import MenuItem from "@mui/material/MenuItem";
-import FormControl from "@mui/material/FormControl";
-import Select from "@mui/material/Select";
 import { getAllMotos } from "services/bikes/motos";
 
 const myLoader = ({ src }) => {
@@ -55,18 +45,6 @@ export default function FloteBikes() {
   const handleChange = (event) => {
     setAge(event.target.value);
   };
-
-  // const handleClickBook = (id) => {
-  //   console.log('SE EJECUTA', id);
-  //   let overlayblack = document.getElementById(`${id}`);
-  //   console.log(overlayblack);
-  //   overlayblack.classList.add('active')
-  // };
-
-  // const handleCloseBook = (id) => {
-  //   let overlayblack = document.getElementById(`${id}`);
-  //   overlayblack.classList.remove('active')
-  // };
 
   return (
     <>
@@ -203,92 +181,6 @@ export default function FloteBikes() {
                     Reservar ahora
                   </Link>
                 </footer>
-
-                <div
-                  className={`flotebikes__popup d-flex flex-column justify-content-between`}
-                  id={moto._id}
-                >
-                  <button
-                    className="btn close-book"
-                    onClick={() => handleCloseBook(moto._id)}
-                  >
-                    <Image
-                      src={"/assets/icons/icon-close.webp"}
-                      alt={"Icon close"}
-                      
-                      width={32}
-                      height={32}
-                    />{" "}
-                  </button>
-
-                  <main className="flotebikes__card-body mt-5">
-                    <select
-                      className="form-select flotebikes__card-body--location"
-                      aria-label="Default select example"
-                    >
-                      <option disabled defaultValue>
-                        Ubicación
-                      </option>
-                      <option value="Cancún, Quintana Roo.">
-                        Cancún, Quintana Roo.
-                      </option>
-                      <option value="Tulúm, Quintana Roo.">
-                        Tulúm, Quintana Roo.
-                      </option>
-                    </select>
-
-                    <LocalizationProvider dateAdapter={AdapterDayjs}>
-                      <FormControl fullWidth className="mt-3">
-                        <DatePicker
-                          label="Check In"
-                          className="datepicker mt-lg-none"
-                          value={checkIn}
-                          minDate={dayjs(dateNow)}
-                          onChange={(newValue) => {
-                            setCheckIn(newValue);
-                          }}
-                          renderInput={(params) => (
-                            <TextField {...params} helperText={null} />
-                          )}
-                        />
-                      </FormControl>
-                      <div className="separator d-none d-md-flex" />
-                      <FormControl fullWidth className="mt-3">
-                        <DatePicker
-                          label="Check Out"
-                          className="datepicker mt-2 mt-lg-0"
-                          value={checkOut}
-                          minDate={dayjs(dateNow)}
-                          onChange={(newValue) => {
-                            setCheckOut(newValue);
-                          }}
-                          renderInput={(params) => <TextField {...params} />}
-                        />
-                      </FormControl>
-                    </LocalizationProvider>
-                    <div className="d-flex mt-3 justify-content-between">
-                      <button className="btn">-</button>
-                      <input type="number" className="form-control" />
-                      <button className="btn">+</button>
-                    </div>
-                  </main>
-                  <section className="flotebikes__card-body-info">
-                      <small className="flotebikes__card-body-info--rentFrom">
-                        Rental price: <strong>{`${moto.price} x 2`}</strong>
-                      </small>
-                      <strong className="flotebikes__card-body-info--price mb-0">
-                        ${moto.price}/día
-                      </strong>
-                    </section>
-                  <footer className="flotebikes__card-footer text-center">
-                    <button
-                      className="btn btn-movebike outlined shadow btn-booking"
-                      onClick={() => console.log('Reserva moto: ', moto._id)}
-                    >
-                      Reservar ahora
-                    </button>
-                  </footer>
-                </div>
               </article>
             </SwiperSlide>
           ))}

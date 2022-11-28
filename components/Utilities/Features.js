@@ -7,11 +7,11 @@ const myLoader = ({ src }) => {
 
 export default function Features({ icon, feature }) {
   return (
-    <div className="col-4 mt-4">
-      <div className="card border-3 shadow d-flex flex-row align-items-center p-4 mt-2">
+    <div className="col-md-4 mt-4">
+      <div className="card border-3 shadow d-md-flex flex-md-row align-items-center p-4 mt-2 text-center text-md-start">
         <Image
-          //loader={myLoader}
-          src={'/assets/icons/icon-check.webp'}
+          loader={myLoader}
+          src={icon}
           alt={"Icon Feature"}
           width={32}
           height={32}

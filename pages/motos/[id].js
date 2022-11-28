@@ -1,21 +1,32 @@
 import React, { useEffect } from "react";
-import { LocalizationProvider } from "@mui/x-date-pickers";
+import { useForm, Controller } from "react-hook-form";
+import dayjs, { Dayjs } from "dayjs";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-import { TextField } from "@mui/material";
-import dayjs from "dayjs";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { DatePicker, DateTimePicker, TimePicker } from "@mui/x-date-pickers";
+import { Box } from "@mui/system";
+import {
+  FormControl,
+  FormControlLabel,
+  InputLabel,
+  KeyboardDatePicker,
+  MenuItem,
+  MuiPickersUtilsProvider,
+  Radio,
+  RadioGroup,
+  Select,
+  TextField,
+} from "@mui/material";
 
-import InputLabel from "@mui/material/InputLabel";
-import MenuItem from "@mui/material/MenuItem";
-import FormControl from "@mui/material/FormControl";
-import Select from "@mui/material/Select";
 import Layouts from "components/Layouts";
 import { useRouter } from "next/router";
 import { getById } from "services/bikes/motos";
 import { useState } from "react";
 import Image from "next/image";
 import Head from "next/head";
-import Features from "../../components/Utilities/Features";
+import Features from "components/Utilities/Features";
+import moment from "moment";
+import { FormLabel } from "react-bootstrap";
 
 const myLoader = ({ src }) => {
   return `https://movebike-users-imgs.s3.us-east-1.amazonaws.com/${src}`;
@@ -26,18 +37,29 @@ export default function Bike() {
   const [moto, setMoto] = useState({});
   const [features, setFeatures] = useState([]);
   const { id } = router.query;
-  const [checkIn, setCheckIn] = useState();
-  const [checkOut, setCheckOut] = useState();
+  const [checkIn, setCheckIn] = useState(null);
+  const [checkOut, setCheckOut] = useState(null);
   const [dateNow, setDateNow] = useState("");
+  const [selectedDate, setselectedDate] = useState(null);
+  const [value, setValue] = useState(dayjs(new Date()));
+  const [minTime, setMinTime] = useState(dayjs(new Date()));
+  const [location, setLocation] = useState();
+  const [counter, setCounter] = useState(null);
+
+  const {
+    register,
+    formState: { errors },
+    handleSubmit,
+    control,
+  } = useForm();
+  const onSubmit = (data) => {
+    console.log(data);
+  };
+
   useEffect(() => {
     const date = Date.now();
     setDateNow(date);
   }, []);
-
-  const [age, setAge] = useState("");
-  const handleChange = (event) => {
-    setAge(event.target.value);
-  };
 
   const getMoto = async () => {
     try {
@@ -56,84 +78,200 @@ export default function Bike() {
     getMoto();
   }, [id]);
 
+  const handleStock = (e) => {
+    setCounter(e.target.value);
+  };
+
   return (
     <>
       {(moto && (
-        <Layouts title={`${moto?.name} - MoveBike`}>
+        <Layouts title={`${moto.name ? moto.name : "Moto"} - MoveBike`}>
           <Head>
             <meta name="description" content="" />
           </Head>
           <main>
             <section className="container-fluid mt-4">
               <div className="container">
-                <form className="row">
-                  <div className="col-lg-7 border-1">
-                    <Image
-                      loader={myLoader}
-                      src={moto.keyImage}
-                      alt={moto.keyImage}
-                      width={320}
-                      height={300}
-                    />
+                <form onSubmit={handleSubmit(onSubmit)} className="row">
+                  <div className="col-lg-6 border-1 position-relative">
+                    {moto.image ? (
+                      <>
+                        <Image
+                          className="d-block d-md-none mx-md-auto"
+                          loader={myLoader}
+                          src={moto?.keyImage}
+                          alt={`Scooter ${moto.keyImage}`}
+                          width={250}
+                          height={250}
+                        />
+                        <Image
+                          className="d-none d-md-block mx-auto mx-lg-0"
+                          loader={myLoader}
+                          src={moto?.keyImage}
+                          alt={`Scooter ${moto.keyImage}`}
+                          width={400}
+                          height={400}
+                        />
+                      </>
+                    ) : (
+                      <div className="d-flex h-100 align-items-center justify-content-center">
+                        <div className="spinner-border" role="status">
+                          <span className="visually-hidden">Loading...</span>
+                        </div>
+                      </div>
+                    )}
                   </div>
-                  <div className="col-lg-5 pb-4">
+                  <div className="col-lg-6 pb-4">
                     <div className="card p-3 shadow border-0">
-                    <h1 className="text-black-800 mv-h1">{moto.name}</h1>
-                    <h4 className="text-gray-400 mt-1">${moto.price} MXN por día</h4>
-                    <FormControl fullWidth className="mt-3">
-                      <InputLabel id="demo-simple-select-label">
-                        Ubicación
-                      </InputLabel>
-                      <Select
-                        labelId="demo-simple-select-label"
-                        id="demo-simple-select"
-                        value={age}
-                        className="datepicker"
-                        label="Ubicación"
-                        onChange={handleChange}
+                      {moto.name ? (
+                        <>
+                          <h1 className="text-black-700 mv-h1">{moto.name}</h1>
+                          <input
+                            type="hidden"
+                            value={moto.name}
+                            {...register("nameMoto")}
+                          />
+                        </>
+                      ) : (
+                        <p className="placeholder-glow">
+                          <span className="placeholder col-12"></span>
+                        </p>
+                      )}
+
+                      {moto.price ? (
+                        <>
+                          <h5 className="text-gray-400 mt-1">
+                            ${moto.price} MXN por día
+                          </h5>
+                          <input
+                            type="hidden"
+                            value={moto.price}
+                            {...register("price")}
+                          />
+                        </>
+                      ) : (
+                        <p className="placeholder-glow">
+                          <span className="placeholder col-12"></span>
+                        </p>
+                      )}
+                      <FormControl fullWidth className="mt-4">
+                        <InputLabel id="demo-simple-select-label">
+                          Ubicación
+                        </InputLabel>
+                        <Controller
+                          name="location"
+                          control={control}
+                          render={({
+                            field: { onChange, onBlur, value, ref },
+                          }) => {
+                            return (
+                              <Select
+                                labelId="demo-simple-select-label"
+                                id="demo-simple-select"
+                                className="datepicker mb-2 mb-lg-0"
+                                label="Ubicación"
+                                onChange={onChange}
+                                onBlur={onBlur}
+                                value={value}
+                              >
+                                <MenuItem value={"Cancún, Quintana, Roo"}>
+                                  Cancún, Quintana, Roo.
+                                </MenuItem>
+                                <MenuItem value={"Tulúm, Quintana, Roo"}>
+                                  Tulúm, Quintana, Roo.
+                                </MenuItem>
+                              </Select>
+                            );
+                          }}
+                          rules={{ required: true }}
+                        />
+                      </FormControl>
+
+                      <div className="row">
+                        <div className="col-md-6">
+                          <LocalizationProvider dateAdapter={AdapterDayjs}>
+                            <Controller
+                              name="dateTimeCheckIn"
+                              control={control}
+                              valueName="selected"
+                              render={({ field: { ref, ...rest } }) => {
+                                return (
+                                  <DateTimePicker
+                                    label="Fecha y hora de entrega"
+                                    className="mt-4 w-100"
+                                    minDate={value}
+                                    renderInput={(params) => (
+                                      <TextField {...params} />
+                                    )}
+                                    {...rest}
+                                  />
+                                );
+                              }}
+                            />
+                          </LocalizationProvider>
+                        </div>
+                        <div className="col-md-6">
+                          <LocalizationProvider dateAdapter={AdapterDayjs}>
+                            <Controller
+                              name="dateTimeCheckOut"
+                              control={control}
+                              valueName="selected"
+                              render={({ field: { ref, ...rest } }) => {
+                                return (
+                                  <DateTimePicker
+                                    label="Fecha y hora de devolución"
+                                    className="mt-4 w-100"
+                                    minDate={value}
+                                    minTime={minTime}
+                                    renderInput={(params) => (
+                                      <TextField {...params} />
+                                    )}
+                                    {...rest}
+                                  />
+                                );
+                              }}
+                            />
+                          </LocalizationProvider>
+                        </div>
+                      </div>
+                      <FormControl className="mt-4 text-center">
+                        <FormLabel id="demo-row-radio-buttons-group-label">¿Dónde recoges?</FormLabel>
+                        <RadioGroup
+                          row
+                          aria-labelledby="demo-row-radio-buttons-group-label"
+                          name="row-radio-buttons-group"
+                          className="d-flex justify-content-evenly"
+                        >
+                          <FormControlLabel
+                            value="hotel"
+                            control={<Radio />}
+                            label="Mi hotel"
+                          />
+                          <FormControlLabel
+                            value="male"
+                            control={<Radio />}
+                            label="Sucursal"
+                          />
+                        </RadioGroup>
+                      </FormControl>
+                      <button
+                        type="submit"
+                        className="btn btn-movebike contained mt-4 w-100"
                       >
-                        <MenuItem value={10}>Cancún, Quintana, Roo.</MenuItem>
-                        <MenuItem value={20}>Tulúm, Quintana, Roo.</MenuItem>
-                      </Select>
-                    </FormControl>
-                    <LocalizationProvider dateAdapter={AdapterDayjs}>
-                      <FormControl fullWidth>
-                        <DatePicker
-                          label="Check In"
-                          className="datepicker mt-3"
-                          value={checkIn}
-                          minDate={dayjs(dateNow)}
-                          onChange={(newValue) => {
-                            setCheckIn(newValue);
-                          }}
-                          renderInput={(params) => (
-                            <TextField {...params} helperText={null} />
-                          )}
-                        />
-                      </FormControl>
-                      <div className="separator d-none d-md-flex" />
-                      <FormControl fullWidth>
-                        <DatePicker
-                          label="Check Out"
-                          className="datepicker mt-3"
-                          value={checkOut}
-                          minDate={dayjs(dateNow)}
-                          onChange={(newValue) => {
-                            setCheckOut(newValue);
-                          }}
-                          renderInput={(params) => <TextField {...params} />}
-                        />
-                      </FormControl>
-                    </LocalizationProvider>
-                    <button className="btn btn-movebike contained mt-4 w-100">Reservar ahora</button>
+                        Reservar ahora
+                      </button>
                     </div>
                   </div>
                 </form>
                 <div className="row mb-5">
-                  <h3>Caracteristicas</h3>
-                    {
-                      features.map((feature) => <Features key={feature._id} icon={feature.icon} feature={feature.name} />)
-                    }
+                  <h3>Características</h3>
+                  {features.map((feature) => (
+                    <Features
+                      key={feature._id}
+                      icon={feature.keyIcon}
+                      feature={feature.name}
+                    />
+                  ))}
                 </div>
               </div>
             </section>

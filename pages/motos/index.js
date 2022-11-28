@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import Layout from "components/Layouts";
 import { getAllMotos } from "services/bikes/motos";
-import SlideMotos from "../../components/home/SlideMotos";
+import SlideMotos from "components/home/SlideMotos";
 
-export default function motos() {
+export default function Motos() {
     const [motos, setMotos] = useState([]);
   const getMotos = async () => {
     try {
