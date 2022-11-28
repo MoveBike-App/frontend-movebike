@@ -20,7 +20,7 @@ export default function Layouts ({ children, title, description }) {
         />
         <title>{title}</title>
         {/* <!-- Primary Meta Tags --> */}
-        <meta name="title" content={title} />
+        <meta name="title" content={`${title} | MoveBike`} />
         <meta name="description" content={description} />
 
         {/* <!-- Open Graph / Facebook --> */}

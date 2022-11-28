@@ -48,3 +48,11 @@
 .Mui-selected{
     background-color: variables.$orange-900!important;
 }
+
+.Mui-checked{
+    color: variables.$orange-900!important;
+}
+
+.MuiButtonBase-root.MuiRadio-root:hover {
+    background-color: rgb(196 130 88 / 4%);
+}
