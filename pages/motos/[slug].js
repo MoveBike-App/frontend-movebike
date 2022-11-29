@@ -24,19 +24,24 @@ import { getById } from "services/bikes/motos";
 import { useState } from "react";
 import Image from "next/image";
 import Head from "next/head";
+import AuthContext from "context/AuthContext";
 import Features from "components/Utilities/Features";
 import moment from "moment";
-import { FormLabel } from "react-bootstrap";
+import { FormLabel, Toast, ToastContainer } from "react-bootstrap";
+import { useContext } from "react";
+import LoginModal from "../../components/Utilities/LoginModal";
+import Link from "next/link";
 
 const myLoader = ({ src }) => {
   return `https://movebike-users-imgs.s3.us-east-1.amazonaws.com/${src}`;
 };
 
 export default function Bike() {
+  const { user, isLogged, setIsLogged } = useContext(AuthContext);
   const router = useRouter();
   const [moto, setMoto] = useState({});
   const [features, setFeatures] = useState([]);
-  const { id } = router.query;
+  const { slug } = router.query;
   const [checkIn, setCheckIn] = useState(null);
   const [checkOut, setCheckOut] = useState(null);
   const [dateNow, setDateNow] = useState("");
@@ -45,6 +50,9 @@ export default function Bike() {
   const [minTime, setMinTime] = useState(dayjs(new Date()));
   const [location, setLocation] = useState();
   const [counter, setCounter] = useState(null);
+  const [login, setLogin] = useState(false);
+  const [radio, setRadio] = useState("");
+  const handleClose = () => setLogin(false);
 
   const {
     register,
@@ -52,8 +60,15 @@ export default function Bike() {
     handleSubmit,
     control,
   } = useForm();
+
   const onSubmit = (data) => {
-    console.log(data);
+    const token = localStorage.getItem("token");
+    if (token) {
+      console.log(data);
+    } else {
+      setLogin(true);
+      console.log("Inicia sesión para continuar");
+    }
   };
 
   useEffect(() => {
@@ -63,20 +78,18 @@ export default function Bike() {
 
   const getMoto = async () => {
     try {
-      const response = await getById(id);
+      const response = await getById(slug);
       if (!response) {
         router.push("/404");
       }
       setMoto(response.data.data.moto);
       setFeatures(response.data.data.moto.features);
-    } catch (error) {
-      //router.push("/404");
-    }
+    } catch (error) {}
   };
 
   useEffect(() => {
     getMoto();
-  }, [id]);
+  }, [slug]);
 
   const handleStock = (e) => {
     setCounter(e.target.value);
@@ -89,6 +102,8 @@ export default function Bike() {
           <Head>
             <meta name="description" content="" />
           </Head>
+
+          
           <main>
             <section className="container-fluid mt-4">
               <div className="container">
@@ -183,9 +198,14 @@ export default function Bike() {
                               </Select>
                             );
                           }}
-                          rules={{ required: true }}
+                          rules={{ required: "This is required" }}
                         />
                       </FormControl>
+                      {errors.location?.type === "required" && (
+                        <p className="text-danger" role="alert">
+                          {errors.location?.message}
+                        </p>
+                      )}
 
                       <div className="row">
                         <div className="col-md-6">
@@ -194,6 +214,7 @@ export default function Bike() {
                               name="dateTimeCheckIn"
                               control={control}
                               valueName="selected"
+                              rules={{ required: "This is required" }}
                               render={({ field: { ref, ...rest } }) => {
                                 return (
                                   <DateTimePicker
@@ -209,6 +230,11 @@ export default function Bike() {
                               }}
                             />
                           </LocalizationProvider>
+                          {errors.dateTimeCheckIn?.type === "required" && (
+                            <p className="text-danger" role="alert">
+                              {errors.dateTimeCheckIn?.message}
+                            </p>
+                          )}
                         </div>
                         <div className="col-md-6">
                           <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -216,6 +242,7 @@ export default function Bike() {
                               name="dateTimeCheckOut"
                               control={control}
                               valueName="selected"
+                              rules={{ required: "This is required" }}
                               render={({ field: { ref, ...rest } }) => {
                                 return (
                                   <DateTimePicker
@@ -232,28 +259,71 @@ export default function Bike() {
                               }}
                             />
                           </LocalizationProvider>
+                          {errors.dateTimeCheckOut?.type === "required" && (
+                            <p className="text-danger" role="alert">
+                              {errors.dateTimeCheckOut?.message}
+                            </p>
+                          )}
                         </div>
                       </div>
                       <FormControl className="mt-4 text-center">
-                        <FormLabel id="demo-row-radio-buttons-group-label">¿Dónde recoges?</FormLabel>
-                        <RadioGroup
-                          row
-                          aria-labelledby="demo-row-radio-buttons-group-label"
-                          name="row-radio-buttons-group"
-                          className="d-flex justify-content-evenly"
-                        >
-                          <FormControlLabel
-                            value="hotel"
-                            control={<Radio />}
-                            label="Mi hotel"
-                          />
-                          <FormControlLabel
-                            value="male"
-                            control={<Radio />}
-                            label="Sucursal"
-                          />
-                        </RadioGroup>
+                        <FormLabel id="demo-row-radio-buttons-group-label">
+                          ¿Dónde recoges?
+                        </FormLabel>
+                        <Controller
+                          control={control}
+                          name="pickup"
+                          rules={{ required: "This is required" }}
+                          render={({ field }) => (
+                            <RadioGroup
+                              row
+                              aria-labelledby="demo-row-radio-buttons-group-label"
+                              name="row-radio-buttons-group"
+                              className="d-flex justify-content-evenly"
+                              onChange={setRadio(field.value)}
+                              {...field}
+                            >
+                              <FormControlLabel
+                                value="hotel"
+                                control={<Radio />}
+                                label="Mi hotel"
+                              />
+                              <FormControlLabel
+                                value="sucursal"
+                                control={<Radio />}
+                                label="Sucursal"
+                              />
+                            </RadioGroup>
+                          )}
+                        />
                       </FormControl>
+                      {errors.pickup?.type === "required" && (
+                        <p className="text-danger text-center " role="alert">
+                          {errors.pickup?.message}
+                        </p>
+                      )}
+
+                      {radio === "hotel" && (
+                        <div className="mb-2">
+                          <label className="form-label">
+                            Ingresa Ubicación del Hotel
+                          </label>
+                          <input
+                            type="text"
+                            className="form-control"
+                            {...register("locationGmaps", {
+                              required: "This is required",
+                            })}
+                          />
+                          {errors.locationGmaps?.type === "required" && (
+                            <p className="text-danger" role="alert">
+                              {errors.locationGmaps?.message}
+                            </p>
+                          )}
+                        </div>
+                      )}
+                      {radio === "sucursal" && <p>MOVEBIKE APP</p>}
+
                       <button
                         type="submit"
                         className="btn btn-movebike contained mt-4 w-100"
@@ -276,7 +346,22 @@ export default function Bike() {
               </div>
             </section>
           </main>
+
+          <ToastContainer position="top-end" className="mt-2 me-2">
+            <Toast
+              onClose={() => setLogin(false)}
+              show={login}
+              delay={3000}
+              autohide
+            >
+              <Toast.Header>
+                <strong className={`me-auto text-warning`}>Notificación</strong>
+              </Toast.Header>
+              <Toast.Body>Debes iniciar sesión</Toast.Body>
+            </Toast>
+          </ToastContainer>
         </Layouts>
+        
       )) ||
         router.push("/404")}
     </>

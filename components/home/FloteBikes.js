@@ -175,7 +175,7 @@ export default function FloteBikes() {
                 </main>
                 <footer className="flotebikes__card-footer text-center ">
                   <Link
-                    href={`/motos/${moto._id}`}
+                    href={`/motos/${moto.slug}`}
                     className="btn btn-movebike outlined shadow btn-booking"
                   >
                     Reservar ahora
