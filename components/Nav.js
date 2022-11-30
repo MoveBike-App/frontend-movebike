@@ -502,7 +502,7 @@ export default function Nav () {
                 </div>
                 <div>
                   <Link className="login__forgot text-black-800" href="/">
-                    Olvide mi contraseña
+                    ¿No tienes cuenta?
                   </Link>
                 </div>
               </div>

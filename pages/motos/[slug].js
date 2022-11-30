@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
 import dayjs, { Dayjs } from "dayjs";
+import { format, differenceInDays } from "date-fns";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker, DateTimePicker, TimePicker } from "@mui/x-date-pickers";
@@ -27,16 +28,28 @@ import Head from "next/head";
 import AuthContext from "context/AuthContext";
 import Features from "components/Utilities/Features";
 import moment from "moment";
+import "moment/locale/es";
 import { FormLabel, Toast, ToastContainer } from "react-bootstrap";
 import { useContext } from "react";
 import LoginModal from "../../components/Utilities/LoginModal";
 import Link from "next/link";
+
+const locales = ["en", "ru", "ar-sa"];
+
+// prettier-ignore
+const ampmOptions = {
+  'undefined': undefined,
+  true: true,
+  false: false };
 
 const myLoader = ({ src }) => {
   return `https://movebike-users-imgs.s3.us-east-1.amazonaws.com/${src}`;
 };
 
 export default function Bike() {
+  const [locale, setLocale] = useState("es");
+  const [ampm, setAmpm] = useState(undefined);
+  const [ampmOption, setAmpmOption] = useState("undefined");
   const { user, isLogged, setIsLogged } = useContext(AuthContext);
   const router = useRouter();
   const [moto, setMoto] = useState({});
@@ -53,6 +66,16 @@ export default function Bike() {
   const [login, setLogin] = useState(false);
   const [radio, setRadio] = useState("");
   const handleClose = () => setLogin(false);
+  const [idMoto, setIdMoto] = useState('')
+
+  const selectAmpm = (event) => {
+    setAmpm(ampmOptions[event.target.value]);
+    setAmpmOption(event.target.value);
+  };
+
+  const selectLocale = (newLocale) => {
+    setLocale(newLocale);
+  };
 
   const {
     register,
@@ -65,6 +88,37 @@ export default function Bike() {
     const token = localStorage.getItem("token");
     if (token) {
       console.log(data);
+
+      const initialDate2 = format(data.dateTimeCheckIn.$d, "MM/dd/yyyy");
+      const initialDate = format(data.dateTimeCheckIn.$d, "MM/dd/yyyy H:mm");
+      const finalDate = format(data.dateTimeCheckOut.$d, "MM/dd/yyyy H:mm");
+
+      const totalDays = differenceInDays(
+        new Date(finalDate),
+        new Date(initialDate)
+      );
+      console.log("TOTAL DIAS", totalDays);
+      let totalPrice = Number(data.price) * Number(totalDays);
+      console.log(totalPrice);
+
+      const cart = {
+        vehicle: idMoto,
+        nameMoto: data.nameMoto,
+        location: data.location,
+        pickup: data.pickup,
+        priceReserve: totalPrice,
+        fechaInical: initialDate,
+        fechaFinal: finalDate,
+        dias: totalDays,
+      };
+
+      localStorage.setItem("cartCurrent", JSON.stringify(cart));
+
+      console.log(initialDate2);
+      console.log(initialDate);
+      console.log(finalDate);
+
+      router.push('/checkout')
     } else {
       setLogin(true);
       console.log("Inicia sesión para continuar");
@@ -84,6 +138,7 @@ export default function Bike() {
       }
       setMoto(response.data.data.moto);
       setFeatures(response.data.data.moto.features);
+      setIdMoto(response.data.data.moto._id)
     } catch (error) {}
   };
 
@@ -103,7 +158,6 @@ export default function Bike() {
             <meta name="description" content="" />
           </Head>
 
-          
           <main>
             <section className="container-fluid mt-4">
               <div className="container">
@@ -209,7 +263,10 @@ export default function Bike() {
 
                       <div className="row">
                         <div className="col-md-6">
-                          <LocalizationProvider dateAdapter={AdapterDayjs}>
+                          <LocalizationProvider
+                            dateAdapter={AdapterDayjs}
+                            //adapterLocale={locale}
+                          >
                             <Controller
                               name="dateTimeCheckIn"
                               control={control}
@@ -237,7 +294,10 @@ export default function Bike() {
                           )}
                         </div>
                         <div className="col-md-6">
-                          <LocalizationProvider dateAdapter={AdapterDayjs}>
+                          <LocalizationProvider
+                            dateAdapter={AdapterDayjs}
+                            //adapterLocale={locale}
+                          >
                             <Controller
                               name="dateTimeCheckOut"
                               control={control}
@@ -361,9 +421,7 @@ export default function Bike() {
             </Toast>
           </ToastContainer>
         </Layouts>
-        
-      )) ||
-        router.push("/404")}
+      )) || router.push("/404")}
     </>
   );
 }
