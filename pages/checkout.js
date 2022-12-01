@@ -12,26 +12,36 @@ export default function Checkout() {
   const [priceCart, setPriceCart] = useState();
   const [motoCart, setMotoCart] = useState("");
   const [idMoto, setIdMoto] = useState("");
+  const [fechaInicial, setFechaInicial] = useState()
+  const [fechaFinal, setFechaFinal] = useState()
   const [checkout, setCheckout] = useState({});
+
   const getCart = () => {
     const cartStorage = JSON.parse(localStorage.getItem("cartCurrent"));
     if (cartStorage) {
       setCheckout(cartStorage);
-      const { vehicle, priceReserve, nameMoto } = cartStorage;
+      const { vehicle, priceReserve, nameMoto, fechaFinal, fechaInical } = cartStorage;
       setPriceCart(Number(priceReserve));
       setMotoCart(nameMoto);
       setIdMoto(vehicle);
+      setFechaInicial(fechaInical)
+      setFechaFinal(fechaFinal)
     } else {
       //router.push("/");
     }
   };
 
-  const handleReserve = () => {
+  const handleReserve = async() => {
     const token = localStorage.getItem("token");
+    console.log(token);
+    let isPaid = true
+    const { fechaInical, fechaFinal } = JSON.parse(localStorage.getItem('cartCurrent'))
     try {
-      const respReserve = createReserve(idMoto, priceCart, token);
-      console.log(respReserve);
-    } catch (error) {}
+      const respReserve = await createReserve(idMoto, priceCart, isPaid, fechaInical, fechaFinal, token);
+      console.log(respReserve.data.data._id);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   useEffect(() => {
@@ -44,6 +54,7 @@ export default function Checkout() {
           <div className="row">
             <div className="col-12">
               <h1 className="text-gray-600 mb-4">Finaliza tu reserva</h1>
+              <button className="btn" onClick={handleReserve}>Reservar</button>
             </div>
             <div className="col-lg-7 mt-3">
               <section className="checkout__card">
@@ -102,10 +113,14 @@ export default function Checkout() {
             {(motoCart && (
               <div className="col-lg-5 mt-3">
                 <section className="checkout__card mt-3">
+                  {console.log(checkout.fechaInical)}
+                  {console.log(checkout.fechaFinal)}
                   <CheckoutCard
                     price={Number(priceCart)}
                     description={motoCart}
                     vehicle={idMoto}
+                    initialDate={fechaInicial}
+                    finalDate={fechaFinal}
                   />
                 </section>
               </div>

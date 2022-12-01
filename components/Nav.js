@@ -64,9 +64,10 @@ export default function Nav () {
     
     try {
       const response = await authLogin(email, password)
+      console.log(response.data.userCurrent);
       const token = response.data.token
-      const { id, name, role } = response.data.userCurrent
-      const userCurrent = { id, username: name, role }
+      const { id, name, role, slug } = response.data.userCurrent
+      const userCurrent = { id, username: name, role, slug }
       localStorage.setItem('token', token)
       localStorage.setItem('userCurrent', JSON.stringify(userCurrent))
       setLogin(false) 

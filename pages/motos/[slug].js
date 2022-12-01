@@ -139,7 +139,9 @@ export default function Bike() {
       setMoto(response.data.data.moto);
       setFeatures(response.data.data.moto.features);
       setIdMoto(response.data.data.moto._id)
-    } catch (error) {}
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   useEffect(() => {

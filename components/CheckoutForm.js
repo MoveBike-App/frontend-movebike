@@ -6,7 +6,8 @@ import {
 } from "@stripe/react-stripe-js";
 import { createReserve } from "../services/reserves/reserve";
 
-export default function CheckoutForm({vehicle, totalPrice, isPaid=true, token}) {
+export default function CheckoutForm({vehicle, totalPrice, initialDate, finalDate, token}) {
+  console.log(initialDate);
   const stripe = useStripe();
   const elements = useElements();
 
@@ -47,6 +48,8 @@ export default function CheckoutForm({vehicle, totalPrice, isPaid=true, token}) 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    
+
     if (!stripe || !elements) {
       // Stripe.js has not yet loaded.
       // Make sure to disable form submission until Stripe.js has loaded.
@@ -54,15 +57,22 @@ export default function CheckoutForm({vehicle, totalPrice, isPaid=true, token}) 
     }
 
     setIsLoading(true);
-    const response = createReserve(vehicle, totalPrice,isPaid, token)
-    console.log(response)
-    localStorage.removeItem('cartCurrent')
+    let idReserve = ''
 
+    const cartStorage = JSON.parse(localStorage.getItem("cartCurrent"));
+   if(cartStorage){
+    const { fechaFinal, fechaInical } = cartStorage;
+    const response = await createReserve(vehicle, totalPrice, true, fechaInical, fechaFinal, token)
+    console.log(response)
+    idReserve = response.data.data._id
+    localStorage.removeItem('cartCurrent')
+   }
+    
     const { error } = await stripe.confirmPayment({
       elements,
       confirmParams: {
         // Make sure to change this to your payment completion page
-        return_url: `http://localhost:3000/thanks?token=${token}`,
+        return_url: `http://localhost:3000/thanks?token=${token}&idReserve=${idReserve}`,
       },
     });
 
@@ -75,6 +85,10 @@ export default function CheckoutForm({vehicle, totalPrice, isPaid=true, token}) 
     } else {
       setMessage("An unexpected error occurred.");
     }
+
+    
+    
+    
 
     setIsLoading(false);
   };
