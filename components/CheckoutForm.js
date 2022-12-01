@@ -4,8 +4,10 @@ import {
   useStripe,
   useElements
 } from "@stripe/react-stripe-js";
+import { createReserve } from "../services/reserves/reserve";
 
-export default function CheckoutForm() {
+export default function CheckoutForm({vehicle, totalPrice, initialDate, finalDate, token}) {
+  console.log(initialDate);
   const stripe = useStripe();
   const elements = useElements();
 
@@ -46,6 +48,8 @@ export default function CheckoutForm() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    
+
     if (!stripe || !elements) {
       // Stripe.js has not yet loaded.
       // Make sure to disable form submission until Stripe.js has loaded.
@@ -53,25 +57,38 @@ export default function CheckoutForm() {
     }
 
     setIsLoading(true);
+    let idReserve = ''
 
+    const cartStorage = JSON.parse(localStorage.getItem("cartCurrent"));
+   if(cartStorage){
+    const { fechaFinal, fechaInical } = cartStorage;
+    const response = await createReserve(vehicle, totalPrice, true, fechaInical, fechaFinal, token)
+    console.log(response)
+    idReserve = response.data.data._id
+    localStorage.removeItem('cartCurrent')
+   }
+    
     const { error } = await stripe.confirmPayment({
       elements,
       confirmParams: {
         // Make sure to change this to your payment completion page
-        return_url: "http://localhost:3000/thanks",
+        return_url: `http://localhost:3000/thanks?token=${token}&idReserve=${idReserve}`,
       },
     });
 
-    // This point will only be reached if there is an immediate error when
-    // confirming the payment. Otherwise, your customer will be redirected to
-    // your `return_url`. For some payment methods like iDEAL, your customer will
-    // be redirected to an intermediate site first to authorize the payment, then
-    // redirected to the `return_url`.
+
+    
+
+
     if (error.type === "card_error" || error.type === "validation_error") {
       setMessage(error.message);
     } else {
       setMessage("An unexpected error occurred.");
     }
+
+    
+    
+    
 
     setIsLoading(false);
   };
