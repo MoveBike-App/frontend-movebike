@@ -66,7 +66,7 @@ export default function Bike() {
   const [login, setLogin] = useState(false);
   const [radio, setRadio] = useState("");
   const handleClose = () => setLogin(false);
-  const [idMoto, setIdMoto] = useState('')
+  const [idMoto, setIdMoto] = useState("");
 
   const selectAmpm = (event) => {
     setAmpm(ampmOptions[event.target.value]);
@@ -118,7 +118,7 @@ export default function Bike() {
       console.log(initialDate);
       console.log(finalDate);
 
-      router.push('/checkout')
+      router.push("/checkout");
     } else {
       setLogin(true);
       console.log("Inicia sesión para continuar");
@@ -132,19 +132,43 @@ export default function Bike() {
 
   const getMoto = async () => {
     try {
+      console.log(slug);
       const response = await getById(slug);
-      if (!response) {
-        router.push("/404");
+      if (response.status === 200) {
+        const {
+          data: { moto },
+        } = await response.json();
+
+        setMoto(moto);
+        setFeatures(moto.features);
+        setIdMoto(moto._id);
       }
-      setMoto(response.data.data.moto);
-      setFeatures(response.data.data.moto.features);
-      setIdMoto(response.data.data.moto._id)
+
+      // if (response.status >= 400 || response.status <= 599) {
+      //   router.push("/404");
+      // }
     } catch (error) {
       console.log(error);
     }
   };
 
   useEffect(() => {
+    async function getMoto() {
+      try {
+        const response = await getById(slug);
+        const {
+          data: { moto },
+        } = await response.json();
+        console.log(moto);
+
+        setMoto(moto);
+        setFeatures(moto.features);
+        setIdMoto(moto._id);
+      } catch (error) {
+        console.log(error);
+        // router.push("/404");
+      }
+    }
     getMoto();
   }, [slug]);
 
@@ -225,38 +249,45 @@ export default function Bike() {
                           <span className="placeholder col-12"></span>
                         </p>
                       )}
-                      <FormControl fullWidth className="mt-4">
-                        <InputLabel id="demo-simple-select-label">
-                          Ubicación
-                        </InputLabel>
-                        <Controller
-                          name="location"
-                          control={control}
-                          render={({
-                            field: { onChange, onBlur, value, ref },
-                          }) => {
-                            return (
-                              <Select
-                                labelId="demo-simple-select-label"
-                                id="demo-simple-select"
-                                className="datepicker mb-2 mb-lg-0"
-                                label="Ubicación"
-                                onChange={onChange}
-                                onBlur={onBlur}
-                                value={value}
-                              >
-                                <MenuItem value={"Cancún, Quintana, Roo"}>
-                                  Cancún, Quintana, Roo.
-                                </MenuItem>
-                                <MenuItem value={"Tulúm, Quintana, Roo"}>
-                                  Tulúm, Quintana, Roo.
-                                </MenuItem>
-                              </Select>
-                            );
-                          }}
-                          rules={{ required: "This is required" }}
-                        />
-                      </FormControl>
+                      {moto.price ? (
+                        <FormControl fullWidth className="mt-4">
+                          <InputLabel id="demo-simple-select-label">
+                            Ubicación
+                          </InputLabel>
+                          <Controller
+                            name="location"
+                            control={control}
+                            render={({
+                              field: { onChange, onBlur, value, ref },
+                            }) => {
+                              return (
+                                <Select
+                                  labelId="demo-simple-select-label"
+                                  id="demo-simple-select"
+                                  className="datepicker mb-2 mb-lg-0"
+                                  label="Ubicación"
+                                  onChange={onChange}
+                                  onBlur={onBlur}
+                                  value={value}
+                                >
+                                  <MenuItem value={"Cancún, Quintana, Roo"}>
+                                    Cancún, Quintana, Roo.
+                                  </MenuItem>
+                                  <MenuItem value={"Tulúm, Quintana, Roo"}>
+                                    Tulúm, Quintana, Roo.
+                                  </MenuItem>
+                                </Select>
+                              );
+                            }}
+                            rules={{ required: "This is required" }}
+                          />
+                        </FormControl>
+                      ) : (
+                        <p className="placeholder-glow">
+                          <span className="placeholder col-12"></span>
+                        </p>
+                      )}
+
                       {errors.location?.type === "required" && (
                         <p className="text-danger" role="alert">
                           {errors.location?.message}
@@ -265,30 +296,37 @@ export default function Bike() {
 
                       <div className="row">
                         <div className="col-md-6">
-                          <LocalizationProvider
-                            dateAdapter={AdapterDayjs}
-                            //adapterLocale={locale}
-                          >
-                            <Controller
-                              name="dateTimeCheckIn"
-                              control={control}
-                              valueName="selected"
-                              rules={{ required: "This is required" }}
-                              render={({ field: { ref, ...rest } }) => {
-                                return (
-                                  <DateTimePicker
-                                    label="Fecha y hora de entrega"
-                                    className="mt-4 w-100"
-                                    minDate={value}
-                                    renderInput={(params) => (
-                                      <TextField {...params} />
-                                    )}
-                                    {...rest}
-                                  />
-                                );
-                              }}
-                            />
-                          </LocalizationProvider>
+                          {moto.price ? (
+                            <LocalizationProvider
+                              dateAdapter={AdapterDayjs}
+                              //adapterLocale={locale}
+                            >
+                              <Controller
+                                name="dateTimeCheckIn"
+                                control={control}
+                                valueName="selected"
+                                rules={{ required: "This is required" }}
+                                render={({ field: { ref, ...rest } }) => {
+                                  return (
+                                    <DateTimePicker
+                                      label="Fecha y hora de entrega"
+                                      className="mt-4 w-100"
+                                      minDate={value}
+                                      renderInput={(params) => (
+                                        <TextField {...params} />
+                                      )}
+                                      {...rest}
+                                    />
+                                  );
+                                }}
+                              />
+                            </LocalizationProvider>
+                          ) : (
+                            <p className="placeholder-glow">
+                              <span className="placeholder col-12"></span>
+                            </p>
+                          )}
+
                           {errors.dateTimeCheckIn?.type === "required" && (
                             <p className="text-danger" role="alert">
                               {errors.dateTimeCheckIn?.message}
@@ -296,31 +334,38 @@ export default function Bike() {
                           )}
                         </div>
                         <div className="col-md-6">
-                          <LocalizationProvider
-                            dateAdapter={AdapterDayjs}
-                            //adapterLocale={locale}
-                          >
-                            <Controller
-                              name="dateTimeCheckOut"
-                              control={control}
-                              valueName="selected"
-                              rules={{ required: "This is required" }}
-                              render={({ field: { ref, ...rest } }) => {
-                                return (
-                                  <DateTimePicker
-                                    label="Fecha y hora de devolución"
-                                    className="mt-4 w-100"
-                                    minDate={value}
-                                    minTime={minTime}
-                                    renderInput={(params) => (
-                                      <TextField {...params} />
-                                    )}
-                                    {...rest}
-                                  />
-                                );
-                              }}
-                            />
-                          </LocalizationProvider>
+                          {moto.price ? (
+                            <LocalizationProvider
+                              dateAdapter={AdapterDayjs}
+                              //adapterLocale={locale}
+                            >
+                              <Controller
+                                name="dateTimeCheckOut"
+                                control={control}
+                                valueName="selected"
+                                rules={{ required: "This is required" }}
+                                render={({ field: { ref, ...rest } }) => {
+                                  return (
+                                    <DateTimePicker
+                                      label="Fecha y hora de devolución"
+                                      className="mt-4 w-100"
+                                      minDate={value}
+                                      minTime={minTime}
+                                      renderInput={(params) => (
+                                        <TextField {...params} />
+                                      )}
+                                      {...rest}
+                                    />
+                                  );
+                                }}
+                              />
+                            </LocalizationProvider>
+                          ) : (
+                            <p className="placeholder-glow">
+                              <span className="placeholder col-12"></span>
+                            </p>
+                          )}
+
                           {errors.dateTimeCheckOut?.type === "required" && (
                             <p className="text-danger" role="alert">
                               {errors.dateTimeCheckOut?.message}
@@ -328,37 +373,44 @@ export default function Bike() {
                           )}
                         </div>
                       </div>
-                      <FormControl className="mt-4 text-center">
-                        <FormLabel id="demo-row-radio-buttons-group-label">
-                          ¿Dónde recoges?
-                        </FormLabel>
-                        <Controller
-                          control={control}
-                          name="pickup"
-                          rules={{ required: "This is required" }}
-                          render={({ field }) => (
-                            <RadioGroup
-                              row
-                              aria-labelledby="demo-row-radio-buttons-group-label"
-                              name="row-radio-buttons-group"
-                              className="d-flex justify-content-evenly"
-                              onChange={setRadio(field.value)}
-                              {...field}
-                            >
-                              <FormControlLabel
-                                value="hotel"
-                                control={<Radio />}
-                                label="Mi hotel"
-                              />
-                              <FormControlLabel
-                                value="sucursal"
-                                control={<Radio />}
-                                label="Sucursal"
-                              />
-                            </RadioGroup>
-                          )}
-                        />
-                      </FormControl>
+                      {moto.price ? (
+                        <FormControl className="mt-4 text-center">
+                          <FormLabel id="demo-row-radio-buttons-group-label">
+                            ¿Dónde recoges?
+                          </FormLabel>
+                          <Controller
+                            control={control}
+                            name="pickup"
+                            rules={{ required: "This is required" }}
+                            render={({ field }) => (
+                              <RadioGroup
+                                row
+                                aria-labelledby="demo-row-radio-buttons-group-label"
+                                name="row-radio-buttons-group"
+                                className="d-flex justify-content-evenly"
+                                onChange={setRadio(field.value)}
+                                {...field}
+                              >
+                                <FormControlLabel
+                                  value="hotel"
+                                  control={<Radio />}
+                                  label="Mi hotel"
+                                />
+                                <FormControlLabel
+                                  value="sucursal"
+                                  control={<Radio />}
+                                  label="Sucursal"
+                                />
+                              </RadioGroup>
+                            )}
+                          />
+                        </FormControl>
+                      ) : (
+                        <p className="placeholder-glow">
+                          <span className="placeholder col-12"></span>
+                        </p>
+                      )}
+
                       {errors.pickup?.type === "required" && (
                         <p className="text-danger text-center " role="alert">
                           {errors.pickup?.message}
@@ -423,7 +475,8 @@ export default function Bike() {
             </Toast>
           </ToastContainer>
         </Layouts>
-      )) || router.push("/404")}
+      )) ||
+        router.push("/404")}
     </>
   );
 }
