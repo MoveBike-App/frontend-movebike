@@ -1,18 +1,24 @@
 const axios = require('axios')
 import { URL_BASE } from "../config";
 
-function authLogin(email, password) {
+function authLogin(credentials) {
   const URL = `${URL_BASE}auth/login`;
+  
+  const options = {
+    method: 'POST',
+    body: JSON.stringify(credentials),
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    mode: 'cors'
+  }
 
-  return axios.post(URL, {
-    email,
-    password,
-  });
+  return fetch(URL, options);
 }
 
 function createAccount(email, password, identity, phone) {
   const URL = `${URL_BASE}customers`
-  return axios.post(URL, {
+  return fetch(URL, {
     email,
     password,
     identity,
