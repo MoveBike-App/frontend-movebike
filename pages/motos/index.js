@@ -37,7 +37,7 @@ export default function Motos() {
                 </div>
               </aside>
               {
-                motos.map((moto) => <SlideMotos key={moto._id} model={moto.model} name={moto.name} price={moto.price} img={moto.keyImage} idMoto={moto._id} /> )
+                motos.map((moto) => <SlideMotos key={moto._id} model={moto.model} name={moto.name} price={moto.price} img={moto.keyImage} idMoto={moto.slug} /> )
                }
             </div>
           </div>

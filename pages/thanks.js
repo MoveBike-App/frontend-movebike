@@ -1,39 +1,86 @@
-import Image from 'next/image'
-import Link from 'next/link'
-import React from 'react'
-import Layout from 'components/Layouts'
+import Image from "next/image";
+import Link from "next/link";
+import React, { useState } from "react";
+import { useRouter } from "next/router";
+import Layout from "components/Layouts";
+import { useEffect } from "react";
 
-export default function Thanks () {
+export default function Thanks() {
+  const router = useRouter();
+  const [isPaid, setIsPaid] = useState(false);
+  const intent = router.query["payment_intent"];
+  
+  const getPaymentIntent = () => {
+    console.log(intent);
+
+    
+
+  };
+
+  useEffect(() => {
+    if(intent){
+      setIsPaid(true)
+    }
+  },[intent]);
+
   return (
-    <Layout>
-      <main className='cotainer-fluid thanks'>
-        <div className='container'>
-          <div className='row'>
-            <div className='col-md-9 mx-auto'>
-              <article className='thanks__card text-center'>
-                <Image src='/assets/icons/icon-check-thanks.webp' alt='Icon check thanks'  width={56} height={56} />
-                <h1 className='thanks__card-title'>¡Gracias por preferirnos!</h1>
-                <strong className='thanks__card-subtitle'>Tu reserva se ha realizado con éxito</strong>
-                <p className='thanks__card-subtitle mt-2 mb-0'>En breve recibirás un correo con la información <br /> del contacto encargado de entregar tu reserva</p>
-                <Link className='btn btn-movebike contained me-bookings' href='/checkout'>Mis Reservas</Link>
+    <>
+      {(isPaid && (
+        <Layout title={"Gracias por tu pago - MoveBike"}>
+          <main className="cotainer-fluid thanks">
+            <div className="container">
+              <div className="row">
+                <div className="col-md-9 mx-auto">
+                  <article className="thanks__card text-center">
+                    <Image
+                      src="/assets/icons/icon-check-thanks.webp"
+                      alt="Icon check thanks"
+                      width={56}
+                      height={56}
+                    />
+                    <h1 className="thanks__card-title">
+                      ¡Gracias por preferirnos!
+                    </h1>
+                    <strong className="thanks__card-subtitle">
+                      Tu reserva se ha realizado con éxito
+                    </strong>
+                    <p className="thanks__card-subtitle mt-2 mb-0">
+                      En breve recibirás un correo con la información <br /> del
+                      contacto encargado de entregar tu reserva
+                    </p>
+                    <Link
+                      className="btn btn-movebike contained me-bookings"
+                      href="/dashboard"
+                    >
+                      Mis Reservas
+                    </Link>
 
-                <div className='thanks__card-tracking steps mx-auto d-flex flex-column flex-md-row justify-content-between align-items-center'>
-                  <div className='round-step round-step--fill d-flex justify-content-center align-items-center'>
-                    <span className='position-absolute msg-status'>Reservada</span>
-                    <Image src='/assets/icons/icon-check-step.webp' alt='Icon check step'  width={32} height={32} />
-                  </div>
-                  <div className='conector' />
-                  <div className='round-step round-step--border d-flex justify-content-center align-items-center' />
-                  <div className='conector conector--disabled' />
-                  <div className='round-step round-step--disabled d-flex justify-content-center align-items-center' />
-                  <div className='conector conector--disabled' />
-                  <div className='round-step round-step--disabled d-flex justify-content-center align-items-center' />
+                    <div className="thanks__card-tracking steps mx-auto d-flex flex-column flex-md-row justify-content-between align-items-center">
+                      <div className="round-step round-step--fill d-flex justify-content-center align-items-center">
+                        <span className="position-absolute msg-status">
+                          Reservada
+                        </span>
+                        <Image
+                          src="/assets/icons/icon-check-step.webp"
+                          alt="Icon check step"
+                          width={32}
+                          height={32}
+                        />
+                      </div>
+                      <div className="conector" />
+                      <div className="round-step round-step--border d-flex justify-content-center align-items-center" />
+                      <div className="conector conector--disabled" />
+                      <div className="round-step round-step--disabled d-flex justify-content-center align-items-center" />
+                      <div className="conector conector--disabled" />
+                      <div className="round-step round-step--disabled d-flex justify-content-center align-items-center" />
+                    </div>
+                  </article>
                 </div>
-              </article>
+              </div>
             </div>
-          </div>
-        </div>
-      </main>
-    </Layout>
-  )
+          </main>
+        </Layout>
+      )) || null}
+    </>
+  );
 }
