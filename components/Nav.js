@@ -60,31 +60,38 @@ export default function Nav () {
     }
   })
 
-  const onLogin = async({ email, password }) => {
+  const onLogin = async (data) => {
     
     try {
-      const response = await authLogin(email, password)
-      console.log(response.data.userCurrent);
-      const token = response.data.token
-      const { id, name, role, slug } = response.data.userCurrent
-      const userCurrent = { id, username: name, role, slug }
-      localStorage.setItem('token', token)
-      localStorage.setItem('userCurrent', JSON.stringify(userCurrent))
-      setLogin(false) 
-      setIsLogged(true)
-      setShowA(response.data.success)
-      setIsError(response.data.success)
-      setMessageError(response.data.message)
-      toggleShowA()
-      resetField("email")
-      resetField("password")
-    } catch (error) {
-      const {success, message}  = error.response.data
-      setIsError(success)
-      if(success === false){
+      const response = await authLogin(data)
+      const dataJson = await response.json()
+      if(response.status === 200) {
+        const {token} = dataJson
+        const { id, name, role, slug } = dataJson.userCurrent
+        const userCurrent = { id, username: name, role, slug }
+        localStorage.setItem('token', token)
+        localStorage.setItem('userCurrent', JSON.stringify(userCurrent))
+        setLogin(false) 
+        setIsLogged(true)
+
+        setShowA(dataJson.success)
+        setIsError(dataJson.success)
+        setMessageError(dataJson.message)
+        toggleShowA()
+        resetField("email")
+        resetField("password")
+
+      }
+
+      if(response.status >= 400 || response.status <= 599) {
+        setShowA(dataJson.success)
+        setIsError(dataJson.success)
+        setMessageError(dataJson.message)
         toggleShowA()
       }
-      setMessageError(message)
+      
+      
+    } catch (error) {
     }
 
   }
@@ -206,9 +213,9 @@ export default function Nav () {
                           <hr className="dropdown-divider" />
                         </li>
                         <li>
-                          <a className="dropdown-item" href={`${router.basePath}/dashboard`}>
+                          <Link className="dropdown-item" href='/dashboard'>
                             Mis reservas
-                          </a>
+                          </Link>
                         </li>
                         <li>
                           <Link className="dropdown-item" href="/settings">
@@ -390,9 +397,9 @@ export default function Nav () {
                       <hr className="dropdown-divider" />
                     </li>
                     <li>
-                      <a className="dropdown-item" href={`${router.basePath}/dashboard`}>
+                      <Link className="dropdown-item" href='/dashboard'>
                         Mis reservas
-                      </a>
+                      </Link>
                     </li>
                     {/* <li>
                       <a className="dropdown-item" href="#">

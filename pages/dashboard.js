@@ -11,7 +11,6 @@ import { useState } from "react";
 export default function Dashboard() {
   const tableRef = useRef(null);
   const wrapperRef = useRef(null);
-  //const [reserves, setReserves] = useState([]);
 
   const row = (reserves) =>
     reserves.map((reserva) => [

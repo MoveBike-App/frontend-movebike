@@ -32,7 +32,8 @@ export default function FloteBikes() {
   const getMotos = async () => {
     try {
       const response = await getAllMotos();
-      setMotos(response.data.data.motos);
+      const { data: { motos }} = await response.json()
+      setMotos(motos);
     } catch (error) {}
   };
 
