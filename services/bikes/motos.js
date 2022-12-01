@@ -3,7 +3,14 @@ import { URL_BASE } from "../config";
 
 function getAllMotos(){
     const URL = `${URL_BASE}motos`
-    return axios.get(URL)
+    const options = {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        mode: 'cors'
+    }
+    return fetch(URL, options)
 }
 
 function getById(id) {

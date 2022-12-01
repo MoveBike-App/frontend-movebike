@@ -64,9 +64,7 @@ export default function Nav () {
     
     try {
       const response = await authLogin(data)
-      console.log('RESPONSE: ', response);
       const dataJson = await response.json()
-      console.log('DATA JSON: ',dataJson)
       if(response.status === 200) {
         const {token} = dataJson
         const { id, name, role, slug } = dataJson.userCurrent
