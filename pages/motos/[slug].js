@@ -98,7 +98,7 @@ export default function Bike() {
         new Date(initialDate)
       );
       console.log("TOTAL DIAS", totalDays);
-      let totalPrice = Number(data.price) * Number(totalDays);
+      let totalPrice = Number(data.price) * Number(totalDays) * 100;
       console.log(totalPrice);
 
       const cart = {

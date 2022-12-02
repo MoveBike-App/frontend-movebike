@@ -113,10 +113,8 @@ export default function Checkout() {
             {(motoCart && (
               <div className="col-lg-5 mt-3">
                 <section className="checkout__card mt-3">
-                  {console.log(checkout.fechaInical)}
-                  {console.log(checkout.fechaFinal)}
                   <CheckoutCard
-                    price={Number(priceCart)}
+                    price={priceCart}
                     description={motoCart}
                     vehicle={idMoto}
                     initialDate={fechaInicial}
