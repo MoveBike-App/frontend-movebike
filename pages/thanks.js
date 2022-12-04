@@ -76,6 +76,7 @@ export default function Thanks() {
                                   className="btn btn-movebike link"
                                   href={`${link}`}
                                   target={"_blank"}
+                                  rel="noreferrer"
                                 >
                                   Ver recibo
                                 </a>
@@ -97,6 +98,7 @@ export default function Thanks() {
                       className="btn btn-movebike contained me-bookings"
                       href={`${link}`}
                       target={"_blank"}
+                      rel="noreferrer"
                     >
                       Ver recibo
                     </a>
@@ -126,7 +128,7 @@ export default function Thanks() {
             </div>
           </main>
         </Layout>
-      ) : router.push('/404')}
+      ) : null}
     </>
   );
 }
