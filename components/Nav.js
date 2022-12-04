@@ -70,6 +70,7 @@ export default function Nav() {
   const [username, setUsername] = useState("");
   const [isError, setIsError] = useState(false);
   const [messageError, setMessageError] = useState("");
+  const [validEmail, setValidEmail] = useState('')
   const handleClose = () => setLogin(false);
   const handleCloseRegister = () => setRegisterModal(false);
   const handleClickRegister = () => setRegisterModal(true);
@@ -102,6 +103,16 @@ export default function Nav() {
         password: data.passwordL,
       });
       const dataJson = await response.json();
+      console.log(dataJson.userCurrent.validEmail);
+      setValidEmail(dataJson.userCurrent.validEmail)
+      console.log(validEmail);
+      if(validEmail) {
+        setLogin(false)
+        reset({emailL: '', passwordL: ''})
+        setVerify(true)
+        return;
+      }
+
       if (response.status === 200) {
         const { token } = dataJson;
         const { id, name, role, slug } = dataJson.userCurrent;
@@ -118,6 +129,7 @@ export default function Nav() {
         resetField("email");
         resetField("password");
       }
+      
 
       if (response.status >= 400 || response.status <= 599) {
         setShowA(dataJson.success);
