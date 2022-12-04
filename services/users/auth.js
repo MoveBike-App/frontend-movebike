@@ -1,4 +1,3 @@
-const axios = require('axios')
 import { URL_BASE } from "../config";
 
 function authLogin(credentials) {
@@ -16,14 +15,16 @@ function authLogin(credentials) {
   return fetch(URL, options);
 }
 
-function createAccount(email, password, identity, phone) {
+function createAccount(data) {
   const URL = `${URL_BASE}customers`
-  return fetch(URL, {
-    email,
-    password,
-    identity,
-    phone
-  })
+  const options = {
+    method: 'POST',
+    body: data,
+    headers: {
+      mode: 'cors'
+    }
+  }
+  return fetch(URL, options)
 }
 
-export { authLogin };
+export { authLogin, createAccount };

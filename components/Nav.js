@@ -1,121 +1,188 @@
-import Image from 'next/image'
-import Link from 'next/link'
-import React, { useEffect, useState, useContext } from 'react'
-import { useRouter } from 'next/router'
-import { useForm } from 'react-hook-form'
-import * as dotenv from 'dotenv'
-import AuthContext from 'context/AuthContext'
-import Toast from 'react-bootstrap/Toast';
-import ToastContainer from 'react-bootstrap/ToastContainer';
-import { authLogin, authLogins } from 'services/users/auth'
+import Image from "next/image";
+import Link from "next/link";
+import React, { useEffect, useState, useContext } from "react";
+import { useRouter } from "next/router";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
+import AuthContext from "context/AuthContext";
+import Toast from "react-bootstrap/Toast";
+import ToastContainer from "react-bootstrap/ToastContainer";
+import { authLogin, authLogins } from "services/users/auth";
 
 /* Hooks */
-import { useAuthUser } from '../hooks/auth-user'
+import { useAuthUser } from "../hooks/auth-user";
 
-import LoginModal from './Utilities/LoginModal'
-import VerifyModal from './Utilities/VerifyModal'
+import LoginModal from "./Utilities/LoginModal";
+import VerifyModal from "./Utilities/VerifyModal";
+import { createAccount } from "../services/users/auth";
 
-import { userContext } from '../pages'
-const axios = require('axios')
+const schemaValidations = yup
+  .object({
+    email: yup
+      .string()
+      .required("El correo electrónico es obligatorio")
+      .email("Email inválido"),
+    password: yup
+      .string()
+      .required("La contraseña es requerido")
+      .min(8, "La longitud de la contraseña debe ser de al menos 8 caracteres"),
+    cpassword: yup
+      .string()
+      .required("Es necesario confirmar la contraseña")
+      .min(8, "La longitud de la contraseña debe ser de al menos 8 caracteres")
+      .oneOf([yup.ref("password")], "Las contraseñas no coinciden"),
+    phone: yup.string().required("El Teléfono es requerido"),
+    identify: yup.mixed().required("Es necesario subir una identificación"),
 
-dotenv.config()
+    // .test('fileSize', 'El archivo es muy grande', (value) => {
+    //   return value && value[0].size <= 122880
+    // })
+    // .test('isEmpty', 'Es necesario subir una identificación', (value) => {
+    //   if(value.length <= 0){
+    //     //console.log(value && value[0].size <= 122880);
+    //     return false
+    //   }
 
-export default function Nav () {
-  const { user, isLogged, setIsLogged } = useContext(AuthContext)
+    // })
+  })
+  .required();
 
-  const [isToggle, setIsToggle] = useState(false)
-  const router = useRouter()
-  const [login, setLogin] = useState(false)
-  const [registerModal, setRegisterModal] = useState(false)
-  const [verify, setVerify] = useState(false)
-  const [role, setRole] = useState('')
-  const [username, setUsername] = useState('')
-  const [isError, setIsError] = useState(false)
-  const [messageError, setMessageError] = useState('')
-  const handleClose = () => setLogin(false)
-  const handleCloseRegister = () => setRegisterModal(false)
-  const handleClickRegister = () => setRegisterModal(true)
-  const handleCloseVerify = () => setVerify(false)
-  
+const schemaLogin = yup
+  .object({
+    emailL: yup
+      .string()
+      .required("El correo electrónico es obligatorio")
+      .email("Email inválido"),
+    passwordL: yup.string().required("La contraseña es requerido"),
+  })
+  .required();
+
+export default function Nav() {
+  const { user, isLogged, setIsLogged } = useContext(AuthContext);
+
+  const [isToggle, setIsToggle] = useState(false);
+  const router = useRouter();
+  const [login, setLogin] = useState(false);
+  const [registerModal, setRegisterModal] = useState(false);
+  const [verify, setVerify] = useState(false);
+  const [role, setRole] = useState("");
+  const [username, setUsername] = useState("");
+  const [isError, setIsError] = useState(false);
+  const [messageError, setMessageError] = useState("");
+  const handleClose = () => setLogin(false);
+  const handleCloseRegister = () => setRegisterModal(false);
+  const handleClickRegister = () => setRegisterModal(true);
+  const handleCloseVerify = () => setVerify(false);
 
   const [showA, setShowA] = useState(false);
   const toggleShowA = () => setShowA(!showA);
 
   useEffect(() => {
-    setUsername(user?.username)
-    setRole(user?.role)
-  }, [user])
-
+    setUsername(user?.username);
+    setRole(user?.role);
+  }, [user]);
 
   const {
     register,
-    resetField,
     formState: { errors },
-    handleSubmit
+    handleSubmit,
+    reset,
   } = useForm({
-    mode: "onSubmit",
-    defaultValues: {
-      email: '',
-      password: ''
-    }
-  })
+    resolver: yupResolver(
+      login ? schemaLogin : registerModal ? schemaValidations : null
+    ),
+  });
 
   const onLogin = async (data) => {
-    
     try {
-      const response = await authLogin(data)
-      const dataJson = await response.json()
-      if(response.status === 200) {
-        const {token} = dataJson
-        const { id, name, role, slug } = dataJson.userCurrent
-        const userCurrent = { id, username: name, role, slug }
-        localStorage.setItem('token', token)
-        localStorage.setItem('userCurrent', JSON.stringify(userCurrent))
-        setLogin(false) 
-        setIsLogged(true)
+      const response = await authLogin({
+        ...data,
+        email: data.emailL,
+        password: data.passwordL,
+      });
+      const dataJson = await response.json();
+      if (response.status === 200) {
+        const { token } = dataJson;
+        const { id, name, role, slug } = dataJson.userCurrent;
+        const userCurrent = { id, username: name, role, slug };
+        localStorage.setItem("token", token);
+        localStorage.setItem("userCurrent", JSON.stringify(userCurrent));
+        setLogin(false);
+        setIsLogged(true);
 
-        setShowA(dataJson.success)
-        setIsError(dataJson.success)
-        setMessageError(dataJson.message)
-        toggleShowA()
-        resetField("email")
-        resetField("password")
-
+        setShowA(dataJson.success);
+        setIsError(dataJson.success);
+        setMessageError(dataJson.message);
+        toggleShowA();
+        resetField("email");
+        resetField("password");
       }
 
-      if(response.status >= 400 || response.status <= 599) {
-        setShowA(dataJson.success)
-        setIsError(dataJson.success)
-        setMessageError(dataJson.message)
-        toggleShowA()
+      if (response.status >= 400 || response.status <= 599) {
+        setShowA(dataJson.success);
+        setIsError(dataJson.success);
+        setMessageError(dataJson.message);
+        toggleShowA();
       }
-      
-      
+    } catch (error) {}
+  };
+
+  const onCreateAccount = async ({ identify, email, password, phone }) => {
+    const formData = new FormData();
+    formData.append("identify", identify["0"]);
+    formData.append("email", email);
+    formData.append("password", password);
+    formData.append("phone", phone);
+
+    try {
+      const response = await createAccount(formData);
+
+      const dataJson = await response.json();
+      if (response.status === 200) {
+        setRegisterModal(false);
+        setVerify(true);
+      }
+
+      if (response.status >= 400 || response.status <= 599) {
+        setShowA(dataJson.success);
+        setIsError(dataJson.success);
+        setMessageError(dataJson.message);
+        toggleShowA();
+      }
     } catch (error) {
+      console.log(error);
     }
-
-  }
-
+    //console.log(formData);
+  };
 
   const signOut = () => {
-    localStorage.removeItem('token')
-    localStorage.removeItem('userCurrent')
+    localStorage.removeItem("token");
+    localStorage.removeItem("userCurrent");
     localStorage.clear();
-    setIsLogged(false)
-  }
+    setIsLogged(false);
+  };
 
   return (
     <>
-      <ToastContainer position='top-end' className='mt-2 me-2'>
-        <Toast onClose={() => setShowA(false)} show={showA} delay={3000} autohide >
+      <ToastContainer position="top-end" className="mt-2 me-2">
+        <Toast
+          onClose={() => setShowA(false)}
+          show={showA}
+          delay={3000}
+          autohide
+        >
           <Toast.Header>
-            <strong className={`me-auto ${isError ? 'text-success' : 'text-danger'}`}>{isError ? 'Succesull!' : 'Invalid credentials!'} </strong>
-            
+            <strong
+              className={`me-auto ${isError ? "text-success" : "text-danger"}`}
+            >
+              {isError ? "Succesull!" : "Error!"}{" "}
+            </strong>
           </Toast.Header>
           <Toast.Body>{messageError}</Toast.Body>
         </Toast>
       </ToastContainer>
-      
+
       <nav className="navbar mb-navbar fixed-top bg-white" id="nav-movebike">
         <section
           role="navigation "
@@ -190,7 +257,7 @@ export default function Nav () {
                   </Link>
                 </li>
                 {isLogged ? (
-                  <li className='nav-link'>
+                  <li className="nav-link">
                     <div className="dropdown dropup">
                       <button
                         type="button"
@@ -206,14 +273,14 @@ export default function Nav () {
                         <li>
                           <a className="dropdown-item" href="#">
                             <p className="mb-0 fw-bold">{username}</p>
-                            <span className='text-capitalize'>{role}</span>
+                            <span className="text-capitalize">{role}</span>
                           </a>
                         </li>
                         <li>
                           <hr className="dropdown-divider" />
                         </li>
                         <li>
-                          <Link className="dropdown-item" href='/dashboard'>
+                          <Link className="dropdown-item" href="/dashboard">
                             Mis reservas
                           </Link>
                         </li>
@@ -336,7 +403,11 @@ export default function Nav () {
                   <span className="text-uppercase">
                     {router.locale === "en" ? "en" : "es"}{" "}
                   </span>
-                  <img className='ms-1 me-1' src="/assets/icons/icon_web.svg" alt="icon web" />
+                  <img
+                    className="ms-1 me-1"
+                    src="/assets/icons/icon_web.svg"
+                    alt="icon web"
+                  />
 
                   <img
                     className="arrow"
@@ -374,7 +445,7 @@ export default function Nav () {
               </div>
             </section>
             {isLogged && (
-              <section className='d-none d-lg-block'>
+              <section className="d-none d-lg-block">
                 <div className="dropdown">
                   <button
                     type="button"
@@ -390,14 +461,14 @@ export default function Nav () {
                     <li>
                       <a className="dropdown-item" href="#">
                         <p className="mb-0 fw-bold">{username}</p>
-                        <span className='text-capitalize'>{role}</span>
+                        <span className="text-capitalize">{role}</span>
                       </a>
                     </li>
                     <li>
                       <hr className="dropdown-divider" />
                     </li>
                     <li>
-                      <Link className="dropdown-item" href='/dashboard'>
+                      <Link className="dropdown-item" href="/dashboard">
                         Mis reservas
                       </Link>
                     </li>
@@ -454,21 +525,12 @@ export default function Nav () {
                   type="text"
                   className="form-control login__input"
                   placeholder="Ingresa tu email"
-                  {...register("email", {
-                    required: "El email es obligatorio",
-                    pattern: /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/,
-                  })}
-                  aria-invalid={errors.email ? "true" : "false"}
+                  {...register("emailL")}
                 />
-                {errors.email && (
+                {errors.emailL && (
                   <p className="text-danger" role="alert">
-                    {errors.email?.message}
+                    {errors.emailL?.message}
                   </p>
-                )}
-                {errors.email?.type === "pattern" && (
-                  <p className="text-danger" role="alert">
-                  Ingese un email válido!
-                </p>
                 )}
               </div>
               <div className="col-12">
@@ -483,14 +545,11 @@ export default function Nav () {
                   className="form-control login__input"
                   id="validationServer02"
                   placeholder="Ingresa tu contraseña"
-                  {...register("password", {
-                    required: "La contraseña es obligatoria",
-                  })}
-                  aria-invalid={errors.password ? "true" : "false"}
+                  {...register("passwordL")}
                 />
-                {errors.password && (
+                {errors.passwordL && (
                   <p className="text-danger" role="alert">
-                    {errors.password?.message}
+                    {errors.passwordL?.message}
                   </p>
                 )}
               </div>
@@ -536,29 +595,35 @@ export default function Nav () {
         title="Crear cuenta"
         body={
           <>
-            <form className="row g-3">
-              {/* <div className="col-12">
-                <label
-                  className="form-label login__label"
+            <form onSubmit={handleSubmit(onCreateAccount)} className="row g-3">
+              {messageError ? (
+                <div
+                  class="alert alert-warning alert-dismissible fade show"
+                  role="alert"
                 >
-                  Usuario
-                </label>
-                <input
-                  type="text"
-                  className="form-control login__input"
-                  placeholder="Ingresa tu usuario"
-                  required
-                />
-              </div> */}
+                  <strong>{messageError}</strong>
+                  <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="alert"
+                    aria-label="Close"
+                  ></button>
+                </div>
+              ): null}
               <div className="col-12">
                 <label className="form-label login__label">
                   Correo electrónico
                 </label>
                 <input
-                  type="email"
                   className="form-control login__input"
                   placeholder="Ingresa tu correo"
+                  {...register("email")}
                 />
+                {errors.email && (
+                  <p className="text-danger mb-0" role="alert">
+                    {errors.email?.message}
+                  </p>
+                )}
               </div>
               <div className="col-12">
                 <label className="form-label login__label">Contraseña</label>
@@ -566,8 +631,13 @@ export default function Nav () {
                   type="password"
                   className="form-control login__input"
                   placeholder="Ingresa tu contraseña"
-                  required
+                  {...register("password")}
                 />
+                {errors.password && (
+                  <p className="text-danger mb-0" role="alert">
+                    {errors.password?.message}
+                  </p>
+                )}
               </div>
               <div className="col-12">
                 <label className="form-label login__label">
@@ -577,8 +647,13 @@ export default function Nav () {
                   type="password"
                   className="form-control login__input"
                   placeholder="Ingresa tu contraseña"
-                  required
+                  {...register("cpassword")}
                 />
+                {errors.cpassword && (
+                  <p className="text-danger mb-0" role="alert">
+                    {errors.cpassword?.message}
+                  </p>
+                )}
               </div>
               <div className="col-12">
                 <label
@@ -590,9 +665,13 @@ export default function Nav () {
                 <input
                   className="form-control login__input"
                   type="file"
-                  id="formFileMultiple"
-                  multiple
+                  {...register("identify")}
                 />
+                {errors.identify && (
+                  <p className="text-danger mb-0" role="alert">
+                    {errors.identify?.message}
+                  </p>
+                )}
               </div>
               <div className="col-12 mb-2">
                 <label className="form-label login__label">Teléfono</label>
@@ -600,17 +679,19 @@ export default function Nav () {
                   type="tel"
                   className="form-control login__input"
                   placeholder="Ingresa tu teléfono"
+                  {...register("phone")}
                 />
+                {errors.phone && (
+                  <p className="text-danger mb-0" role="alert">
+                    {errors.phone?.message}
+                  </p>
+                )}
               </div>
 
               <div className="col-12 text-center">
                 <button
                   className="btn btn-movebike contained w-50 mx-auto"
                   type="submit"
-                  onClick={() => {
-                    setRegisterModal(false);
-                    setVerify(true);
-                  }}
                 >
                   Registrarse
                 </button>

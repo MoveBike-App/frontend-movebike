@@ -39,8 +39,8 @@ export default function Hero () {
               Explora Cancún
             </h1>
             <p className='hero-section__content--subtitle mb-0'>
-              Donde la belleza y la cultura se encuentran <br />
-              Donde la belleza y la cultura se encuentran
+            Donde la belleza y la cultura se encuentran.
+            Tu próxima aventura <br /> comienza con Movebike ¿Te apuntas a la máxima velocidad? <br /> ¡Reserva sin limites!
             </p>
             <button className='btn btn-movebike contained btn-cta'>
               ¡Reserva Ahora!

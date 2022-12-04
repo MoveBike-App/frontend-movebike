@@ -15,8 +15,15 @@ function getAllMotos(){
 
 function getById(id) {
     const URL = `${URL_BASE}motos/${id}`
+    const options = {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        mode: 'cors'
+    }
 
-    return axios.get(URL)
+    return fetch(URL, options)
 }
 
 export {

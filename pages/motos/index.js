@@ -8,7 +8,9 @@ export default function Motos() {
   const getMotos = async () => {
     try {
       const response = await getAllMotos();
-      setMotos(response.data.data.motos);
+      const dataJson = await response.json()
+      console.log(dataJson);
+      setMotos(dataJson.data.motos);
     } catch (error) {}
   };
 
