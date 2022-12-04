@@ -37,7 +37,7 @@ export default function CheckoutCard({price, description, vehicle}) {
     })
       .then((res) => res.json())
       .then((data) => setClientSecret(data.clientSecret));
-  }, [price]);
+  }, []);
 
   const appearance = {
     theme: 'stripe',
@@ -51,7 +51,7 @@ export default function CheckoutCard({price, description, vehicle}) {
     <div className="App">
       {clientSecret && (
         <Elements options={options} stripe={stripePromise} key={clientSecret}>
-          <CheckoutForm vehicle={vehicle} totalPrice={price} token={token} clientSecret={clientSecret} />
+          <CheckoutForm vehicle={vehicle} totalPrice={price} token={token}/>
         </Elements>
       )}
     </div>

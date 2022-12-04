@@ -20,7 +20,7 @@ export default function CheckoutForm({
 
   const [message, setMessage] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
-  const [statusPayment, setStatusPayment] = useState('')
+  const [statusPayment, setStatusPayment] = useState("");
 
   useEffect(() => {
     if (!stripe) {
@@ -39,15 +39,15 @@ export default function CheckoutForm({
       switch (paymentIntent.status) {
         case "succeeded":
           setMessage("¡Pago realizado exitosamente!");
-          setStatusPayment('succeeded')
+          setStatusPayment("succeeded");
           break;
         case "processing":
-          setMessage("Your payment is processing.")
-          setStatusPayment('succeeded')          
+          setMessage("Your payment is processing.");
+          setStatusPayment("succeeded");
           break;
         case "requires_payment_method":
-          setMessage("Your payment was not successful, please try again.")
-          setStatusPayment('requires_payment_method')
+          setMessage("Your payment was not successful, please try again.");
+          setStatusPayment("requires_payment_method");
           break;
         default:
           setMessage("Something went wrong.");
@@ -70,32 +70,32 @@ export default function CheckoutForm({
 
     const response = await stripe.confirmPayment({
       elements,
-      redirect: 'if_required',
+      //redirect: "if_required",
       confirmParams: {
         // Make sure to change this to your payment completion page
         return_url: `http://localhost:3000/thanks?token=${token}`,
       },
     });
-    localStorage.setItem('stripe', JSON.stringify(response))
+    localStorage.setItem("stripe", JSON.stringify(response));
 
     console.log(response);
 
-    if(response?.paymentIntent?.amount !== totalPrice){
+    if (response?.paymentIntent?.amount !== totalPrice) {
       console.error(
-        'Amount mismatch',
+        "Amount mismatch",
         response?.paymentIntent?.amount,
-        'does not equal',
+        "does not equal",
         totalPrice,
-        '\n\nFull response:\n\n',
+        "\n\nFull response:\n\n",
         response
-      )
+      );
     }
 
     setIsLoading(false);
 
-    const { error } = response
+    const { error } = response;
 
-    if(error) {
+    if (error) {
       if (error.type === "card_error" || error.type === "validation_error") {
         setMessage(error.message);
       }

@@ -8,30 +8,46 @@ import { useEffect } from "react";
 export default function Thanks() {
   const router = useRouter();
   const [isPaid, setIsPaid] = useState(false);
-  const intent = router.query["payment_intent"];
-  
-  const getPaymentIntent = () => {
-    console.log(intent);
+  const [link, setLink] = useState("");
+  const [amount, setAmount] = useState(0);
+  const [description, setDescription] = useState("");
+  const [isLogged, setIsLogged] = useState(false)
+  const retrieveCharge = router.query["payment_intent"];
 
-    
-
+  const getPaymentIntent = async () => {
+    const token = localStorage.getItem('token')
+    if(token){
+      setIsLogged(true)
+    }
+    try {
+      const options = {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ payment_intent_id: retrieveCharge }),
+      };
+      const chargeData = await fetch("/api/retrieve-charge-reserve", options);
+      const dataJson = await chargeData.json();
+      setAmount(dataJson.charge_data[0].amount);
+      setLink(dataJson.charge_data[0].receipt_url);
+      setDescription(dataJson.charge_data[0].description);
+      setIsPaid(dataJson.charge_data[0].paid);
+      console.log(dataJson);
+    } catch (error) {}
   };
 
   useEffect(() => {
-    if(intent){
-      setIsPaid(true)
-    }
-  },[intent]);
+    getPaymentIntent();
+  }, [retrieveCharge]);
 
   return (
     <>
-      {(isPaid && (
+      {(isPaid && isLogged) ? (
         <Layout title={"Gracias por tu pago - MoveBike"}>
           <main className="cotainer-fluid thanks">
             <div className="container">
               <div className="row">
                 <div className="col-md-9 mx-auto">
-                  <article className="thanks__card text-center">
+                  <article className="thanks__card text-center ps-1 ps-lg-5 pe-1 pe-lg-5">
                     <Image
                       src="/assets/icons/icon-check-thanks.webp"
                       alt="Icon check thanks"
@@ -39,8 +55,36 @@ export default function Thanks() {
                       height={56}
                     />
                     <h1 className="thanks__card-title">
-                      ¡Gracias por preferirnos!
+                      ¡Hemos recibido tu reserva!
                     </h1>
+                    <div className="row">
+                      <div className="table-responsive">
+                        <table className="table table-striped align-middle">
+                          <thead>
+                            <tr>
+                              <th scope="col">Concepto</th>
+                              <th scope="col">Monto</th>
+                              <th scope="col">Recibo</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <th>{description}</th>
+                              <th>${amount / 100}</th>
+                              <th>
+                                <a
+                                  className="btn btn-movebike link"
+                                  href={`${link}`}
+                                  target={"_blank"}
+                                >
+                                  Ver recibo
+                                </a>
+                              </th>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
                     <strong className="thanks__card-subtitle">
                       Tu reserva se ha realizado con éxito
                     </strong>
@@ -48,12 +92,14 @@ export default function Thanks() {
                       En breve recibirás un correo con la información <br /> del
                       contacto encargado de entregar tu reserva
                     </p>
-                    <Link
+                    <p>{description}</p>
+                    <a
                       className="btn btn-movebike contained me-bookings"
-                      href="/dashboard"
+                      href={`${link}`}
+                      target={"_blank"}
                     >
-                      Mis Reservas
-                    </Link>
+                      Ver recibo
+                    </a>
 
                     <div className="thanks__card-tracking steps mx-auto d-flex flex-column flex-md-row justify-content-between align-items-center">
                       <div className="round-step round-step--fill d-flex justify-content-center align-items-center">
@@ -80,7 +126,7 @@ export default function Thanks() {
             </div>
           </main>
         </Layout>
-      )) || null}
+      ) : router.push('/404')}
     </>
   );
 }

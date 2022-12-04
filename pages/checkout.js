@@ -27,7 +27,7 @@ export default function Checkout() {
       setFechaInicial(fechaInical)
       setFechaFinal(fechaFinal)
     } else {
-      //router.push("/");
+      //router.push("/")
     }
   };
 
@@ -54,7 +54,7 @@ export default function Checkout() {
           <div className="row">
             <div className="col-12">
               <h1 className="text-gray-600 mb-4">Finaliza tu reserva</h1>
-              <button className="btn" onClick={handleReserve}>Reservar</button>
+              {/* <button className="btn" onClick={handleReserve}>Reservar</button> */}
             </div>
             <div className="col-lg-7 mt-3">
               <section className="checkout__card">
@@ -111,7 +111,7 @@ export default function Checkout() {
               </section>
             </div>
             {(motoCart && (
-              <div className="col-lg-5 mt-3">
+              <div className="col-lg-5 mt-3 mt-lg-0">
                 <section className="checkout__card mt-3">
                   <CheckoutCard
                     price={priceCart}
