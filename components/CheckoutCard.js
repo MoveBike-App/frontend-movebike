@@ -13,7 +13,6 @@ export default function CheckoutCard({price, description, vehicle}) {
   const [clientSecret, setClientSecret] = useState("");
   const [isPrice, setIsPrice] = useState(price)
 
-  console.log(typeof price)
 
   const [token, setToken] = useState()
 
@@ -38,7 +37,7 @@ export default function CheckoutCard({price, description, vehicle}) {
     })
       .then((res) => res.json())
       .then((data) => setClientSecret(data.clientSecret));
-  }, [price]);
+  }, []);
 
   const appearance = {
     theme: 'stripe',
@@ -51,8 +50,8 @@ export default function CheckoutCard({price, description, vehicle}) {
   return (
     <div className="App">
       {clientSecret && (
-        <Elements options={options} stripe={stripePromise}>
-          <CheckoutForm vehicle={vehicle} totalPrice={price} token={token} />
+        <Elements options={options} stripe={stripePromise} key={clientSecret}>
+          <CheckoutForm vehicle={vehicle} totalPrice={price} token={token}/>
         </Elements>
       )}
     </div>

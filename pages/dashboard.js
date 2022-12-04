@@ -1,24 +1,32 @@
 import React, { useEffect, useRef } from "react";
 import { DataGrid } from "@mui/x-data-grid";
-import { Grid } from "gridjs-react";
+import { Grid, _ } from "gridjs-react";
 import "gridjs/dist/theme/mermaid.css";
-
+import { format, differenceInDays } from "date-fns";
 import Layouts from "components/Layouts";
 import Image from "next/image";
 import { getReserveByCustomer } from "../services/reserves/reserve";
 import { useState } from "react";
+import { h, html } from "gridjs";
+import { useRouter } from "next/router";
 
 export default function Dashboard() {
+  const router =useRouter()
   const tableRef = useRef(null);
   const wrapperRef = useRef(null);
-  //const [reserves, setReserves] = useState([]);
+
+  function formatDate(text) {
+    return h('b', {}, text)
+  }
 
   const row = (reserves) =>
     reserves.map((reserva) => [
+      reserva._id,
       reserva.reserveNumber,
       reserva.status,
       reserva.initialDate,
-      reserva.finalDate
+      formatDate(reserva.finalDate),
+      null
     ]);
   const [data, setData] = useState([]);
 
@@ -32,8 +40,6 @@ export default function Dashboard() {
     const token = localStorage.getItem("token");
     try {
       const response = await getReserveByCustomer(id, token);
-      console.log(response.data.data.customer.reserve);
-      //setReserves(response.data.data.customer.reserve);
       setData(row(response.data.data.customer.reserve));
       const rows = [];
     } catch (error) {
@@ -46,7 +52,7 @@ export default function Dashboard() {
   }, []);
 
   return (
-    <Layouts title={'Mis Reservas'}>
+    <Layouts title={"Mis Reservas"}>
       <main className="container-fluid bookings">
         <div className="container">
           <div className="row">
@@ -58,11 +64,38 @@ export default function Dashboard() {
                 <Grid
                   data={data}
                   columns={[
-                    { id: "reserveNumber", name: "No. Reserva" },
+                    {
+                      id: "_id",
+                      hidden: true
+
+                    },
+                    {
+                      id: "reserveNumber",
+                      name: "No. Reserva",
+                      
+                    },
                     { id: "status", name: "Estado" },
-                    { id: "initialDate", name: "Fecha Inicial" },
+                    {
+                      id: "initialDate",
+                      name: "Fecha Inicial",
+                      formatter: (cell) => `Fechas: ${cell}`,
+                    },
                     { id: "finalDate", name: "Fecha Fin" },
-                    { name: 'Actions'}
+                    {
+                      name: "Actions",
+                      formatter: (cell, row) => {
+                        return h(
+                          "button",
+                          {
+                            className:
+                              "py-2 mb-4 px-4 border rounded-md text-white btn btn-movebike contained",
+                            onClick: () =>
+                            router.push(`/reserva/${row.cells[0].data}`)
+                          },
+                          "Ver reserva"
+                        );
+                      },
+                    },
                   ]}
                   search={true}
                   sort={true}
