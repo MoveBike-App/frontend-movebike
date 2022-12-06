@@ -1,27 +1,45 @@
 const axios = require("axios");
 import { URL_BASE } from "../config";
 
-function createReserve(
-  vehicle,
-  totalPrice,
-  isPaid,
-  initialDate,
-  finalDate,
-  token
-) {
+function createReserve(data, token) {
   const URL = `${URL_BASE}reserves`;
+  const options = {
+    method: 'POST',
+    body: JSON.stringify(data),
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: token,
+      mode: 'cors'
+    },
+  }
 
-  return axios.post(
-    URL,
-    { vehicle, totalPrice, isPaid, initialDate, finalDate },
-    { headers: { Authorization: token } }
-  );
+  return fetch(URL, options)
 }
 
 function getReserveByCustomer(user, token) {
   const URL = `${URL_BASE}customers/${user}`;
+  const options = {
+    method: 'GET',
+    headers: {
+      Authorization: token,
+      mode: 'cors'
+    }
+  }
 
-  return axios.get(URL, { headers: { Authorization: token } });
+  return fetch(URL, options)
 }
 
-export { createReserve, getReserveByCustomer };
+function getReserveById(id, token){
+  const URL = `${URL_BASE}reserves/${id}`
+  const options = {
+    method: 'GET',
+    headers: {
+      Authorization: token,
+      mode: 'cors'
+    }
+  }
+
+  return fetch(URL, options)
+}
+
+export { createReserve, getReserveByCustomer, getReserveById };

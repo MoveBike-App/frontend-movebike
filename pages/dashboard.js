@@ -3,6 +3,7 @@ import { DataGrid } from "@mui/x-data-grid";
 import { Grid, _ } from "gridjs-react";
 import "gridjs/dist/theme/mermaid.css";
 import { format, differenceInDays } from "date-fns";
+import es from 'date-fns/locale/es'
 import Layouts from "components/Layouts";
 import Image from "next/image";
 import { getReserveByCustomer } from "../services/reserves/reserve";
@@ -16,7 +17,8 @@ export default function Dashboard() {
   const wrapperRef = useRef(null);
 
   function formatDate(text) {
-    return h('b', {}, text)
+    let newDate = format(text, 'dd/mm/yyyy')
+    return h('b', {}, newDate)
   }
 
   const row = (reserves) =>
@@ -25,9 +27,9 @@ export default function Dashboard() {
       reserva.reserveNumber,
       reserva.status,
       reserva.initialDate,
-      formatDate(reserva.finalDate),
+      reserva.finalDate,
       null
-    ]);
+    ]).reverse()
   const [data, setData] = useState([]);
 
   console.log(data);
@@ -40,7 +42,9 @@ export default function Dashboard() {
     const token = localStorage.getItem("token");
     try {
       const response = await getReserveByCustomer(id, token);
-      setData(row(response.data.data.customer.reserve));
+      const dataJson = await response.json()
+      console.log(dataJson);
+      setData(row(dataJson.data.customer.reserve));
       const rows = [];
     } catch (error) {
       console.log(error);
@@ -78,9 +82,21 @@ export default function Dashboard() {
                     {
                       id: "initialDate",
                       name: "Fecha Inicial",
-                      formatter: (cell) => `Fechas: ${cell}`,
+                      formatter: (cell) => {
+                        let newDate = format(new Date(cell), "dd/MM/yyyy H:mm b", {locales: es })
+                        console.log(newDate);
+                        return `${newDate}`
+                      },
                     },
-                    { id: "finalDate", name: "Fecha Fin" },
+                    { 
+                      id: "finalDate", 
+                      name: "Fecha Fin",
+                      formatter: (cell) => {
+                        let newDate = format(new Date(cell), "dd/MM/yyyy H:mm b")
+                        console.log(newDate);
+                        return `${newDate}`
+                      }
+                    },
                     {
                       name: "Actions",
                       formatter: (cell, row) => {

@@ -5,22 +5,25 @@ import {
   useElements,
 } from "@stripe/react-stripe-js";
 import { createReserve } from "../services/reserves/reserve";
-import { format } from "date-fns";
+import { useRouter } from 'next/router'
 
 export default function CheckoutForm({
   vehicle,
-  totalPrice,
+  price,
   clientSecret,
   initialDate,
   finalDate,
+  totalDays,
   token,
 }) {
   const stripe = useStripe();
   const elements = useElements();
+  const router = useRouter();
 
   const [message, setMessage] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [statusPayment, setStatusPayment] = useState("");
+  const [idReserve, setIdReserve] = useState()
 
   useEffect(() => {
     if (!stripe) {
@@ -70,22 +73,19 @@ export default function CheckoutForm({
 
     const response = await stripe.confirmPayment({
       elements,
-      //redirect: "if_required",
+      redirect: "if_required",
       confirmParams: {
         // Make sure to change this to your payment completion page
-        return_url: `http://localhost:3000/thanks?token=${token}`,
+        return_url: `http://localhost:3000/thanks?token=${token}&idReserve=${idReserve}`,
       },
     });
-    localStorage.setItem("stripe", JSON.stringify(response));
 
-    console.log(response);
-
-    if (response?.paymentIntent?.amount !== totalPrice) {
+    if (response?.paymentIntent?.amount !== price) {
       console.error(
         "Amount mismatch",
         response?.paymentIntent?.amount,
         "does not equal",
-        totalPrice,
+        price,
         "\n\nFull response:\n\n",
         response
       );
@@ -108,20 +108,25 @@ export default function CheckoutForm({
     } else {
       const cartStorage = JSON.parse(localStorage.getItem("cartCurrent"));
       if (cartStorage) {
-        const { fechaFinal, fechaInical } = cartStorage;
-        const response = await createReserve(
-          vehicle,
-          totalPrice / 100,
-          true,
-          fechaInical,
-          fechaFinal,
-          token
-        );
-        console.log(response);
-        //idReserve = response.data.data._id;
+        const data = {
+          vehicle: vehicle,
+          totalPrice: price / 100,
+          initialDate: initialDate,
+          finalDate: finalDate,
+          totalDays: totalDays,
+          isPaid: true
+        }
+
+        const respReserve = await createReserve(data, token);
+        console.log(respReserve);
+        const dataJson = await respReserve.json()
+        console.log(dataJson);
+        setIdReserve(dataJson.data._id)
         localStorage.removeItem("cartCurrent");
       }
     }
+
+
 
     setIsLoading(false);
   };
@@ -135,7 +140,7 @@ export default function CheckoutForm({
       <PaymentElement id="payment-element" options={paymentElementOptions} />
       <button disabled={isLoading || !stripe || !elements} id="submit">
         <span id="button-text">
-          {isLoading ? <div className="spinner" id="spinner"></div> : "Pay now"}
+          {isLoading ? <div className="spinner" id="spinner"></div> : "Pagar ahora"}
         </span>
       </button>
       {/* Show any error or success messages */}

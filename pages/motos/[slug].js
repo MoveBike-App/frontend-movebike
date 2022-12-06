@@ -98,7 +98,7 @@ export default function Bike() {
         new Date(initialDate)
       );
       console.log("TOTAL DIAS", totalDays);
-      let totalPrice = Number(data.price) * Number(totalDays) * 100;
+      let totalPrice = Number(data.price) * Number(totalDays);
       console.log(totalPrice);
 
       const cart = {
@@ -113,15 +113,9 @@ export default function Bike() {
       };
 
       localStorage.setItem("cartCurrent", JSON.stringify(cart));
-
-      console.log(initialDate2);
-      console.log(initialDate);
-      console.log(finalDate);
-
       router.push("/checkout");
     } else {
       setLogin(true);
-      console.log("Inicia sesión para continuar");
     }
   };
 
@@ -312,6 +306,7 @@ export default function Bike() {
                                       label="Fecha y hora de entrega"
                                       className="mt-4 w-100"
                                       minDate={value}
+                                      onChange={(e) => console.log(e.target.value) }
                                       renderInput={(params) => (
                                         <TextField {...params} />
                                       )}

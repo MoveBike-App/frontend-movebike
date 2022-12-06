@@ -9,7 +9,7 @@ import CheckoutForm from "./CheckoutForm";
 // This is your test publishable API key.
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY);
 
-export default function CheckoutCard({price, description, vehicle}) {
+export default function CheckoutCard({price, description, vehicle, initialDate, finalDate, totalDays}) {
   const [clientSecret, setClientSecret] = useState("");
   const [isPrice, setIsPrice] = useState(price)
 
@@ -51,7 +51,7 @@ export default function CheckoutCard({price, description, vehicle}) {
     <div className="App">
       {clientSecret && (
         <Elements options={options} stripe={stripePromise} key={clientSecret}>
-          <CheckoutForm vehicle={vehicle} totalPrice={price} token={token}/>
+          <CheckoutForm vehicle={vehicle} price={price} initialDate={initialDate} finalDate={finalDate} totalDays={totalDays} token={token}/>
         </Elements>
       )}
     </div>

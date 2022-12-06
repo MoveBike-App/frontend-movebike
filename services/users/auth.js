@@ -27,4 +27,16 @@ function createAccount(data) {
   return fetch(URL, options)
 }
 
-export { authLogin, createAccount };
+function validEmail(token){
+  const URL = `${URL_BASE}auth/validate-email/`
+  const options = {
+    method: 'POST',
+    headers: {
+      Authorization: token,
+      mode: 'cors'
+    }
+  }
+  return fetch(URL, options)
+}
+
+export { authLogin, createAccount, validEmail };
