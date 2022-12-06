@@ -40,7 +40,6 @@ const schemaValidations = yup
     // })
     // .test('isEmpty', 'Es necesario subir una identificación', (value) => {
     //   if(value.length <= 0){
-    //     //console.log(value && value[0].size <= 122880);
     //     return false
     //   }
 
@@ -102,12 +101,10 @@ export default function Nav() {
         email: data.emailL,
         password: data.passwordL,
       });
-      console.log(response)
       const dataJson = await response.json();
-      console.log(dataJson)
-      console.log(dataJson.userCurrent.validEmail);
+
       setValidEmail(dataJson.userCurrent.validEmail)
-      console.log(validEmail || '');
+
       if(validEmail === 'false' || '') {
         setLogin(false)
         reset({emailL: '', passwordL: ''})
@@ -133,7 +130,6 @@ export default function Nav() {
         
   
         if (response.status >= 400 || response.status <= 599) {
-          console.log(response);
           setShowA(dataJson.success);
           setIsError(dataJson.success);
           setMessageError(dataJson.message);
@@ -143,7 +139,6 @@ export default function Nav() {
 
       
     } catch (error) {
-      console.log(error);
     }
   };
 
@@ -170,9 +165,7 @@ export default function Nav() {
         toggleShowA();
       }
     } catch (error) {
-      console.log(error);
     }
-    //console.log(formData);
   };
 
   const signOut = () => {
