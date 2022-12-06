@@ -12,32 +12,44 @@ export default function Checkout() {
   const [priceCart, setPriceCart] = useState();
   const [motoCart, setMotoCart] = useState("");
   const [idMoto, setIdMoto] = useState("");
-  const [fechaInicial, setFechaInicial] = useState()
-  const [fechaFinal, setFechaFinal] = useState()
-  const [checkout, setCheckout] = useState({});
+  const [fechaInicial, setFechaInicial] = useState();
+  const [fechaFinal, setFechaFinal] = useState();
+  const [checkout, setCheckout] = useState(false);
+  const [days, setDays] = useState()
 
   const getCart = () => {
     const cartStorage = JSON.parse(localStorage.getItem("cartCurrent"));
     if (cartStorage) {
-      setCheckout(cartStorage);
-      const { vehicle, priceReserve, nameMoto, fechaFinal, fechaInical } = cartStorage;
+      setCheckout(true);
+      const { vehicle, priceReserve, nameMoto, fechaFinal, fechaInical, dias } =
+        cartStorage;
       setPriceCart(Number(priceReserve));
       setMotoCart(nameMoto);
       setIdMoto(vehicle);
-      setFechaInicial(fechaInical)
-      setFechaFinal(fechaFinal)
+      setFechaInicial(fechaInical);
+      setFechaFinal(fechaFinal);
+      setDays(dias)
     } else {
       //router.push("/")
     }
   };
 
-  const handleReserve = async() => {
+  const handleReserve = async () => {
     const token = localStorage.getItem("token");
     console.log(token);
-    let isPaid = true
-    const { fechaInical, fechaFinal } = JSON.parse(localStorage.getItem('cartCurrent'))
+    let isPaid = true;
+    const { fechaInical, fechaFinal } = JSON.parse(
+      localStorage.getItem("cartCurrent")
+    );
     try {
-      const respReserve = await createReserve(idMoto, priceCart, isPaid, fechaInical, fechaFinal, token);
+      const respReserve = await createReserve(
+        idMoto,
+        priceCart,
+        isPaid,
+        fechaInical,
+        fechaFinal,
+        token
+      );
       console.log(respReserve.data.data._id);
     } catch (error) {
       console.log(error);
@@ -48,18 +60,22 @@ export default function Checkout() {
     getCart();
   }, []);
   return (
-    <Layout>
+    <Layout title={'Completa tu reserva'}>
       <main className="container-fluid checkout">
-        <div className="container">
-          <div className="row">
+        <div className="container vh-100">
+          <div className={`row ${ motoCart ? '': 'h-100 d-flex justify-content-center'}`}>
             <div className="col-12">
-              <h1 className="text-gray-600 mb-4">Finaliza tu reserva</h1>
+              {
+                motoCart && (
+                  <h1 className="text-gray-600">Finaliza tu reserva</h1>
+                ) || null
+              }
               {/* <button className="btn" onClick={handleReserve}>Reservar</button> */}
             </div>
-            <div className="col-lg-7 mt-3">
-              <section className="checkout__card">
-                <article className="checkout__card--article d-flex flex-column flex-md-row justify-content-center align-items-center">
-                  {(motoCart && (
+            {(motoCart && (
+              <div className="col-lg-7 mt-3">
+                <section className="checkout__card">
+                  <article className="checkout__card--article d-flex flex-column flex-md-row justify-content-center align-items-center">
                     <>
                       <Image
                         src="/assets/landing/flotebikers/vitalia-125.webp"
@@ -101,24 +117,35 @@ export default function Checkout() {
                         ${checkout.priceReserve}
                       </strong>
                     </>
-                  )) || (
-                    <div className="d-flex flex-column">
+                  </article>
+                </section>
+              </div>
+            )) || (
+              <div className="col-lg-6 text-center">
+                <section className="checkout__card">
+                  <div className="d-flex flex-column">
                     <h3>Carrito vacío</h3>
-                    <Link href={'/motos'} className="btn btn-movebike contained mt-3">Ver motos</Link>
-                    </div>
-                  )}
-                </article>
-              </section>
-            </div>
+                    <Link
+                      href={"/motos"}
+                      className="btn btn-movebike contained mt-3 w-200 mx-auto"
+                    >
+                      Ver motos
+                    </Link>
+                  </div>
+                </section>
+              </div>
+            )}
             {(motoCart && (
-              <div className="col-lg-5 mt-3 mt-lg-0">
-                <section className="checkout__card mt-3">
+              <div className="col-lg-5 mt-3">
+                <section >
                   <CheckoutCard
-                    price={priceCart}
+                    className="bg-white"
+                    price={priceCart * 100}
                     description={motoCart}
                     vehicle={idMoto}
                     initialDate={fechaInicial}
                     finalDate={fechaFinal}
+                    totalDays={days}
                   />
                 </section>
               </div>

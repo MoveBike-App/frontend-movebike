@@ -54,7 +54,7 @@ const schemaLogin = yup
       .string()
       .required("El correo electrónico es obligatorio")
       .email("Email inválido"),
-    passwordL: yup.string().required("La contraseña es requerido"),
+    passwordL: yup.string().required("La contraseña es requerida"),
   })
   .required();
 
@@ -70,6 +70,7 @@ export default function Nav() {
   const [username, setUsername] = useState("");
   const [isError, setIsError] = useState(false);
   const [messageError, setMessageError] = useState("");
+  const [validEmail, setValidEmail] = useState('')
   const handleClose = () => setLogin(false);
   const handleCloseRegister = () => setRegisterModal(false);
   const handleClickRegister = () => setRegisterModal(true);
@@ -101,31 +102,49 @@ export default function Nav() {
         email: data.emailL,
         password: data.passwordL,
       });
+      console.log(response)
       const dataJson = await response.json();
-      if (response.status === 200) {
-        const { token } = dataJson;
-        const { id, name, role, slug } = dataJson.userCurrent;
-        const userCurrent = { id, username: name, role, slug };
-        localStorage.setItem("token", token);
-        localStorage.setItem("userCurrent", JSON.stringify(userCurrent));
-        setLogin(false);
-        setIsLogged(true);
-
-        setShowA(dataJson.success);
-        setIsError(dataJson.success);
-        setMessageError(dataJson.message);
-        toggleShowA();
-        resetField("email");
-        resetField("password");
+      console.log(dataJson)
+      console.log(dataJson.userCurrent.validEmail);
+      setValidEmail(dataJson.userCurrent.validEmail)
+      console.log(validEmail || '');
+      if(validEmail === 'false' || '') {
+        setLogin(false)
+        reset({emailL: '', passwordL: ''})
+        setVerify(true)
+        return;
+      } else {
+        if (response.status === 200) {
+          const { token } = dataJson;
+          const { id, name, role, slug } = dataJson.userCurrent;
+          const userCurrent = { id, username: name, role, slug };
+          localStorage.setItem("token", token);
+          localStorage.setItem("userCurrent", JSON.stringify(userCurrent));
+          setLogin(false);
+          setIsLogged(true);
+  
+          setShowA(dataJson.success);
+          setIsError(dataJson.success);
+          setMessageError(dataJson.message);
+          toggleShowA();
+          resetField("email");
+          resetField("password");
+        }
+        
+  
+        if (response.status >= 400 || response.status <= 599) {
+          console.log(response);
+          setShowA(dataJson.success);
+          setIsError(dataJson.success);
+          setMessageError(dataJson.message);
+          toggleShowA();
+        }
       }
 
-      if (response.status >= 400 || response.status <= 599) {
-        setShowA(dataJson.success);
-        setIsError(dataJson.success);
-        setMessageError(dataJson.message);
-        toggleShowA();
-      }
-    } catch (error) {}
+      
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const onCreateAccount = async ({ identify, email, password, phone }) => {
@@ -223,6 +242,9 @@ export default function Nav() {
                   <Link href={router.pathname !== "/" ? "/#steps" : "#steps"}>
                     Beneficios
                   </Link>
+                </li>
+                <li className="option">
+                  <Link href="/motos">Motos</Link>
                 </li>
                 {/* <li className="option dropdown">
                   <a
@@ -362,6 +384,9 @@ export default function Nav() {
                     <Link href={router.pathname !== "/" ? "/#steps" : "#steps"}>
                       Beneficios
                     </Link>
+                  </li>
+                  <li className="option">
+                    <Link href="/motos">Motos</Link>
                   </li>
                   <li className="option">
                     <Link
@@ -609,7 +634,7 @@ export default function Nav() {
                     aria-label="Close"
                   ></button>
                 </div>
-              ): null}
+              ) : null}
               <div className="col-12">
                 <label className="form-label login__label">
                   Correo electrónico
