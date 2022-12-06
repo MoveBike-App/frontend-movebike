@@ -9,7 +9,7 @@ export default function Thanks() {
   const router = useRouter();
   const [isPaid, setIsPaid] = useState(false);
   const [link, setLink] = useState("");
-  const [amount, setAmount] = useState(0);
+  const [amount, setAmount] = useState('');
   const [description, setDescription] = useState("");
   const [isLogged, setIsLogged] = useState(false)
   const retrieveCharge = router.query["payment_intent"];
@@ -27,7 +27,11 @@ export default function Thanks() {
       };
       const chargeData = await fetch("/api/retrieve-charge-reserve", options);
       const dataJson = await chargeData.json();
-      setAmount(dataJson.charge_data[0].amount);
+      let monto = dataJson.charge_data[0].amount / 100
+      console.log(monto);
+      let formatMonto = new Intl.NumberFormat('en-In', {style: 'currency', currency: 'MXN', minimumFractionDigits: 2}).format(monto)
+      console.log(formatMonto);
+      setAmount(formatMonto);
       setLink(dataJson.charge_data[0].receipt_url);
       setDescription(dataJson.charge_data[0].description);
       setIsPaid(dataJson.charge_data[0].paid);
@@ -70,7 +74,7 @@ export default function Thanks() {
                           <tbody>
                             <tr>
                               <th>{description}</th>
-                              <th>${amount / 100}</th>
+                              <th>{amount}</th>
                               <th>
                                 <a
                                   className="btn btn-movebike link"
@@ -93,14 +97,11 @@ export default function Thanks() {
                       En breve recibirás un correo con la información <br /> del
                       contacto encargado de entregar tu reserva
                     </p>
-                    <p>{description}</p>
                     <a
                       className="btn btn-movebike contained me-bookings"
-                      href={`${link}`}
-                      target={"_blank"}
-                      rel="noreferrer"
+                      href={'/dashboard'}
                     >
-                      Ver recibo
+                      Ver reserva
                     </a>
 
                     <div className="thanks__card-tracking steps mx-auto d-flex flex-column flex-md-row justify-content-between align-items-center">

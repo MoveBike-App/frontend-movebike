@@ -15,7 +15,7 @@ function MyApp({ Component, pageProps }) {
   
 
   const handleGetUserFromStorage = () => {
-    const storage = window.localStorage.getItem("userCurrent");
+    const storage = localStorage.getItem("userCurrent");
     if(storage){
       setIsLogged(true)
     }
