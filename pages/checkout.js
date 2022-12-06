@@ -6,6 +6,8 @@ import { useState } from "react";
 import { useRouter } from "next/router";
 import { createReserve } from "services/reserves/reserve";
 import Link from "next/link";
+import { format } from "date-fns";
+import { es } from "date-fns/locale";
 
 export default function Checkout() {
   const router = useRouter();
@@ -31,28 +33,6 @@ export default function Checkout() {
       setDays(dias)
     } else {
       //router.push("/")
-    }
-  };
-
-  const handleReserve = async () => {
-    const token = localStorage.getItem("token");
-    console.log(token);
-    let isPaid = true;
-    const { fechaInical, fechaFinal } = JSON.parse(
-      localStorage.getItem("cartCurrent")
-    );
-    try {
-      const respReserve = await createReserve(
-        idMoto,
-        priceCart,
-        isPaid,
-        fechaInical,
-        fechaFinal,
-        token
-      );
-      console.log(respReserve.data.data._id);
-    } catch (error) {
-      console.log(error);
     }
   };
 
@@ -86,25 +66,37 @@ export default function Checkout() {
                       <div className="checkout__card-details text-justify">
                         <span className="text-gray-400">Reservado x 1</span>
                         <p className="mb-0 text-gray-400">
-                          {checkout.nameMoto}
+                          {motoCart}
                         </p>
                         <p className="mb-0 text-gray-400">
                           <strong className="checkout__card--bold">
                             Fecha Inicio:
                           </strong>{" "}
-                          {checkout.fechaInical}
+                          {
+                            fechaInicial
+                            ? format(new Date(fechaInicial), "dd/MM/yyyy H:mm b", {
+                              locales: es,
+                            })
+                            : 'N/A'
+                          }
                         </p>
                         <p className="mb-0 text-gray-400">
                           <strong className="checkout__card--bold">
                             Fecha Fin:
                           </strong>{" "}
-                          {checkout.fechaFinal}
+                          {
+                            fechaFinal
+                            ? format(new Date(fechaFinal), "dd/MM/yyyy H:mm b", {
+                              locales: es,
+                            })
+                            : 'N/A'
+                          }
                         </p>
                         <p className="mb-0 text-gray-400">
                           <strong className="checkout__card--bold">
                             Día (s):
                           </strong>{" "}
-                          {checkout.dias}
+                          {days}
                         </p>
                         <p className="mb-0 text-gray-400">
                           <strong className="checkout__card--bold">
@@ -114,7 +106,7 @@ export default function Checkout() {
                         </p>
                       </div>
                       <strong className="checkout__card-price text-orange-900 ms-md-auto">
-                        ${checkout.priceReserve}
+                        ${priceCart}
                       </strong>
                     </>
                   </article>

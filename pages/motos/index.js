@@ -9,7 +9,6 @@ export default function Motos() {
     try {
       const response = await getAllMotos();
       const dataJson = await response.json()
-      console.log(dataJson);
       setMotos(dataJson.data.motos);
     } catch (error) {}
   };

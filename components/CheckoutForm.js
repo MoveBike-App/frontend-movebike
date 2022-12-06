@@ -73,7 +73,7 @@ export default function CheckoutForm({
 
     const response = await stripe.confirmPayment({
       elements,
-      redirect: "if_required",
+      //redirect: "if_required",
       confirmParams: {
         // Make sure to change this to your payment completion page
         return_url: `http://localhost:3000/thanks?token=${token}&idReserve=${idReserve}`,
@@ -118,9 +118,7 @@ export default function CheckoutForm({
         }
 
         const respReserve = await createReserve(data, token);
-        console.log(respReserve);
         const dataJson = await respReserve.json()
-        console.log(dataJson);
         setIdReserve(dataJson.data._id)
         localStorage.removeItem("cartCurrent");
       }

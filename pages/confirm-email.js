@@ -13,7 +13,6 @@ export default function ConfirmEmail () {
     setIsLogged(logeado)
     const response = await validEmail(token)
     const dataJson = await response.json()
-    console.log(dataJson);
   }
 
   useEffect(() => {

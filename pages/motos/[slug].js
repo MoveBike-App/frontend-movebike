@@ -87,8 +87,6 @@ export default function Bike() {
   const onSubmit = (data) => {
     const token = localStorage.getItem("token");
     if (token) {
-      console.log(data);
-
       const initialDate2 = format(data.dateTimeCheckIn.$d, "MM/dd/yyyy");
       const initialDate = format(data.dateTimeCheckIn.$d, "MM/dd/yyyy H:mm");
       const finalDate = format(data.dateTimeCheckOut.$d, "MM/dd/yyyy H:mm");
@@ -97,9 +95,7 @@ export default function Bike() {
         new Date(finalDate),
         new Date(initialDate)
       );
-      console.log("TOTAL DIAS", totalDays);
       let totalPrice = Number(data.price) * Number(totalDays);
-      console.log(totalPrice);
 
       const cart = {
         vehicle: idMoto,
@@ -126,7 +122,6 @@ export default function Bike() {
 
   const getMoto = async () => {
     try {
-      console.log(slug);
       const response = await getById(slug);
       if (response.status === 200) {
         const {
@@ -142,7 +137,6 @@ export default function Bike() {
       //   router.push("/404");
       // }
     } catch (error) {
-      console.log(error);
     }
   };
 
@@ -153,13 +147,11 @@ export default function Bike() {
         const {
           data: { moto },
         } = await response.json();
-        console.log(moto);
 
         setMoto(moto);
         setFeatures(moto.features);
         setIdMoto(moto._id);
       } catch (error) {
-        console.log(error);
         // router.push("/404");
       }
     }
@@ -306,7 +298,6 @@ export default function Bike() {
                                       label="Fecha y hora de entrega"
                                       className="mt-4 w-100"
                                       minDate={value}
-                                      onChange={(e) => console.log(e.target.value) }
                                       renderInput={(params) => (
                                         <TextField {...params} />
                                       )}
