@@ -9,7 +9,6 @@ const AuthUserProvider = ({ children }) => {
 
     const handleGetUserFromStorage = () => {
         const storage = window.localStorage.getItem('userCurrent')
-        console.log(storage);
         const user = storage
             ? {
                 userId: storage.id,

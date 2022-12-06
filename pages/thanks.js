@@ -28,14 +28,11 @@ export default function Thanks() {
       const chargeData = await fetch("/api/retrieve-charge-reserve", options);
       const dataJson = await chargeData.json();
       let monto = dataJson.charge_data[0].amount / 100
-      console.log(monto);
       let formatMonto = new Intl.NumberFormat('en-In', {style: 'currency', currency: 'MXN', minimumFractionDigits: 2}).format(monto)
-      console.log(formatMonto);
       setAmount(formatMonto);
       setLink(dataJson.charge_data[0].receipt_url);
       setDescription(dataJson.charge_data[0].description);
       setIsPaid(dataJson.charge_data[0].paid);
-      console.log(dataJson);
     } catch (error) {}
   };
 

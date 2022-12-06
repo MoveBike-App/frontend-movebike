@@ -25,7 +25,6 @@ export default function Detail() {
       setData(dataJson.data.reserves)
       setFechaI(dataJson.data.reserves.initialDate)
     } catch (error) {
-      console.log(error);
     }
   }
   useEffect(() => {
@@ -56,7 +55,6 @@ export default function Detail() {
                       <strong className='checkout__card--bold'>
                         Fecha Inicio:
                       </strong>{' '}
-                      {console.log(fechaI)}
                       {
                         data.initialDate
                         ? format(new Date(data?.initialDate), "dd/MM/yyyy H:mm b", {locales: es })
