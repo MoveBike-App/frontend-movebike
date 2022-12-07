@@ -73,7 +73,7 @@ export default function CheckoutForm({
 
     const response = await stripe.confirmPayment({
       elements,
-      //redirect: "if_required",
+      redirect: "if_required",
       confirmParams: {
         // Make sure to change this to your payment completion page
         return_url: `http://localhost:3000/thanks?token=${token}&idReserve=${idReserve}`,
@@ -100,12 +100,8 @@ export default function CheckoutForm({
         setMessage(error.message);
       }
     } else {
-      setMessage("An unexpected error occurred.");
-    }
+      setMessage("Tu pago ha sido realizado con éxito!");
 
-    if (error) {
-      setMessage(error.message);
-    } else {
       const cartStorage = JSON.parse(localStorage.getItem("cartCurrent"));
       if (cartStorage) {
         const data = {
@@ -114,15 +110,23 @@ export default function CheckoutForm({
           initialDate: initialDate,
           finalDate: finalDate,
           totalDays: totalDays,
-          isPaid: true
+          isPaid: true,
+          payment_id: response?.paymentIntent?.id
         }
 
         const respReserve = await createReserve(data, token);
         const dataJson = await respReserve.json()
-        setIdReserve(dataJson.data._id)
+        ///setIdReserve(dataJson.data._id)
+        router.push(`/thanks?token=${token}&idReserve=${dataJson.data._id}&payment_intent=${response?.paymentIntent?.id}`)
         localStorage.removeItem("cartCurrent");
       }
     }
+
+    // if (error) {
+    //   setMessage(error.message);
+    // } else {
+      
+    // }
 
 
 

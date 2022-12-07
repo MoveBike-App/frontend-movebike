@@ -35,6 +35,7 @@ function getReserveById(id, token){
     method: 'GET',
     headers: {
       Authorization: token,
+      'typeSearch': 'BY_SLUG',
       mode: 'cors'
     }
   }
