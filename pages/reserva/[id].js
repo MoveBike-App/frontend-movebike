@@ -22,6 +22,7 @@ export default function Detail() {
     const token = localStorage.getItem("token");
     try {
       const response = await getReserveById(id, token);
+      console.log(response);
       const dataJson = await response.json();
       console.log(dataJson);
       setData(dataJson.data.reserves);
@@ -111,7 +112,11 @@ export default function Detail() {
                 <p className="text-center text-gray-600 h5 mb-lg-3">
                   Sigue de cerca el estado de tu reserva
                 </p>
-                <div className="d-flex wrapper-status justify-content-between">
+                {
+                  status != 'canceled'
+                  ? (
+                    <>
+                    <div className="d-flex wrapper-status justify-content-between">
                   <div className="msg-status">Procesando</div>
                   <div className="msg-status">Reservada</div>
                   <div className="msg-status">En ruta</div>
@@ -160,8 +165,8 @@ export default function Detail() {
                   />
                   <div
                     className={`round-step ${
-                      status === "onWay" || status === "delivered"
-                        ? "round-step--fill"
+                      status === "reserved"
+                        ? "round-step--border"
                         : status === "onWay" || status === "delivered"
                         ? "round-step--fill"
                         : "round-step--disabled"
@@ -174,9 +179,7 @@ export default function Detail() {
                         width={32}
                         height={32}
                       />
-                    ) : (
-                      ""
-                    )}
+                    ) : ''}
                   </div>
                   <div
                     className={`conector ${
@@ -188,24 +191,31 @@ export default function Detail() {
                   <div
                     className={`round-step ${
                       status === "delivered"
-                        ? "round-step--border"
-                        : status === "delivered"
                         ? "round-step--fill"
+                        : status === "onWay" 
+                        ? "round-step--border"
                         : "round-step--disabled"
                     } d-flex justify-content-center align-items-center`}
                   >
-                    {status === "delivered" ? (
+                    {status === "delivered" && (
                       <Image
                         src="/assets/icons/icon-check-step.webp"
                         alt="Icon check step"
                         width={32}
                         height={32}
                       />
-                    ) : (
-                      ""
                     )}
                   </div>
                 </div>
+                    </>
+                  )
+                  : (
+                    <div class="alert alert-danger" role="alert">
+                      ¡Lo sentimos, tu reserva ha sido cancelada!
+                    </div>
+                  )
+                }
+                
               </section>
 
               <section className=" text-center mt-5 mb-4">
