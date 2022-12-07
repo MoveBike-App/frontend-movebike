@@ -18,7 +18,8 @@ function getById(id) {
     const options = {
         method: 'GET',
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'typeSearch': 'BY_SLUG'
         },
         mode: 'cors'
     }

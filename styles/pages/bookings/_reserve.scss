@@ -13,9 +13,29 @@
         //max-width: 305px;
     }
 
+    .wrapper-status {
+        max-width: 325px;
+        margin: 0 auto;
+    }
+
+    .msg-status {
+        left: -90px;
+        font-style: normal;
+        font-weight: 500;
+        font-size: 12px;
+        line-height: 20px;
+        color: variables.$gray-500;
+
+        @include mixins.responsive(variables.$medium) {
+            top: -100%;
+            left: -60%;
+        }
+    }
+
     &__tracking {
         max-width: 305px;
-        margin-top: 36px;
+        margin-top: 24px;
+        
 
         .round-step {
             position: relative;
@@ -24,11 +44,13 @@
             border-radius: 1000px;
            
     
-            .msg-status {
+            
+
+            .msg-default {
                 left: -90px;
                 font-style: normal;
                 font-weight: 500;
-                font-size: 16px;
+                font-size: 12px;
                 line-height: 20px;
                 color: variables.$gray-500;
     
