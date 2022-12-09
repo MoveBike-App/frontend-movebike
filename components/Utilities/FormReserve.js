@@ -94,13 +94,7 @@ export default function FormReserve({
     console.log(`Marker moved to ${JSON.stringify(coordinate)}.`);
   }
 
-  const handleSubmitAdd = useCallback(
-    async (e) => {
-      e.preventDefault();
-      
-    },
-    [showConfirm]
-  );
+
 
   function submitForm() {
     setShowValidationText(true);
@@ -118,36 +112,41 @@ export default function FormReserve({
   }
 
   const onSubmit = async (data) => {
-    const result = await showConfirm();
-    if (result.type === "nochange") submitForm();
-    console.log(data);
-    const token = localStorage.getItem("token");
-    if (token) {
-      const initialDate2 = format(data.dateTimeCheckIn.$d, "MM/dd/yyyy");
-      const initialDate = format(data.dateTimeCheckIn.$d, "MM/dd/yyyy H:mm");
-      const finalDate = format(data.dateTimeCheckOut.$d, "MM/dd/yyyy H:mm");
+    try {
+      const result = await showConfirm();
+      console.log(result)
+      console.log(data);
+      const token = localStorage.getItem("token");
+      if (token) {
+        const initialDate2 = format(data.dateTimeCheckIn.$d, "MM/dd/yyyy");
+        const initialDate = format(data.dateTimeCheckIn.$d, "MM/dd/yyyy H:mm");
+        const finalDate = format(data.dateTimeCheckOut.$d, "MM/dd/yyyy H:mm");
 
-      const totalDays = differenceInDays(
-        new Date(finalDate),
-        new Date(initialDate)
-      );
-      let totalPrice = Number(data.price) * Number(totalDays);
+        const totalDays = differenceInDays(
+          new Date(finalDate),
+          new Date(initialDate)
+        );
+        let totalPrice = Number(data.price) * Number(totalDays);
 
-      const cart = {
-        vehicle: idMoto,
-        nameMoto: data.nameMoto,
-        location: data.location,
-        pickup: data.pickup,
-        priceReserve: totalPrice,
-        fechaInical: initialDate,
-        fechaFinal: finalDate,
-        dias: totalDays,
-      };
-      localStorage.setItem("cartCurrent", JSON.stringify(cart));
-      router.push("/checkout");
-    } else {
-      setLogin(true);
+        const cart = {
+          vehicle: idMoto,
+          nameMoto: data.nameMoto,
+          location: data.location,
+          pickup: data.pickup,
+          priceReserve: totalPrice,
+          fechaInical: initialDate,
+          fechaFinal: finalDate,
+          dias: totalDays,
+        };
+        localStorage.setItem("cartCurrent", JSON.stringify(cart));
+        router.push("/checkout");
+      } else {
+        setLogin(true);
+      }
+    } catch (error) {
+      console.log('Error: ', error)
     }
+    
   };
 
   return (
