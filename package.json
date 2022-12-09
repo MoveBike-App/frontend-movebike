@@ -14,6 +14,8 @@
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
     "@hookform/resolvers": "^2.9.10",
+    "@mapbox/search-js-core": "^1.0.0-beta.14",
+    "@mapbox/search-js-react": "^1.0.0-beta.14",
     "@mui/lab": "^5.0.0-alpha.109",
     "@mui/material": "^5.10.15",
     "@mui/styled-engine-sc": "^5.10.6",
