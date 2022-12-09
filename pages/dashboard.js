@@ -8,7 +8,7 @@ import Layouts from "components/Layouts";
 import Image from "next/image";
 import { getReserveByCustomer } from "../services/reserves/reserve";
 import { useState } from "react";
-import { h, html } from "gridjs";
+  import { h, html } from "gridjs";
 import { useRouter } from "next/router";
 
 export default function Dashboard() {
