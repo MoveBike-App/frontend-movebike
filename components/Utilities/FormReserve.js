@@ -452,7 +452,7 @@ export default function FormReserve({
                             className="input"
                             placeholder="ZIP / Postcode"
                             autoComplete="postal-code"
-                            {..."zip"}
+                            {...register('zip')}
                           />
                         </div>
                       </div>
