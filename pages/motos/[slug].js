@@ -28,88 +28,48 @@ const locales = ["en", "ru", "ar-sa"];
 
 
 export default function Bike() {
-  const [locale, setLocale] = useState("es");
-  const [ampm, setAmpm] = useState(undefined);
-  const [ampmOption, setAmpmOption] = useState("undefined");
-  const { user, isLogged, setIsLogged } = useContext(AuthContext);
+  // const [locale, setLocale] = useState("es");
+  // const [ampm, setAmpm] = useState(undefined);
+  // const [ampmOption, setAmpmOption] = useState("undefined");
+  // const { user, isLogged, setIsLogged } = useContext(AuthContext);
   const router = useRouter();
   const [moto, setMoto] = useState({});
   const [features, setFeatures] = useState([]);
   const { slug } = router.query;
-  const [checkIn, setCheckIn] = useState(null);
-  const [checkOut, setCheckOut] = useState(null);
-  const [dateNow, setDateNow] = useState("");
-  const [selectedDate, setselectedDate] = useState(null);
-  const [value, setValue] = useState(dayjs(new Date()));
-  const [minTime, setMinTime] = useState(dayjs(new Date()));
-  const [location, setLocation] = useState();
-  const [counter, setCounter] = useState(null);
-  const [login, setLogin] = useState(false);
+  // const [checkIn, setCheckIn] = useState(null);
+  // const [checkOut, setCheckOut] = useState(null);
+  // const [dateNow, setDateNow] = useState("");
+  // const [selectedDate, setselectedDate] = useState(null);
+  // const [value, setValue] = useState(dayjs(new Date()));
+  // const [minTime, setMinTime] = useState(dayjs(new Date()));
+  // const [location, setLocation] = useState();
+  // const [counter, setCounter] = useState(null);
+  // const [login, setLogin] = useState(false);
   
-  const handleClose = () => setLogin(false);
+  // const handleClose = () => setLogin(false);
   const [idMoto, setIdMoto] = useState("");
 
-  const {
-    register,
-    formState: { errors },
-    handleSubmit,
-    control,
-  } = useForm();
 
-  const onSubmit = (data) => {
-    const token = localStorage.getItem("token");
-    if (token) {
-      const initialDate2 = format(data.dateTimeCheckIn.$d, "MM/dd/yyyy");
-      const initialDate = format(data.dateTimeCheckIn.$d, "MM/dd/yyyy H:mm");
-      const finalDate = format(data.dateTimeCheckOut.$d, "MM/dd/yyyy H:mm");
 
-      const totalDays = differenceInDays(
-        new Date(finalDate),
-        new Date(initialDate)
-      );
-      let totalPrice = Number(data.price) * Number(totalDays);
 
-      const cart = {
-        vehicle: idMoto,
-        nameMoto: data.nameMoto,
-        location: data.location,
-        pickup: data.pickup,
-        priceReserve: totalPrice,
-        fechaInical: initialDate,
-        fechaFinal: finalDate,
-        dias: totalDays,
-      };
+  // const getMoto = async () => {
+  //   try {
+  //     const response = await getById(slug);
+  //     if (response.status === 200) {
+  //       const {
+  //         data: { moto },
+  //       } = await response.json();
 
-      localStorage.setItem("cartCurrent", JSON.stringify(cart));
-      router.push("/checkout");
-    } else {
-      setLogin(true);
-    }
-  };
+  //       setMoto(moto);
+  //       setFeatures(moto.features);
+  //       setIdMoto(moto._id);
+  //     }
 
-  useEffect(() => {
-    const date = Date.now();
-    setDateNow(date);
-  }, []);
-
-  const getMoto = async () => {
-    try {
-      const response = await getById(slug);
-      if (response.status === 200) {
-        const {
-          data: { moto },
-        } = await response.json();
-
-        setMoto(moto);
-        setFeatures(moto.features);
-        setIdMoto(moto._id);
-      }
-
-      // if (response.status >= 400 || response.status <= 599) {
-      //   router.push("/404");
-      // }
-    } catch (error) {}
-  };
+  //     // if (response.status >= 400 || response.status <= 599) {
+  //     //   router.push("/404");
+  //     // }
+  //   } catch (error) {}
+  // };
 
   useEffect(() => {
     async function getMoto() {
@@ -145,7 +105,7 @@ export default function Bike() {
             <section className="container-fluid mt-4">
               <div className="container">
 
-                <FormReserve image={moto?.image} keyImage={moto?.keyImage} name={moto?.name} price={moto.price} idMoto={moto._id} />
+                <FormReserve image={moto?.image} keyImage={moto?.keyImage} nameMoto={moto?.name} price={moto.price} idMoto={moto._id} />
 
                 <div className="row mb-5">
                   <h3>Características</h3>

@@ -14,6 +14,7 @@ export default function CheckoutForm({
   initialDate,
   finalDate,
   totalDays,
+  addressMap,
   token,
 }) {
   const stripe = useStripe();
@@ -111,6 +112,7 @@ export default function CheckoutForm({
           finalDate: finalDate,
           totalDays: totalDays,
           isPaid: true,
+          address: addressMap,
           payment_id: response?.paymentIntent?.id
         }
 

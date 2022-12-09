@@ -1,3 +1,4 @@
+import React, { useState, useCallback, useEffect } from "react";
 import Image from "next/image";
 import { useForm, Controller } from "react-hook-form";
 import {
@@ -6,7 +7,6 @@ import {
   useConfirmAddress,
   config,
 } from "@mapbox/search-js-react";
-import React, { useState, useCallback, useEffect } from "react";
 
 import dayjs from "dayjs";
 
@@ -39,14 +39,7 @@ const options = {
   country: "MX",
 };
 
-export default function FormReserve({
-  image,
-  keyImage,
-  name,
-  price,
-  submitData,
-  idMoto,
-}) {
+export default function FormReserve({image, keyImage, nameMoto, price, submitData, idMoto }) {
   const router = useRouter();
   const [radio, setRadio] = useState("");
   const [value, setValue] = useState(new Date());
@@ -59,13 +52,7 @@ export default function FormReserve({
   const [showValidationText, setShowValidationText] = useState(false);
   const [token, setToken] = useState("");
 
-  const {
-    register,
-    formState: { errors },
-    handleSubmit,
-    control,
-  } = useForm();
-
+  
 
   useEffect(() => {
     const accessToken = process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN;
@@ -91,10 +78,10 @@ export default function FormReserve({
   );
 
   function handleSaveMarkerLocation(coordinate) {
+    const coor = JSON.stringify(coordinate);
     console.log(`Marker moved to ${JSON.stringify(coordinate)}.`);
+    return coor;
   }
-
-
 
   function submitForm() {
     setShowValidationText(true);
@@ -111,14 +98,24 @@ export default function FormReserve({
     setFeature(null);
   }
 
+  const {
+    register,
+    formState: { errors },
+    handleSubmit,
+    control,
+  } = useForm();
+
   const onSubmit = async (data) => {
+    console.log(handleSaveMarkerLocation());
     try {
       const result = await showConfirm();
-      console.log(result)
+      console.log(result);
       console.log(data);
+      const fullAddress = `${data.address_line1}, ${data?.address_line2}, ${data.zip} ${data.city}, ${
+        data.state}`;
+      const coordinatesAddress = `${handleSaveMarkerLocation()}`;
       const token = localStorage.getItem("token");
       if (token) {
-        const initialDate2 = format(data.dateTimeCheckIn.$d, "MM/dd/yyyy");
         const initialDate = format(data.dateTimeCheckIn.$d, "MM/dd/yyyy H:mm");
         const finalDate = format(data.dateTimeCheckOut.$d, "MM/dd/yyyy H:mm");
 
@@ -130,8 +127,10 @@ export default function FormReserve({
 
         const cart = {
           vehicle: idMoto,
+          image: image,
           nameMoto: data.nameMoto,
-          location: data.location,
+          address: fullAddress,
+          coordinates: coordinatesAddress,
           pickup: data.pickup,
           priceReserve: totalPrice,
           fechaInical: initialDate,
@@ -144,145 +143,147 @@ export default function FormReserve({
         setLogin(true);
       }
     } catch (error) {
-      console.log('Error: ', error)
+      console.log("Error: ", error);
     }
-    
-  };
+  }
 
-  return (
-    <>
-      <form ref={formRef} onSubmit={handleSubmit(onSubmit)} className="row">
-        <div className="col-lg-6 border-1 position-relative">
-          {image ? (
+return (
+  <>
+    <form ref={formRef} onSubmit={handleSubmit(onSubmit)} className="row">
+      <div className="col-lg-6 border-1 position-relative">
+        {image ? (
+          <>
+            <Image
+              className="d-block d-md-none mx-md-auto"
+              loader={myLoader}
+              src={keyImage}
+              alt={`Scooter ${keyImage}`}
+              width={250}
+              height={250}
+            />
+            <Image
+              className="d-none d-md-block mx-auto mx-lg-0"
+              loader={myLoader}
+              src={keyImage}
+              alt={`Scooter ${keyImage}`}
+              width={400}
+              height={400}
+            />
+          </>
+        ) : (
+          <div className="d-flex h-100 align-items-center justify-content-center">
+            <div className="spinner-border" role="status">
+              <span className="visually-hidden">Loading...</span>
+            </div>
+          </div>
+        )}
+      </div>
+      <div className="col-lg-6 pb-4">
+        <div className="card p-3 shadow border-0">
+          {nameMoto ? (
             <>
-              <Image
-                className="d-block d-md-none mx-md-auto"
-                loader={myLoader}
-                src={keyImage}
-                alt={`Scooter ${keyImage}`}
-                width={250}
-                height={250}
-              />
-              <Image
-                className="d-none d-md-block mx-auto mx-lg-0"
-                loader={myLoader}
-                src={keyImage}
-                alt={`Scooter ${keyImage}`}
-                width={400}
-                height={400}
-              />
+              <h1 className="text-black-700 mv-h1">{nameMoto}</h1>
+              <input type="hidden" value={nameMoto} {...register("nameMoto")} />
             </>
           ) : (
-            <div className="d-flex h-100 align-items-center justify-content-center">
-              <div className="spinner-border" role="status">
-                <span className="visually-hidden">Loading...</span>
-              </div>
-            </div>
+            <p className="placeholder-glow">
+              <span className="placeholder col-12"></span>
+            </p>
           )}
-        </div>
-        <div className="col-lg-6 pb-4">
-          <div className="card p-3 shadow border-0">
-            {name ? (
-              <>
-                <h1 className="text-black-700 mv-h1">{name}</h1>
-                <input type="hidden" value={name} {...register("nameMoto")} />
-              </>
-            ) : (
-              <p className="placeholder-glow">
-                <span className="placeholder col-12"></span>
-              </p>
-            )}
 
-            {price ? (
-              <>
-                <h5 className="text-gray-400 mt-1">${price} MXN por día</h5>
-                <input type="hidden" value={price} {...register("price")} />
-              </>
-            ) : (
-              <p className="placeholder-glow">
-                <span className="placeholder col-12"></span>
-              </p>
-            )}
-            {price ? (
-              <FormControl fullWidth className="mt-4">
-                <InputLabel id="demo-simple-select-label">Ubicación</InputLabel>
-                <Controller
-                  name="location"
-                  control={control}
-                  render={({ field: { onChange, onBlur, value, ref } }) => {
-                    return (
-                      <Select
-                        labelId="demo-simple-select-label"
-                        id="demo-simple-select"
-                        className="datepicker mb-2 mb-lg-0"
-                        label="Ubicación"
-                        onChange={onChange}
-                        onBlur={onBlur}
-                        value={value}
-                      >
-                        <MenuItem value={"Cancún, Quintana, Roo"}>
-                          Cancún, Quintana, Roo.
-                        </MenuItem>
-                        <MenuItem value={"Tulúm, Quintana, Roo"}>
-                          Tulúm, Quintana, Roo.
-                        </MenuItem>
-                      </Select>
-                    );
-                  }}
-                  rules={{ required: "This is required" }}
-                />
-              </FormControl>
-            ) : (
-              <p className="placeholder-glow">
-                <span className="placeholder col-12"></span>
-              </p>
-            )}
+          {price ? (
+            <>
+              <h5 className="text-gray-400 mt-1">${price} MXN por día</h5>
+              <input type="hidden" value={price} {...register("price")} />
+            </>
+          ) : (
+            <p className="placeholder-glow">
+              <span className="placeholder col-12"></span>
+            </p>
+          )}
+          {price ? (
+            <FormControl fullWidth className="mt-4">
+              <InputLabel id="demo-simple-select-label">Ubicación</InputLabel>
+              <Controller
+                name="location"
+                control={control}
+                render={({ field: { onChange, onBlur, value, ref } }) => {
+                  return (
+                    <Select
+                      labelId="demo-simple-select-label"
+                      id="demo-simple-select"
+                      className="datepicker mb-2 mb-lg-0"
+                      label="Ubicación"
+                      onChange={onChange}
+                      onBlur={onBlur}
+                      value={value}
+                    >
+                      <MenuItem value={"Cancún, Quintana, Roo"}>
+                        Cancún, Quintana, Roo.
+                      </MenuItem>
+                      <MenuItem value={"Tulúm, Quintana, Roo"}>
+                        Tulúm, Quintana, Roo.
+                      </MenuItem>
+                    </Select>
+                  );
+                }}
+                rules={{ required: "This is required" }}
+              />
+            </FormControl>
+          ) : (
+            <p className="placeholder-glow">
+              <span className="placeholder col-12"></span>
+            </p>
+          )}
 
-            {errors.location?.type === "required" && (
-              <p className="text-danger" role="alert">
-                {errors.location?.message}
-              </p>
-            )}
+          {errors.location?.type === "required" && (
+            <p className="text-danger" role="alert">
+              {errors.location?.message}
+            </p>
+          )}
 
-            <div className="row">
-              <div className="col-md-6">
-                {price ? (
-                  <LocalizationProvider
-                    dateAdapter={AdapterDayjs}
-                    //adapterLocale={locale}
-                  >
-                    <Controller
-                      name="dateTimeCheckIn"
-                      control={control}
-                      valueName="selected"
-                      rules={{ required: "This is required" }}
-                      render={({ field: { ref, ...rest } }) => {
-                        return (
-                          <DateTimePicker
-                            label="Fecha y hora de entrega"
-                            className="mt-4 w-100"
-                            minDate={value}
-                            renderInput={(params) => <TextField {...params} />}
-                            {...rest}
-                          />
-                        );
-                      }}
-                    />
-                  </LocalizationProvider>
-                ) : (
-                  <p className="placeholder-glow">
-                    <span className="placeholder col-12"></span>
-                  </p>
-                )}
+          <div className="row">
+            <div className="col-md-6">
+              {price ? (
+                <LocalizationProvider
+                  dateAdapter={AdapterDayjs}
+                  //adapterLocale={locale}
+                >
+                  <Controller
+                    name="dateTimeCheckIn"
+                    control={control}
+                    valueName="selected"
+                    rules={{ required: "This is required" }}
+                    render={({ field: { ref, ...rest } }) => {
+                      return (
+                        <DateTimePicker
+                          label="Fecha y hora de entrega"
+                          className="mt-4 w-100"
+                          minDate={value}
+                          renderInput={(params) => <TextField {...params} />}
+                          {...rest}
+                        />
+                      );
+                    }}
+                  />
+                </LocalizationProvider>
+              ) : (
+                <p className="placeholder-glow">
+                  <span className="placeholder col-12"></span>
+                </p>
+              )}
 
-                {errors.dateTimeCheckIn?.type === "required" && (
-                  <p className="text-danger" role="alert">
-                    {errors.dateTimeCheckIn?.message}
-                  </p>
-                )}
-              </div>
-              <div className="col-md-6">
-                {price ? (
+              {errors.dateTimeCheckIn?.type === "required" && (
+                <p className="text-danger" role="alert">
+                  {errors.dateTimeCheckIn?.message}
+                </p>
+              )}
+            </div>
+            <div className="col-md-6">
+              {
+                price
+                ? 
+                (
                   <LocalizationProvider
                     dateAdapter={AdapterDayjs}
                     //adapterLocale={locale}
@@ -306,221 +307,224 @@ export default function FormReserve({
                       }}
                     />
                   </LocalizationProvider>
-                ) : (
+                )
+                :
+                (
                   <p className="placeholder-glow">
                     <span className="placeholder col-12"></span>
                   </p>
-                )}
+                )
+              }
 
-                {errors.dateTimeCheckOut?.type === "required" && (
+              {errors.dateTimeCheckOut?.type === "required" && (
+                <p className="text-danger" role="alert">
+                  {errors.dateTimeCheckOut?.message}
+                </p>
+              )}
+            </div>
+          </div>
+          {price ? (
+            <FormControl className="mt-4 text-center">
+              <FormLabel id="demo-row-radio-buttons-group-label">
+                ¿Dónde recoges?
+              </FormLabel>
+              <Controller
+                control={control}
+                name="pickup"
+                rules={{ required: "This is required" }}
+                render={({ field }) => (
+                  <RadioGroup
+                    row
+                    aria-labelledby="demo-row-radio-buttons-group-label"
+                    name="row-radio-buttons-group"
+                    className="d-flex justify-content-evenly"
+                    onChange={setRadio(field.value)}
+                    {...field}
+                  >
+                    <FormControlLabel
+                      value="hotel"
+                      control={<Radio />}
+                      label="Mi hotel"
+                    />
+                    <FormControlLabel
+                      value="sucursal"
+                      control={<Radio />}
+                      label="Sucursal"
+                    />
+                  </RadioGroup>
+                )}
+              />
+            </FormControl>
+          ) : (
+            <p className="placeholder-glow">
+              <span className="placeholder col-12"></span>
+            </p>
+          )}
+
+          {errors.pickup?.type === "required" && (
+            <p className="text-danger text-center " role="alert">
+              {errors.pickup?.message}
+            </p>
+          )}
+
+          {radio === "hotel" && (
+            <>
+              {/* <div className="mb-2">
+                <label className="form-label">
+                  Ingresa Ubicación del Hotel
+                </label>
+                <input
+                  type="text"
+                  className="form-control"
+                  {...register("locationGmaps", {
+                    required: "This is required",
+                  })}
+                />
+                {errors.locationGmaps?.type === "required" && (
                   <p className="text-danger" role="alert">
-                    {errors.dateTimeCheckOut?.message}
+                    {errors.locationGmaps?.message}
                   </p>
                 )}
-              </div>
-            </div>
-            {price ? (
-              <FormControl className="mt-4 text-center">
-                <FormLabel id="demo-row-radio-buttons-group-label">
-                  ¿Dónde recoges?
-                </FormLabel>
-                <Controller
-                  control={control}
-                  name="pickup"
-                  rules={{ required: "This is required" }}
-                  render={({ field }) => (
-                    <RadioGroup
-                      row
-                      aria-labelledby="demo-row-radio-buttons-group-label"
-                      name="row-radio-buttons-group"
-                      className="d-flex justify-content-evenly"
-                      onChange={setRadio(field.value)}
-                      {...field}
-                    >
-                      <FormControlLabel
-                        value="hotel"
-                        control={<Radio />}
-                        label="Mi hotel"
-                      />
-                      <FormControlLabel
-                        value="sucursal"
-                        control={<Radio />}
-                        label="Sucursal"
-                      />
-                    </RadioGroup>
-                  )}
-                />
-              </FormControl>
-            ) : (
-              <p className="placeholder-glow">
-                <span className="placeholder col-12"></span>
-              </p>
-            )}
-
-            {errors.pickup?.type === "required" && (
-              <p className="text-danger text-center " role="alert">
-                {errors.pickup?.message}
-              </p>
-            )}
-
-            {radio === "hotel" && (
-              <>
-                <div className="mb-2">
-                  <label className="form-label">
-                    Ingresa Ubicación del Hotel
-                  </label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    {...register("locationGmaps", {
-                      required: "This is required",
-                    })}
-                  />
-                  {errors.locationGmaps?.type === "required" && (
-                    <p className="text-danger" role="alert">
-                      {errors.locationGmaps?.message}
-                    </p>
-                  )}
-                </div>
-                <>
-                  <div className="flex flex--column">
-                    <div className="grid grid--gut24 mb60">
-                      <div className="col col--auto-mm w-full">
-                        {/* Input form */}
+              </div> */}
+                <div className="flex flex--column">
+                  <div>
+                  <div className="col col--auto-mm w-full">
+                      {/* Input form */}
+                      <label className="txt-s txt-bold color-gray mb3">
+                        Address
+                      </label>
+                      <AddressAutofill
+                        options={options}
+                        accessToken={token}
+                        onRetrieve={handleRetrieve}
+                      >
+                        <input
+                          className="input mb12"
+                          placeholder="Empieza a escribir tu dirección, p. ej. 123 Main..."
+                          autoComplete="address-line1"
+                          id="mapbox-autofill"
+                          {...register("address_line1")}
+                        />
+                      </AddressAutofill>
+                      {!showFormExpanded && (
+                        <button
+                          id="manual-entry"
+                          className="w180 mt6 link txt-ms border-b color-gray color-black-on-hover"
+                          onClick={() => setShowFormExpanded(true)}
+                        >
+                          Enter an address manually
+                        </button>
+                      )}
+                    </div>
+                  </div>
+                  <div className="grid grid--gut24 mb60">
+                    
+                    <div className="col col--auto-mm w-full">
+                      
+                      <div
+                        className="secondary-inputs"
+                        style={{
+                          display: showFormExpanded ? "block" : "none",
+                        }}
+                      >
                         <label className="txt-s txt-bold color-gray mb3">
-                          Address
+                          Address Line 2
                         </label>
-                        <AddressAutofill
-                          options={options}
-                          accessToken={token}
-                          onRetrieve={handleRetrieve}
-                        >
-                          <input
-                            className="input mb12"
-                            placeholder="Start typing your address, e.g. 123 Main..."
-                            autoComplete="address-line1"
-                            id="mapbox-autofill"
-                            {...register("address-line1")}
-                          />
-                        </AddressAutofill>
-                        {!showFormExpanded && (
-                          <button
-                            id="manual-entry"
-                            className="w180 mt6 link txt-ms border-b color-gray color-black-on-hover"
-                            onClick={() => setShowFormExpanded(true)}
-                          >
-                            Enter an address manually
-                          </button>
-                        )}
-                        <div
-                          className="secondary-inputs"
-                          style={{
-                            display: showFormExpanded ? "block" : "none",
-                          }}
-                        >
-                          <label className="txt-s txt-bold color-gray mb3">
-                            Address Line 2
-                          </label>
-                          <input
-                            className="input mb12"
-                            placeholder="Apartment, suite, unit, building, floor, etc."
-                            autoComplete="address-line2"
-                            {...register("address-line2")}
-                          />
-                          <label className="txt-s txt-bold color-gray mb3">
-                            City
-                          </label>
-                          <input
-                            className="input mb12"
-                            placeholder="City"
-                            autoComplete="address-level2"
-                            {...register("city")}
-                          />
-                          <label className="txt-s txt-bold color-gray mb3">
-                            State / Region
-                          </label>
-                          <input
-                            className="input mb12"
-                            placeholder="State / Region"
-                            autoComplete="address-level1"
-                            {...register("state")}
-                          />
-                          <label className="txt-s txt-bold color-gray mb3">
-                            ZIP / Postcode
-                          </label>
-                          <input
-                            className="input"
-                            placeholder="ZIP / Postcode"
-                            autoComplete="postal-code"
-                            {...register('zip')}
-                          />
-                        </div>
+                        <input
+                          className="input mb12"
+                          placeholder="Apartment, suite, unit, building, floor, etc."
+                          autoComplete="address-line2"
+                          {...register("address_line2")}
+                        />
+                        <label className="txt-s txt-bold color-gray mb3">
+                          City
+                        </label>
+                        <input
+                          className="input mb12"
+                          placeholder="City"
+                          autoComplete="address-level2"
+                          {...register("city")}
+                        />
+                        <label className="txt-s txt-bold color-gray mb3">
+                          State / Region
+                        </label>
+                        <input
+                          className="input mb12"
+                          placeholder="State / Region"
+                          autoComplete="address-level1"
+                          {...register("state")}
+                        />
+                        <label className="txt-s txt-bold color-gray mb3">
+                          ZIP / Postcode
+                        </label>
+                        <input
+                          className="input"
+                          placeholder="ZIP / Postcode"
+                          autoComplete="postal-code"
+                          {...register("zip")}
+                        />
                       </div>
-                      <div className="col col--auto-mm">
-                        {/* Visual confirmation map */}
-                        <div
-                          id="minimap-container"
-                          className="h240 w360 relative mt18"
-                        >
-                          <AddressMinimap
-                            canAdjustMarker={true}
-                            satelliteToggle={true}
-                            feature={feature}
-                            show={showMinimap}
-                            onSaveMarkerLocation={handleSaveMarkerLocation}
-                          />
-                        </div>
+                    </div>
+                    <div className="col col--auto-mm">
+                      {/* Visual confirmation map */}
+                      <div
+                        id="minimap-container"
+                        className="h240 w360 relative mt18"
+                      >
+                        <AddressMinimap
+                          canAdjustMarker={true}
+                          satelliteToggle={true}
+                          feature={feature}
+                          show={showMinimap}
+                          onSaveMarkerLocation={handleSaveMarkerLocation}
+                        />
                       </div>
                     </div>
                   </div>
-                </>
-              </>
-            )}
-            {radio === "sucursal" && <p>MOVEBIKE APP</p>}
+                </div>
+            </>
+          )}
 
-            {/* Form buttons */}
-            {showFormExpanded && (
-              <div className="mb30 submit-btns">
-                <button
-                  type="submit"
-                  className="btn btn-movebike contained mt-4 w-100"
-                  id="btn-confirm"
-                >
-                  Reservar ahora
-                </button>
-                <button
-                  type="button"
-                  className="btn round btn--gray-light ml3"
-                  id="btn-reset"
-                  onClick={resetForm}
-                >
-                  Reset
-                </button>
-              </div>
-            )}
-            {/* Validation text */}
-            {showValidationText && (
-              <div id="validation-msg" className="mt24 txt-m txt-bold">
-                Order successfully submitted.
-              </div>
-            )}
-          </div>
+          {radio === "sucursal" && <p>MOVEBIKE APP</p>}
+
+          {/* Form buttons */}
+          {showFormExpanded && (
+            <div className="mb30 submit-btns">
+              <button
+                type="submit"
+                className="btn btn-movebike contained mt-4 w-100"
+                id="btn-confirm"
+              >
+                Reservar ahora
+              </button>
+              <button
+                type="button"
+                className="btn round btn--gray-light ml3"
+                id="btn-reset"
+                onClick={resetForm}
+              >
+                Reset
+              </button>
+            </div>
+          )}
+          {/* Validation text */}
+          {showValidationText && (
+            <div id="validation-msg" className="mt24 txt-m txt-bold">
+              Order successfully submitted.
+            </div>
+          )}
         </div>
-      </form>
+      </div>
+    </form>
 
-      <ToastContainer position="top-end" className="mt-2 me-2">
-        <Toast
-          onClose={() => setLogin(false)}
-          show={login}
-          delay={3000}
-          autohide
-        >
-          <Toast.Header>
-            <strong className={`me-auto text-warning`}>Notificación</strong>
-          </Toast.Header>
-          <Toast.Body>Debes iniciar sesión</Toast.Body>
-        </Toast>
-      </ToastContainer>
-    </>
-  );
+    <ToastContainer position="top-end" className="mt-2 me-2">
+      <Toast onClose={() => setLogin(false)} show={login} delay={3000} autohide>
+        <Toast.Header>
+          <strong className={`me-auto text-warning`}>Notificación</strong>
+        </Toast.Header>
+        <Toast.Body>Debes iniciar sesión</Toast.Body>
+      </Toast>
+    </ToastContainer>
+  </>
+  )
 }
