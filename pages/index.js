@@ -3,11 +3,11 @@ import CardsExperience from 'components/CardsExperience'
 import Hero from 'components/home/Hero'
 import dynamic from 'next/dynamic'
 const FloteBikes = dynamic(() => import('components/home/FloteBikes'), {
-  ssr: true
+  ssr: false
 })
 
 const Places = dynamic(() => import('components/home/Places'), {
-  ssr: true
+  ssr: false
 })
 
 export default function Home () {

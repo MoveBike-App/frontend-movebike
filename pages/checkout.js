@@ -18,12 +18,14 @@ export default function Checkout() {
   const [fechaFinal, setFechaFinal] = useState();
   const [checkout, setCheckout] = useState(false);
   const [days, setDays] = useState()
+  const [addressMap, setAddressMap] = useState()
+  const [image, setImage] = useState()
 
   const getCart = () => {
     const cartStorage = JSON.parse(localStorage.getItem("cartCurrent"));
     if (cartStorage) {
       setCheckout(true);
-      const { vehicle, priceReserve, nameMoto, fechaFinal, fechaInical, dias } =
+      const { vehicle, priceReserve, nameMoto, fechaFinal, fechaInical, dias, address, image } =
         cartStorage;
       setPriceCart(Number(priceReserve));
       setMotoCart(nameMoto);
@@ -31,6 +33,8 @@ export default function Checkout() {
       setFechaInicial(fechaInical);
       setFechaFinal(fechaFinal);
       setDays(dias)
+      setAddressMap(address)
+      setImage(image)
     } else {
       //router.push("/")
     }
@@ -57,8 +61,8 @@ export default function Checkout() {
                 <section className="checkout__card">
                   <article className="checkout__card--article d-flex flex-column flex-md-row justify-content-center align-items-center">
                     <>
-                      <Image
-                        src="/assets/landing/flotebikers/vitalia-125.webp"
+                      <img
+                        src={`${image}`}
                         alt="Scooter Vitalia 125"
                         width={130}
                         height={95}
@@ -138,6 +142,7 @@ export default function Checkout() {
                     initialDate={fechaInicial}
                     finalDate={fechaFinal}
                     totalDays={days}
+                    address={addressMap}
                   />
                 </section>
               </div>

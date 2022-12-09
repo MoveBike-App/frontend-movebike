@@ -13,6 +13,7 @@ export default function Thanks() {
   const [description, setDescription] = useState("");
   const [isLogged, setIsLogged] = useState(false)
   const retrieveCharge = router.query["payment_intent"];
+  const { idReserve } = router.query
 
   const getPaymentIntent = async () => {
     const token = localStorage.getItem('token')
@@ -79,7 +80,7 @@ export default function Thanks() {
                                   target={"_blank"}
                                   rel="noreferrer"
                                 >
-                                  Ver recibo
+                                  Ver recibo de pago
                                 </a>
                               </th>
                             </tr>
@@ -94,12 +95,12 @@ export default function Thanks() {
                       En breve recibirás un correo con la información <br /> del
                       contacto encargado de entregar tu reserva
                     </p>
-                    <a
+                    <Link
                       className="btn btn-movebike contained me-bookings"
-                      href={'/dashboard'}
+                      href={`/reserva/${idReserve}`}
                     >
                       Ver reserva
-                    </a>
+                    </Link>
 
                     <div className="thanks__card-tracking steps mx-auto d-flex flex-column flex-md-row justify-content-between align-items-center">
                       <div className="round-step round-step--fill d-flex justify-content-center align-items-center">
