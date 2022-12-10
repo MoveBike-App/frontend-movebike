@@ -55,7 +55,7 @@ export default function FormReserve({image, keyImage, nameMoto, price, submitDat
   
 
   useEffect(() => {
-    const accessToken = process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN;
+    const accessToken = 'pk.eyJ1Ijoiam9uYXRlbG85NiIsImEiOiJjbGI5cXZiem8wMTZwM29wa3oxMHEyd2IyIn0.LXx56psAFqaWKNqMKYdaPg';
     setToken(accessToken);
     config.accessToken = accessToken;
   }, []);
