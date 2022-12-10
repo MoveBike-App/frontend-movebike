@@ -1,3 +1,4 @@
+import { Suspense } from 'react'
 import Layouts from 'components/Layouts'
 import CardsExperience from 'components/CardsExperience'
 import Hero from 'components/home/Hero'

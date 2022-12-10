@@ -61,7 +61,7 @@ export default function Places() {
               },
             }}
             modules={[Autoplay, Mousewheel, Pagination]}
-            // className="mySwiper"
+            className="mySwiper"
           >
             <SwiperSlide>
               <div className="col-12">
