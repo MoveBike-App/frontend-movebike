@@ -230,7 +230,7 @@ export default function Detail() {
                 </p>
                 <p>
                   Teléfonos 998 598 56 75, 998 467 89 45 <br />
-                  info@movebike.mx
+                  movebikeapp@gmail.com
                 </p>
               </section>
             </div>

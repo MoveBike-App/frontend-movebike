@@ -634,7 +634,7 @@ export default function Nav() {
               ) : null}
               <div className="col-12">
                 <label className="form-label login__label">
-                  Nombre Completo
+                  Nombre completo
                 </label>
                 <input
                   className="form-control login__input"
