@@ -23,7 +23,7 @@ export default function Motos() {
           <div className="container">
             <div className="row">
                 <div>
-                <h4>Vehiculos disponibles</h4>
+                <h4>Vehículos disponibles</h4>
                 </div>
               <aside className="col-12 d-flex">
                 
