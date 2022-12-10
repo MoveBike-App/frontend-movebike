@@ -19,6 +19,9 @@ import { createAccount } from "../services/users/auth";
 
 const schemaValidations = yup
   .object({
+    name: yup.string()
+      .required('El nombre es obligatorio')
+      .min(5, "El nombre debe ser al menos 5 caracteres"),
     email: yup
       .string()
       .required("El correo electrónico es obligatorio")
@@ -142,12 +145,13 @@ export default function Nav() {
     }
   };
 
-  const onCreateAccount = async ({ identify, email, password, phone }) => {
+  const onCreateAccount = async ({ identify, email, password, phone, name }) => {
     const formData = new FormData();
     formData.append("identify", identify["0"]);
     formData.append("email", email);
     formData.append("password", password);
     formData.append("phone", phone);
+    formData.append("name", name);
 
     try {
       const response = await createAccount(formData);
@@ -616,18 +620,33 @@ export default function Nav() {
             <form onSubmit={handleSubmit(onCreateAccount)} className="row g-3">
               {messageError ? (
                 <div
-                  class="alert alert-warning alert-dismissible fade show"
+                  className="alert alert-warning alert-dismissible fade show"
                   role="alert"
                 >
                   <strong>{messageError}</strong>
                   <button
                     type="button"
-                    class="btn-close"
+                    className="btn-close"
                     data-bs-dismiss="alert"
                     aria-label="Close"
                   ></button>
                 </div>
               ) : null}
+              <div className="col-12">
+                <label className="form-label login__label">
+                  Nombre Completo
+                </label>
+                <input
+                  className="form-control login__input"
+                  placeholder="Ingresa tu correo"
+                  {...register("name")}
+                />
+                {errors.name && (
+                  <p className="text-danger mb-0" role="alert">
+                    {errors.name?.message}
+                  </p>
+                )}
+              </div>
               <div className="col-12">
                 <label className="form-label login__label">
                   Correo electrónico
