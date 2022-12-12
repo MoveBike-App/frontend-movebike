@@ -38,9 +38,9 @@ export default function Hero () {
             <h1 className='mv-h1 hero-section__content--title'>
               Explora Cancún
             </h1>
-            <p className='hero-section__content--subtitle mb-0'>
+            <p className='hero-section__content--subtitle mt-1 mb-0'>
             Donde la belleza y la cultura se encuentran.
-            Tu próxima aventura <br /> comienza con Movebike ¿Te apuntas a la máxima velocidad? <br /> ¡Reserva sin límites!
+            Tu próxima aventura <br className='d-none d-lg-block' /> comienza con Movebike ¿Te apuntas a la máxima velocidad? <br className='d-none d-lg-block' /> ¡Reserva sin límites!
             </p>
             <button className='btn btn-movebike contained btn-cta'>
               ¡Reserva Ahora!
@@ -72,7 +72,7 @@ export default function Hero () {
                       <DatePicker
 
                         label='Check In'
-                        className='datepicker mt-lg-none'
+                        className='datepicker mt-3 mt-lg-none'
                         value={checkIn}
                         minDate={dayjs(dateNow)}
                         onChange={(newValue) => {
@@ -87,7 +87,7 @@ export default function Hero () {
                     <FormControl fullWidth>
                       <DatePicker
                         label='Check Out'
-                        className='datepicker mt-2 mt-lg-0'
+                        className='datepicker mt-4 mt-lg-0'
                         value={checkOut}
                         minDate={dayjs(dateNow)}
                         onChange={(newValue) => {

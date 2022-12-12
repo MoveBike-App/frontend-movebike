@@ -9,7 +9,7 @@ const myLoader = ({ src }) => {
 export default function CardMoto({ keyImage, model, name, price, slug }) {
   return (
     <article className={`flotebikes__card`}>
-      <header className="flotebikes__card--image-bike text-center">
+      <header className="flotebikes__card--image-bike d-flex justify-content-center">
         <Image
           loader={myLoader}
           src={`${keyImage}`}
@@ -25,7 +25,7 @@ export default function CardMoto({ keyImage, model, name, price, slug }) {
         </section>
         <section className="flotebikes__card-body--features">
           <ul className="navbar-nav">
-            <li className="nav-item">
+            <li className="d-flex nav-item mb-2">
               <Image
                 src="/assets/icons/icon_web.svg"
                 alt="Icon max confort"
@@ -34,7 +34,7 @@ export default function CardMoto({ keyImage, model, name, price, slug }) {
               />
               <span className="feature">Máximo confort para tu movilidad</span>
             </li>
-            <li className="nav-item">
+            <li className="d-flex nav-item mb-2">
               <Image
                 src="/assets/icons/icon_web.svg"
                 alt="Icon max confort"
@@ -43,7 +43,7 @@ export default function CardMoto({ keyImage, model, name, price, slug }) {
               />
               <span className="feature">Incluye una cadena de seguridad</span>
             </li>
-            <li className="nav-item">
+            <li className="d-flex nav-item mb-2">
               <Image
                 src="/assets/icons/icon_web.svg"
                 alt="Icon max confort"
@@ -52,7 +52,7 @@ export default function CardMoto({ keyImage, model, name, price, slug }) {
               />
               <span className="feature">Incluye 2 cascos por cada moto</span>
             </li>
-            <li className="nav-item">
+            <li className="d-flex nav-item mb-2">
               <Image
                 src="/assets/icons/icon_web.svg"
                 alt="Icon max confort"
