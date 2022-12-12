@@ -210,7 +210,7 @@ export default function Detail() {
                     </>
                   )
                   : (
-                    <div class="alert alert-danger" role="alert">
+                    <div className="alert alert-danger" role="alert">
                       ¡Lo sentimos, tu reserva ha sido cancelada!
                     </div>
                   )

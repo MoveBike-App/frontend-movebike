@@ -42,7 +42,8 @@
     "slick-carousel": "^1.8.1",
     "stripe": "^11.1.0",
     "styled-components": "^5.3.6",
-    "swiper": "^8.4.4",
+    "swiper": "^8.4.5",
+    "url-loader": "^4.1.1",
     "yup": "^0.32.11"
   },
   "devDependencies": {

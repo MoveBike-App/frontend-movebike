@@ -7,7 +7,7 @@
 
     .btn-place-book {
         @include mixins.responsive(variables.$large) {
-            width: 350px;
+            // width: 350px;
             text-align: center;
             margin-top: 35px;
         }
@@ -33,7 +33,7 @@
     &__card {
         background-position: center;
         background-size: cover;
-        box-shadow: 2px 4px 24px rgba(0, 0, 0, 0.16);
+        box-shadow: 2px 4px 12px rgba(0, 0, 0, 0.16);
         border-radius: 8px;
         width: 295px !important;
         height: 473px !important;
@@ -129,8 +129,8 @@
             }
 
             .btn-visit {
-                width: 7 0px;
-                height: 24px;
+                width: 90px;
+                height: 28px;
                 font-size: 22px;
                 font-style: normal;
                 font-weight: 700;
@@ -144,7 +144,7 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        
+
         height: 32px;
         border-radius: 1000px;
         width: 50%;

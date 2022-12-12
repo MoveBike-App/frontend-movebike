@@ -1,5 +1,5 @@
 module.exports = {
-  reactStrictMode: true,
+  reactStrictMode: false,
   swcMinify: true,
   webpack: (config, { isServer }) => {
     (config.resolve.fallback = { fs: false, net: false, async_hooks: false, }),
