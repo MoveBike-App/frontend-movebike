@@ -3,6 +3,86 @@
 
 .flotebikes {
 
+    .slick-next:before {}
+
+    .slick-slider {
+        .slick-list {
+            padding-top: 35px;
+            padding-bottom: 45px;
+        }
+
+        .slick-arrow {
+
+            &.slick-prev {
+                display: none !important;
+                @include mixins.responsive(variables.$large) {
+                    display: block !important;
+                    border-radius: 5px;
+                    width: 24px;
+                    height: 24px;
+                    background: variables.$orange-900;
+                    border-radius: 4px;
+                    box-shadow: 2px 4px 18px rgba(0, 0, 0, 0.16);
+
+                    &:before {
+                        color: variables.$orange-900;
+                        font-size: large;
+                        content: url("/assets/icons/icon-arrow-left.webp") !important;
+                    }
+                }
+            }
+
+            &.slick-next {
+                display: none !important;
+
+                @include mixins.responsive(variables.$large) {
+                    display: block !important;
+                    border-radius: 5px;
+                    width: 24px;
+                    height: 24px;
+                    background: variables.$orange-900;
+                    border-radius: 4px;
+                    box-shadow: 2px 4px 18px rgba(0, 0, 0, 0.16);
+
+                    &:before {
+                        color: variables.$orange-900;
+                        font-size: large;
+                        content: url("/assets/icons/icon-arrow-right.webp") !important;
+                    }
+                }
+            }
+        }
+
+        .slick-dots {
+            li {
+                button {
+                    &:before {
+                        font-size: 8px;
+                        color: variables.$black-800;
+                    }
+                }
+                &.slick-active {
+                    button {
+                        &:before {
+                            color: variables.$orange-900;
+                        }
+                    }
+                }
+            }
+
+            @include mixins.responsive(variables.$large) {
+                display: none!important;
+            }
+
+        }
+    }
+
+
+
+    &__wrapper {}
+
+    &__slider {}
+
     &__title {
         margin-top: 32px;
         font-style: normal;
@@ -22,7 +102,7 @@
         box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.05);
         border-radius: 50px;
 
-        .separator{
+        .separator {
             height: 100%;
             width: 2px;
             background-color: variables.$gray-600;
@@ -33,12 +113,15 @@
         position: relative;
         background: variables.$white;
         border-radius: 8px;
-        width: 295px !important;
-        height: 473px !important;
+        max-width: 325px !important;
         padding: 12px 16px;
         margin: 0 auto;
         filter: drop-shadow(2px 4px 8px rgba(0, 0, 0, 0.16));
         transition: all 250ms ease-out;
+
+        @include mixins.responsive(variables.$large) {
+            max-width: 295px !important;
+        }
 
         &--image-bike {
             background: rgba(217, 217, 217, 0.13);
@@ -50,6 +133,7 @@
             &--location {
                 height: 56px;
             }
+
             &__model {
                 margin-top: 5px;
                 font-style: normal;
@@ -113,16 +197,16 @@
         }
 
 
-        &:hover{
+        &:hover {
             box-shadow: 0 8px 24px rgb(0 0 0 / 10%);
-            transform: scale(1.03,1.03);
+            transform: scale(1.03, 1.03);
         }
 
-        &--book{
+        &--book {
             position: relative;
 
 
-            
+
         }
 
 
@@ -140,13 +224,13 @@
         border-radius: 8px;
         opacity: 0;
         visibility: hidden;
-        transition: opacity 0.3s ease-out,visibility 0.3s ease-out;
+        transition: opacity 0.3s ease-out, visibility 0.3s ease-out;
 
-        &.active{
+        &.active {
             opacity: 1;
             visibility: visible;
             background-color: #ffffff;
-            transition: opacity 0.3s ease-out,visibility 0.3s ease-out;
+            transition: opacity 0.3s ease-out, visibility 0.3s ease-out;
         }
 
         .close-book {
@@ -157,78 +241,79 @@
     }
 
 
-    .swiper {
-        padding-top: 36px;
-        padding-bottom: 60px;
+    // .swiper {
+    //     padding-top: 36px;
+    //     padding-bottom: 60px;
 
-        @include mixins.responsive(variables.$large) {
+    //     @include mixins.responsive(variables.$large) {
 
-            padding-left: 60px;
-            padding-right: 60px;
-        }
-    }
+    //         padding-left: 60px;
+    //         padding-right: 60px;
+    //     }
+    // }
 
-    .swiper-pagination-bullet-active {
-        background-color: variables.$orange-900;
-    }
+    // .swiper-pagination-bullet-active {
+    //     background-color: variables.$orange-900;
+    // }
 
-    .swiper-horizontal>.swiper-pagination-bullets,
-    .swiper-pagination-bullets.swiper-pagination-horizontal {
+    // .swiper-horizontal>.swiper-pagination-bullets,
+    // .swiper-pagination-bullets.swiper-pagination-horizontal {
+    //     display: block;
 
-        @include mixins.responsive(variables.$extra-large) {
-            display: none;
-        }
-    }
+    //     @include mixins.responsive(variables.$extra-large) {
+    //         display: none;
+    //     }
+    // }
 
-    .swiper-button-next,
-    .swiper-button-prev {
-        display: none !important;
+    // .swiper-button-next,
+    // .swiper-button-prev {
+    //     display: none !important;
 
-        @include mixins.responsive(variables.$extra-large) {
-            position: absolute;
-            padding: 4px !important;
-            width: 32px !important;
-            height: 32px !important;
-            display: flex !important;
-            background: variables.$orange-900;
-            border-radius: 4px;
-            box-shadow: 2px 4px 24px rgba(0, 0, 0, 0.16);
-        }
-    }
+    //     @include mixins.responsive(variables.$extra-large) {
+    //         position: absolute;
+    //         padding: 4px !important;
+    //         width: 32px !important;
+    //         height: 32px !important;
+    //         display: flex !important;
+    //         background: variables.$orange-900;
+    //         border-radius: 4px;
+    //         box-shadow: 2px 4px 24px rgba(0, 0, 0, 0.16);
+    //     }
+    // }
 
-    .swiper-button-prev:after {
-        width: 24px;
-        height: 24px;
-        font-size: large;
-        content: url("/assets/icons/icon-arrow-left.webp");
-    }
+    // .swiper-button-prev:after {
+    //     width: 24px;
+    //     height: 24px;
+    //     font-size: large;
+    //     content: url("/assets/icons/icon-arrow-left.webp");
+    // }
 
-    .swiper-button-next:after {
-        width: 24px;
-        height: 24px;
-        font-size: large;
-        content: url("/assets/icons/icon-arrow-right.webp");
-    }
+    // .swiper-button-next:after {
+    //     width: 24px;
+    //     height: 24px;
+    //     font-size: large;
+    //     content: url("/assets/icons/icon-arrow-right.webp");
+    // }
 
-    .swiper-button-next {
-        @include mixins.responsive(variables.$large) {
-            z-index: 999;
-            right: 41px;
+    // .swiper-button-next {
+    //     @include mixins.responsive(variables.$large) {
+    //         z-index: 999;
+    //         right: 41px;
 
-            &:active {
-                box-shadow: 4px 8px 16px rgba(26, 26, 26, 0.12);
-            }
-        }
-    }
+    //         &:active {
+    //             box-shadow: 4px 8px 16px rgba(26, 26, 26, 0.12);
+    //         }
+    //     }
+    // }
 
-    .swiper-button-prev {
-        @include mixins.responsive(variables.$large) {
-            z-index: 999;
-            left: 41px;
+    // .swiper-button-prev {
+    //     @include mixins.responsive(variables.$large) {
+    //         z-index: 999;
+    //         left: 41px;
 
-            &:active {
-                box-shadow: 4px 8px 16px rgba(26, 26, 26, 0.12);
-            }
-        }
-    }
+    //         &:active {
+    //             box-shadow: 4px 8px 16px rgba(26, 26, 26, 0.12);
+    //         }
+    //     }
+    // }
 }
