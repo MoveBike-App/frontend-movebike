@@ -16,8 +16,12 @@
 
             &.slick-prev {
                 display: none !important;
-                @include mixins.responsive(variables.$large) {
-                    display: block !important;
+                @include mixins.responsive(variables.$extra-large) {
+                    display: flex !important;
+                    justify-content: center;
+                    align-items: center;
+                    padding: 14px;
+                    left: -32px;
                     border-radius: 5px;
                     width: 24px;
                     height: 24px;
@@ -36,8 +40,12 @@
             &.slick-next {
                 display: none !important;
 
-                @include mixins.responsive(variables.$large) {
-                    display: block !important;
+                @include mixins.responsive(variables.$extra-large) {
+                    display: flex !important;
+                    justify-content: center;
+                    align-items: center;
+                    padding: 14px;
+                    right: -32px;
                     border-radius: 5px;
                     width: 24px;
                     height: 24px;
@@ -72,7 +80,7 @@
                 }
             }
 
-            @include mixins.responsive(variables.$large) {
+            @include mixins.responsive(variables.$extra-large) {
                 display: none!important;
             }
 

@@ -70,7 +70,7 @@ export default function Places() {
               ¡Encuentra tu sitio ideal!
             </h2>
             <p className="text-center text-lg-start places-section__subtitle">
-              Una lista de los 75 mejores lugares del mundo<br className="d-none d-lg-block" /> para una
+              Una lista de los 75 mejores lugares del <br className="d-none d-lg-block" /> mundo para una
               experiencia única
             </p>
             <Link

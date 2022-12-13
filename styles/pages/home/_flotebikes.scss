@@ -15,11 +15,15 @@
 
             &.slick-prev {
                 display: none !important;
-                @include mixins.responsive(variables.$large) {
-                    display: block !important;
+                @include mixins.responsive(variables.$extra-large) {
+                    display: flex !important;
+                    justify-content: center;
+                    align-items: center;
                     border-radius: 5px;
-                    width: 24px;
-                    height: 24px;
+                    left: -30px;
+                    padding: 18px!important;
+                    width: 28px;
+                    height: 28px;
                     background: variables.$orange-900;
                     border-radius: 4px;
                     box-shadow: 2px 4px 18px rgba(0, 0, 0, 0.16);
@@ -35,11 +39,15 @@
             &.slick-next {
                 display: none !important;
 
-                @include mixins.responsive(variables.$large) {
-                    display: block !important;
+                @include mixins.responsive(variables.$extra-large) {
+                    display: flex !important;
+                    justify-content: center;
+                    align-items: center;
                     border-radius: 5px;
-                    width: 24px;
-                    height: 24px;
+                    padding: 18px!important;
+                    right: -30px;
+                    width: 28px;
+                    height: 28px;
                     background: variables.$orange-900;
                     border-radius: 4px;
                     box-shadow: 2px 4px 18px rgba(0, 0, 0, 0.16);
@@ -71,7 +79,7 @@
                 }
             }
 
-            @include mixins.responsive(variables.$large) {
+            @include mixins.responsive(variables.$extra-large) {
                 display: none!important;
             }
 
