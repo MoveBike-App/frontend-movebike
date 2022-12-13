@@ -4,6 +4,80 @@
 .places-section {
     padding-top: 87px;
     padding-bottom: 42px;
+    
+
+    .slick-slider {
+        .slick-list {
+            padding-top: 35px;
+            padding-bottom: 45px;
+        }
+
+        .slick-arrow {
+
+            &.slick-prev {
+                display: none !important;
+                @include mixins.responsive(variables.$large) {
+                    display: block !important;
+                    border-radius: 5px;
+                    width: 24px;
+                    height: 24px;
+                    background: variables.$orange-900;
+                    border-radius: 4px;
+                    box-shadow: 2px 4px 18px rgba(0, 0, 0, 0.16);
+
+                    &:before {
+                        color: variables.$orange-900;
+                        font-size: large;
+                        content: url("/assets/icons/icon-arrow-left.webp") !important;
+                    }
+                }
+            }
+
+            &.slick-next {
+                display: none !important;
+
+                @include mixins.responsive(variables.$large) {
+                    display: block !important;
+                    border-radius: 5px;
+                    width: 24px;
+                    height: 24px;
+                    background: variables.$orange-900;
+                    border-radius: 4px;
+                    box-shadow: 2px 4px 18px rgba(0, 0, 0, 0.16);
+
+                    &:before {
+                        color: variables.$orange-900;
+                        font-size: large;
+                        content: url("/assets/icons/icon-arrow-right.webp") !important;
+                    }
+                }
+            }
+        }
+
+        .slick-dots {
+            li {
+                margin: 0;
+                button {
+                    &:before {
+                        font-size: 10px;
+                        color: variables.$black-800;
+                    }
+                }
+                &.slick-active {
+                    button {
+                        &:before {
+                            color: variables.$orange-900;
+                        }
+                    }
+                }
+            }
+
+            @include mixins.responsive(variables.$large) {
+                display: none!important;
+            }
+
+        }
+    }
 
     .btn-place-book {
         @include mixins.responsive(variables.$large) {
@@ -31,13 +105,22 @@
     }
 
     &__card {
+        position: relative;
         background-position: center;
         background-size: cover;
         box-shadow: 2px 4px 12px rgba(0, 0, 0, 0.16);
         border-radius: 8px;
         width: 295px !important;
-        height: 473px !important;
+        height: 423px !important;
         margin: 0 auto;
+
+        .bg-route {
+            position: absolute;
+            z-index: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 7px;
+        }
 
         .icon-heart {
             border: none;
@@ -94,6 +177,8 @@
         }
 
         &-footer {
+            position: relative;
+            z-index: 5;
             background-color: variables.$white;
             padding: 25px 15px 25px 8px;
             max-height: 72px;
@@ -129,12 +214,11 @@
             }
 
             .btn-visit {
-                width: 90px;
-                height: 28px;
-                font-size: 22px;
+                //width: 90px;
+                //height: 28px;
+                font-size: 12px;
                 font-style: normal;
                 font-weight: 700;
-                font-size: 7.88084px;
                 line-height: 9px;
             }
         }

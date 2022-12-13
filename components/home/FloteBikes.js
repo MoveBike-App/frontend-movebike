@@ -48,7 +48,7 @@ export default function FloteBikes() {
         data: { motos },
       } = await response.json();
       const resultMoto = motos.filter((moto) => moto.vehicleType === "moto");
-      console.log(resultMoto);
+      
       const resultScooter = motos.filter(
         (moto) => moto.vehicleType === "scooter"
       );
@@ -61,7 +61,7 @@ export default function FloteBikes() {
     getMotos();
   }, []);
 
-  var settings = {
+  let settings = {
     dots: true,
     infinite: true,
     slidesToShow: 3,
@@ -106,10 +106,10 @@ export default function FloteBikes() {
               Motocicletas <br className="d-lg-none" /> disponibles
             </h2>
           </div>
-          <div className="flotebikes__switch mx-auto">
+          <div className="flotebikes__switch mx-auto shadow d-flex justify-content-between">
             <button
               className={`btn btn-movebike ${
-                isActive === "scooter" ? "link" : "link text-black"
+                isActive === "scooter" ? "contained shadow" : "outlined text-orange-600"
               }`}
               onClick={() => setIsActive("scooter")}
             >
@@ -118,7 +118,7 @@ export default function FloteBikes() {
             <div className="separator" />
             <button
               className={`btn btn-movebike ${
-                isActive === "motos" ? "link" : "link text-black"
+                isActive === "motos" ? "contained shadow" : "outlined text-orange-600"
               }`}
               onClick={() => setIsActive("motos")}
             >

@@ -1,13 +1,66 @@
-import React from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
+import Slider from 'react-slick'
 import { useRouter } from "next/router";
 import Link from "next/link";
 import Image from "next/image";
 // import required modules
 import { Mousewheel, Navigation, Pagination, Autoplay } from "swiper";
+import { getAllRoutes } from "../../services/routes";
+
+const myLoader = ({ src }) => {
+  return `${src}`;
+};
 
 export default function Places() {
   const router = useRouter();
+  const [routes, setRoutes] = useState([]);
+
+  const fetchRoutes = useCallback(async () => {
+    const response = await getAllRoutes();
+    const dataJson = await response.json();
+
+    setRoutes(dataJson.data.routes);
+  }, []);
+
+  useEffect(() => {
+    fetchRoutes();
+  }, [fetchRoutes]);
+
+  let settings = {
+    dots: true,
+    infinite: true,
+    slidesToShow: 3,
+    slidesToScroll: 1,
+    speed: 500,
+    initialSlide: 0,
+    responsive: [
+      {
+        breakpoint: 992,
+        settings: {
+          slidesToShow: 3,
+          slidesToScroll: 3,
+          infinite: true,
+          dots: false,
+        },
+      },
+      {
+        breakpoint: 768,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 2,
+        },
+      },
+      {
+        breakpoint: 576,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
+        },
+      },
+    ],
+  };
+
   return (
     <div className="container">
       <div className="row">
@@ -17,273 +70,74 @@ export default function Places() {
               ¡Encuentra tu sitio ideal!
             </h2>
             <p className="text-center text-lg-start places-section__subtitle">
-              Una lista de los 75 mejores lugares turísticos del mundo para una
+              Una lista de los 75 mejores lugares del mundo<br className="d-none d-lg-block" /> para una
               experiencia única
             </p>
-            <button
-              onClick={() => router.push("/reserve")}
+            <Link
+              href={'/rutas'}
               className="btn btn-movebike contained d-none d-lg-flex justify-content-lg-center text-center btn-place-book"
             >
-              Reservar ahora
-            </button>
+              Explorar lugares
+            </Link>
           </div>
         </div>
         <div className="col-12 col-lg-8">
-          <Swiper
-            slidesPerView="auto"
-            centeredSlides
-            mousewheel
-            // navigation={true}
-            loop
-            pagination={{
-              clickable: true,
-            }}
-            breakpoints={{
-              576: {
-                slidesPerView: 1,
-                spaceBetween: 0,
-              },
-              768: {
-                slidesPerView: 2,
-                spaceBetween: 20,
-              },
-              992: {
-                slidesPerView: 3,
-                spaceBetween: 15,
-              },
-              1200: {
-                slidesPerView: 3,
-                spaceBetween: 15,
-              },
-              1400: {
-                slidesPerView: 3,
-                spaceBetween: 15,
-              },
-            }}
-            modules={[Autoplay, Mousewheel, Pagination]}
-            className="mySwiper"
-          >
-            <SwiperSlide>
-              <div className="col-12">
-                <article className="places-section__card playa-marlin d-flex flex-column justify-content-between">
-                  <header className="d-flex justify-content-end">
-                    <button className="icon-heart">
-                      <Image
-                        className=""
-                        src="/assets/icons/icon-heart.webp"
-                        alt="Icon heart"
-                        width={26}
-                        height={26}
-                      />
-                    </button>
-                  </header>
-                  <section>
-                    <div className="places-section__card-overlay d-flex align-items-center">
-                      <div className="waves d-flex align-items-center justify-content-around">
+          <Slider {...settings}>
+            {routes.map((route, index) => (
+              <div key={index}>
+                <div className="col-12">
+                  <article className="places-section__card d-flex flex-column justify-content-between">
+                    <img className="img-fluid bg-route" src={`${route.image}`} alt="bg-routes" />
+                    <header className="d-flex justify-content-end">
+                      <button className="icon-heart">
                         <Image
-                          src="/assets/icons/icon-start.webp"
-                          alt="Icon start"
-                          width={12}
-                          height={12}
+                          className=""
+                          src="/assets/icons/icon-heart.webp"
+                          alt="Icon heart"
+                          width={26}
+                          height={26}
                         />
-                        <span>4.8</span>
-                      </div>
-                    </div>
-                    <div className="places-section__card-footer d-flex align-items-center bg-white">
-                      <div>
-                        <h4 className="places-section__card-footer--title">
-                          Playa Forum
-                        </h4>
-                        <p className="places-section__card-footer--subtitle">
-                          Zona Hotelera, 7.5 KM
-                        </p>
-                      </div>
-                      <button className="btn btn-movebike contained btn-visit">
-                        Visitar
                       </button>
-                    </div>
-                  </section>
-                </article>
+                    </header>
+                    <section>
+                      <div className="places-section__card-overlay d-flex align-items-center">
+                        <div className="waves d-flex align-items-center justify-content-around">
+                          <Image
+                            src="/assets/icons/icon-start.webp"
+                            alt="Icon start"
+                            width={12}
+                            height={12}
+                          />
+                          <span>4.8</span>
+                        </div>
+                      </div>
+                      <div className="places-section__card-footer d-flex align-items-center bg-white">
+                        <div>
+                          <h4 className="places-section__card-footer--title">
+                            {route?.title}
+                          </h4>
+                          <p className="places-section__card-footer--subtitle">
+                            Zona Hotelera, 7.5 KM
+                          </p>
+                        </div>
+                        <Link
+                          href={`/rutas/${route.slug}`}
+                          className="btn btn-movebike contained btn-visit"
+                        >
+                          Visitar
+                        </Link>
+                      </div>
+                    </section>
+                  </article>
+                </div>
               </div>
-            </SwiperSlide>
-            <SwiperSlide>
-              <div className="col-12">
-                <article className="places-section__card playa-forum d-flex flex-column justify-content-between">
-                  <header className="d-flex justify-content-end">
-                    <button className="icon-heart">
-                      <Image
-                        className=""
-                        src="/assets/icons/icon-heart.webp"
-                        alt="Icon heart"
-                        width={26}
-                        height={26}
-                      />
-                    </button>
-                  </header>
-                  <section>
-                    <div className="places-section__card-overlay d-flex align-items-center">
-                      <div className="waves d-flex align-items-center justify-content-around">
-                        <Image
-                          src="/assets/icons/icon-start.webp"
-                          alt="Icon start"
-                          width={12}
-                          height={12}
-                        />
-                        <span>4.8</span>
-                      </div>
-                    </div>
-                    <div className="places-section__card-footer d-flex align-items-center bg-white">
-                      <div>
-                        <h4 className="places-section__card-footer--title">
-                          Playa Forum
-                        </h4>
-                        <p className="places-section__card-footer--subtitle">
-                          Zona Hotelera, 7.5 KM
-                        </p>
-                      </div>
-                      <button className="btn btn-movebike contained btn-visit">
-                        Visitar
-                      </button>
-                    </div>
-                  </section>
-                </article>
-              </div>
-            </SwiperSlide>
-            <SwiperSlide>
-              <div className="col-12">
-                <article className="places-section__card playa-delfines d-flex flex-column justify-content-between">
-                  <header className="d-flex justify-content-end">
-                    <button className="icon-heart">
-                      <Image
-                        className=""
-                        src="/assets/icons/icon-heart.webp"
-                        alt="Icon heart"
-                        width={26}
-                        height={26}
-                      />
-                    </button>
-                  </header>
-                  <section>
-                    <div className="places-section__card-overlay d-flex align-items-center">
-                      <div className="waves d-flex align-items-center justify-content-around">
-                        <Image
-                          src="/assets/icons/icon-start.webp"
-                          alt="Icon start"
-                          width={12}
-                          height={12}
-                        />
-                        <span>4.8</span>
-                      </div>
-                    </div>
-                    <div className="places-section__card-footer d-flex align-items-center bg-white">
-                      <div>
-                        <h4 className="places-section__card-footer--title">
-                          Playa Forum
-                        </h4>
-                        <p className="places-section__card-footer--subtitle">
-                          Zona Hotelera, 7.5 KM
-                        </p>
-                      </div>
-                      <button className="btn btn-movebike contained btn-visit">
-                        Visitar
-                      </button>
-                    </div>
-                  </section>
-                </article>
-              </div>
-            </SwiperSlide>
-            <SwiperSlide>
-              <div className="col-12">
-                <article className="places-section__card playa-delfines d-flex flex-column justify-content-between">
-                  <header className="d-flex justify-content-end">
-                    <button className="icon-heart">
-                      <Image
-                        className=""
-                        src="/assets/icons/icon-heart.webp"
-                        alt="Icon heart"
-                        width={26}
-                        height={26}
-                      />
-                    </button>
-                  </header>
-                  <section>
-                    <div className="places-section__card-overlay d-flex align-items-center">
-                      <div className="waves d-flex align-items-center justify-content-around">
-                        <Image
-                          src="/assets/icons/icon-start.webp"
-                          alt="Icon start"
-                          width={12}
-                          height={12}
-                        />
-                        <span>4.8</span>
-                      </div>
-                    </div>
-                    <div className="places-section__card-footer d-flex align-items-center bg-white">
-                      <div>
-                        <h4 className="places-section__card-footer--title">
-                          Playa Forum
-                        </h4>
-                        <p className="places-section__card-footer--subtitle">
-                          Zona Hotelera, 7.5 KM
-                        </p>
-                      </div>
-                      <button className="btn btn-movebike contained btn-visit">
-                        Visitar
-                      </button>
-                    </div>
-                  </section>
-                </article>
-              </div>
-            </SwiperSlide>
-            <SwiperSlide>
-              <div className="col-12">
-                <article className="places-section__card playa-delfines d-flex flex-column justify-content-between">
-                  <header className="d-flex justify-content-end">
-                    <button className="icon-heart">
-                      <Image
-                        className=""
-                        src="/assets/icons/icon-heart.webp"
-                        alt="Icon heart"
-                        width={26}
-                        height={26}
-                      />
-                    </button>
-                  </header>
-                  <section>
-                    <div className="places-section__card-overlay d-flex align-items-center">
-                      <div className="waves d-flex align-items-center justify-content-around">
-                        <Image
-                          src="/assets/icons/icon-start.webp"
-                          alt="Icon start"
-                          width={12}
-                          height={12}
-                        />
-                        <span>4.8</span>
-                      </div>
-                    </div>
-                    <div className="places-section__card-footer d-flex align-items-center bg-white">
-                      <div>
-                        <h4 className="places-section__card-footer--title">
-                          Playa Forum
-                        </h4>
-                        <p className="places-section__card-footer--subtitle">
-                          Zona Hotelera, 7.5 KM
-                        </p>
-                      </div>
-                      <button className="btn btn-movebike contained btn-visit">
-                        Visitar
-                      </button>
-                    </div>
-                  </section>
-                </article>
-              </div>
-            </SwiperSlide>
-          </Swiper>
+            ))}
+          </Slider>
         </div>
         <div className="col-12">
-          <button className="btn btn-movebike contained mx-auto d-lg-none btn-place">
-            Reservar ahora
-          </button>
+          <Link href={'/rutas'} className="btn btn-movebike contained mt-5 mx-auto d-lg-none btn-place">
+            Explorar lugares
+          </Link>
         </div>
       </div>
     </div>

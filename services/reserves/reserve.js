@@ -1,4 +1,3 @@
-const axios = require("axios");
 import { URL_BASE } from "../config";
 
 function createReserve(data, token) {
