@@ -28,6 +28,7 @@ function MyApp({ Component, pageProps }) {
           userId: dataParse.id,
           username: dataParse.username,
           role: dataParse.role,
+          letterName: dataParse.letterName
         }
       : null;
 

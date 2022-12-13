@@ -1,0 +1,22 @@
+@use '../../abstract/mixins';
+@use '../../abstract/variables';
+
+.routes{
+    
+    &__atractions {
+        background-color: variables.$white-background;
+    }
+}
+
+.bg-header {
+    background: radial-gradient(208.75% 66.05% at 0% 0%, rgba(238, 113, 21, 0.32) 69.42%, rgba(0, 0, 0, 0) 100%),  url(/assets/landing/routes/bg-header-routes.jpg);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    min-height: 325px;
+    object-fit: cover;
+
+    @include mixins.responsive(variables.$large) {
+        background: radial-gradient(84.08% 95.9% at 32.79% 12.64%, rgba(238, 113, 21, 0.56) 40.58%, rgba(0, 0, 0, 0) 92.65%),  url(/assets/landing/routes/bg-header-routes.jpg);
+    }
+}
