@@ -22,14 +22,15 @@ export default function Footer () {
               vacaciones o un viaje perfecto
             </p>
             <div className='footer__social mx-auto mx-lg-0'>
-              <Image
-                src='/assets/icons/icon-facebook-movebike.webp'
-                alt='Facebook Movebike'
-                
-                width={32}
-                height={32}
-                className='footer__social--facebook'
-              />
+              <a href="https://www.facebook.com/movebikemx/" target={'_blank'}>
+                <Image
+                  src='/assets/icons/icon-facebook-movebike.webp'
+                  alt='Facebook Movebike'
+                  width={32}
+                  height={32}
+                  className='footer__social--facebook'
+                />
+              </a>
               <Image
                 src='/assets/icons/icon-instagram-movebike.webp'
                 alt='Instagram Movebike'

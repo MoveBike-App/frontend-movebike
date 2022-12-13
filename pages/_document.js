@@ -19,7 +19,7 @@ export default function Document () {
           integrity='sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf'
           crossOrigin='anonymous'
         />
-        {/* <link href="https://api.mapbox.com/mapbox-assembly/v1.3.0/assembly.min.css" rel="stylesheet"></link> */}
+        <link href="https://api.mapbox.com/mapbox-assembly/v1.3.0/assembly.min.css" rel="stylesheet"></link>
 
       </Head>
       <body>

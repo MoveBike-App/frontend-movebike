@@ -3,17 +3,17 @@ import Link from "next/link";
 import React from "react";
 
 const myLoader = ({ src }) => {
-  return `https://movebike-users-imgs.s3.us-east-1.amazonaws.com/${src}`;
+  return `${src}`;
 };
 
-export default function CardMoto({ keyImage, model, name, price, slug }) {
+export default function CardMoto({ image, model, name, price, slug, type, keyImage }) {
   return (
     <article className={`flotebikes__card`}>
       <header className="flotebikes__card--image-bike d-flex justify-content-center">
         <Image
           loader={myLoader}
-          src={`${keyImage}`}
-          alt="Scooter Vitalia 150"
+          src={`${image}`}
+          alt={`${keyImage}`}
           width={160}
           height={140}
         />
