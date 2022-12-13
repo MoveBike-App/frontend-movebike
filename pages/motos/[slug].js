@@ -99,6 +99,7 @@ export default function Bike() {
         <Layouts title={`${moto.name ? moto.name : "Moto"} - MoveBike`}>
           <Head>
             <meta name="description" content="" />
+            <link href="https://api.mapbox.com/mapbox-assembly/v1.3.0/assembly.min.css" rel="stylesheet"></link>
           </Head>
 
           <main>

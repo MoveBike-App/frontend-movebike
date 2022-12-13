@@ -19,8 +19,9 @@ import { createAccount } from "../services/users/auth";
 
 const schemaValidations = yup
   .object({
-    name: yup.string()
-      .required('El nombre es obligatorio')
+    name: yup
+      .string()
+      .required("El nombre es obligatorio")
       .min(5, "El nombre debe ser al menos 5 caracteres"),
     email: yup
       .string()
@@ -72,7 +73,8 @@ export default function Nav() {
   const [username, setUsername] = useState("");
   const [isError, setIsError] = useState(false);
   const [messageError, setMessageError] = useState("");
-  const [validEmail, setValidEmail] = useState('')
+  const [validEmail, setValidEmail] = useState("");
+  const [nameLetter, setNameLetter] = useState('')
   const handleClose = () => setLogin(false);
   const handleCloseRegister = () => setRegisterModal(false);
   const handleClickRegister = () => setRegisterModal(true);
@@ -84,6 +86,7 @@ export default function Nav() {
   useEffect(() => {
     setUsername(user?.username);
     setRole(user?.role);
+    setNameLetter(user?.letterName)
   }, [user]);
 
   const {
@@ -106,46 +109,47 @@ export default function Nav() {
       });
       const dataJson = await response.json();
 
-      setValidEmail(dataJson.userCurrent.validEmail)
+      setValidEmail(dataJson.userCurrent.validEmail);
 
-      if(validEmail === 'false' || '') {
-        setLogin(false)
-        reset({emailL: '', passwordL: ''})
-        setVerify(true)
+      if (validEmail === "false" || "") {
+        setLogin(false);
+        reset({ emailL: "", passwordL: "" });
+        setVerify(true);
         return;
-      } else {
-        if (response.status === 200) {
-          const { token } = dataJson;
-          const { id, name, role, slug } = dataJson.userCurrent;
-          const userCurrent = { id, username: name, role, slug };
-          localStorage.setItem("token", token);
-          localStorage.setItem("userCurrent", JSON.stringify(userCurrent));
-          setLogin(false);
-          setIsLogged(true);
-  
-          setShowA(dataJson.success);
-          setIsError(dataJson.success);
-          setMessageError(dataJson.message);
-          toggleShowA();
-          resetField("email");
-          resetField("password");
-        }
-        
-  
-        if (response.status >= 400 || response.status <= 599) {
-          setShowA(dataJson.success);
-          setIsError(dataJson.success);
-          setMessageError(dataJson.message);
-          toggleShowA();
-        }
-      }
+      } else if (response.status === 200) {
+        const { token } = dataJson;
+        const { id, name, role, slug } = dataJson.userCurrent;
+        const splitName = name.split(' ')
+        const InitialName = (splitName[0] ? splitName[0]?.charAt(0) : 'M') + (splitName[1] ? splitName[1]?.charAt(0) : 'B')
 
-      
-    } catch (error) {
-    }
+        const userCurrent = { id, username: name, role, slug, letterName: InitialName  };
+        localStorage.setItem("token", token);
+        localStorage.setItem("userCurrent", JSON.stringify(userCurrent));
+
+        setLogin(false);
+        setIsLogged(true);
+
+        setShowA(dataJson.success);
+        setIsError(dataJson.success);
+        setMessageError(dataJson.message);
+        toggleShowA();
+        reset({ emailL: "", passwordL: "" });
+      } else if (response.status >= 400 || response.status <= 599) {
+        setShowA(dataJson.success);
+        setIsError(dataJson.success);
+        setMessageError(dataJson.message);
+        toggleShowA();
+      }
+    } catch (error) {}
   };
 
-  const onCreateAccount = async ({ identify, email, password, phone, name }) => {
+  const onCreateAccount = async ({
+    identify,
+    email,
+    password,
+    phone,
+    name,
+  }) => {
     const formData = new FormData();
     formData.append("identify", identify["0"]);
     formData.append("email", email);
@@ -168,8 +172,7 @@ export default function Nav() {
         setMessageError(dataJson.message);
         toggleShowA();
       }
-    } catch (error) {
-    }
+    } catch (error) {}
   };
 
   const signOut = () => {
@@ -177,6 +180,7 @@ export default function Nav() {
     localStorage.removeItem("userCurrent");
     localStorage.clear();
     setIsLogged(false);
+    router.reload()
   };
 
   return (
@@ -291,8 +295,8 @@ export default function Nav() {
                       <ul className="dropdown-menu mm-2">
                         <li>
                           <a className="dropdown-item" href="#">
-                            <p className="mb-0 fw-bold">{username}</p>
-                            <span className="text-capitalize">{role}</span>
+                            <p className="mb-0 fw-bold">{isLogged && username}</p>
+                            <span className="text-capitalize">{isLogged && role}</span>
                           </a>
                         </li>
                         <li>
@@ -476,14 +480,14 @@ export default function Nav() {
                     aria-expanded="false"
                   >
                     <div className="btn-avatar d-flex align-items-center justify-content-center">
-                      JA
+                      {isLogged && nameLetter }
                     </div>
                   </button>
                   <ul className="dropdown-menu translate-middle-x">
                     <li>
                       <a className="dropdown-item" href="#">
-                        <p className="mb-0 fw-bold">{username}</p>
-                        <span className="text-capitalize">{role}</span>
+                        <p className="mb-0 fw-bold">{isLogged && username}</p>
+                        <span className="text-capitalize">{isLogged && role}</span>
                       </a>
                     </li>
                     <li>

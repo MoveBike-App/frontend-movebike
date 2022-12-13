@@ -22,14 +22,16 @@ export default function Footer () {
               vacaciones o un viaje perfecto
             </p>
             <div className='footer__social mx-auto mx-lg-0'>
-              <Image
-                src='/assets/icons/icon-facebook-movebike.webp'
-                alt='Facebook Movebike'
-                
-                width={32}
-                height={32}
-                className='footer__social--facebook'
-              />
+              <a href="https://www.facebook.com/movebikemx/" target={'_blank'} rel="noreferrer">
+                <Image
+                  src='/assets/icons/icon-facebook-movebike.webp'
+                  alt='Facebook Movebike'
+                  width={32}
+                  height={32}
+                  className='footer__social--facebook'
+                />
+              </a>
+              <a href="https://www.instagram.com/movebikemx/" target={'_blank'} rel="noreferrer">
               <Image
                 src='/assets/icons/icon-instagram-movebike.webp'
                 alt='Instagram Movebike'
@@ -38,6 +40,9 @@ export default function Footer () {
                 height={32}
                 className='footer__social--instagram'
               />
+              </a>
+              
+              <a href="https://wa.me/message/Y2CMRDDXMFB4G1" target={'_blank'} rel={'noreferrer '}>
               <Image
                 src='/assets/icons/icon-whatsapp-movebike.webp'
                 alt='Whatsapp Movebike'
@@ -46,6 +51,7 @@ export default function Footer () {
                 height={32}
                 className='footer__social--whatsapp'
               />
+              </a>
             </div>
           </div>
           <div className='col-12 col-lg-4 footer__navigation '>
