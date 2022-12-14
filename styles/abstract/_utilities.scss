@@ -1,6 +1,7 @@
 @use './variables';
 @use './mixins';
-.mv-h1{
+
+.mv-h1 {
     font-family: variables.$font-lato;
     font-style: normal;
     font-weight: 700;
@@ -9,7 +10,7 @@
     color: variables.$white;
 }
 
-.mv-h2{
+.mv-h2 {
     font-style: normal;
     font-weight: 700;
     font-size: 36px;
@@ -45,17 +46,74 @@
     color: variables.$gray-400;
 }
 
-.Mui-selected{
-    background-color: variables.$orange-900!important;
+.color-bg-gray {
+    background-color: #F7F7F7;
 }
 
-.w-200{
+.Mui-selected {
+    background-color: variables.$orange-900 !important;
+}
+
+.w-200 {
     width: 200px;
 }
-.Mui-checked{
-    color: variables.$orange-900!important;
+
+.Mui-checked {
+    color: variables.$orange-900 !important;
 }
 
-.MuiButtonBase-root.MuiRadio-root:hover {
+.MuiRadio-root:hover {
     background-color: rgb(196 130 88 / 4%);
+}
+
+.MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input {
+    font-size: 12px !important;
+}
+
+.MuiInputBase-root:hover {
+    color: variables.$orange-900 !important;
+    border-color: variables.$orange-600;
+}
+
+// .Mui-focused,
+// .MuiInputLabel-outlined,
+// .MuiFormLabel-colorPrimary,
+// .MuiFormLabel-root {
+//     color: variables.$orange-900 !important;
+//     border-color: variables.$orange-900 !important;
+// }
+
+// .MuiSelect-select, .MuiSelect-outlined, .MuiInputBase-input, .MuiOutlinedInput-input {
+//     color: variables.$orange-900 !important;
+//     border-color: variables.$orange-900 !important;
+
+// }
+
+// .MuiInputBase-root, .MuiOutlinedInput-root, .MuiInputBase-colorPrimary, .Mui-focused, .MuiInputBase-formControl {
+//     border-color: variables.$orange-900 !important;
+// }
+
+// .datepicker:focus{
+//     border-color: variables.$orange-900 !important;
+// }
+
+// // , .MuiInputLabel-root, .MuiInputLabel-formControl, .MuiInputLabel-animated, .MuiInputLabel-shrink, .MuiInputLabel-outlined, .MuiFormLabel-colorPrimary, .Mui-focused, .MuiInputLabel-root, .MuiInputLabel-formControl, .MuiInputLabel-animated, .MuiInputLabel-shrink, .MuiInputLabel-outlined 
+
+// .MuiFormLabel-root{
+//     color: variables.$orange-900 !important;
+//     border-color: variables.$orange-900 !important;
+
+//     &:focus{
+//         color: variables.$orange-900 !important;
+//         border-color: variables.$orange-900 !important;
+//     }
+
+//     &:hover {
+//         color: variables.$orange-900 !important;
+//         border-color: variables.$orange-900 !important;
+//     }
+// }
+
+.MuiSvgIcon-root{
+    color: variables.$orange-900!important;
 }

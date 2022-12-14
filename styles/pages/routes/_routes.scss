@@ -2,13 +2,30 @@
 @use '../../abstract/variables';
 
 .routes{
+
+    &__headding {
+        font-size: 24px;
+
+        @include mixins.responsive(variables.$medium) {
+            font-size: 28px;
+        }
+
+        @include mixins.responsive(variables.$large) {
+            font-size: 32px;
+        }
+    }
     
     &__subtitle {
         max-width: 650px;
         margin: 0 auto;
+        font-family: variables.$font-quicksand;
     }
     &__atractions {
         background-color: variables.$white-background;
+    }
+
+    &__text{
+        text-align: justify;
     }
 }
 

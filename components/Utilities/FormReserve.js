@@ -39,7 +39,14 @@ const options = {
   country: "MX",
 };
 
-export default function FormReserve({image, keyImage, nameMoto, price, submitData, idMoto }) {
+export default function FormReserve({
+  image,
+  keyImage,
+  nameMoto,
+  price,
+  submitData,
+  idMoto,
+}) {
   const router = useRouter();
   const [radio, setRadio] = useState("");
   const [value, setValue] = useState(new Date());
@@ -52,10 +59,9 @@ export default function FormReserve({image, keyImage, nameMoto, price, submitDat
   const [showValidationText, setShowValidationText] = useState(false);
   const [token, setToken] = useState("");
 
-  
-
   useEffect(() => {
-    const accessToken = 'pk.eyJ1Ijoiam9uYXRlbG85NiIsImEiOiJjbGI5cXZiem8wMTZwM29wa3oxMHEyd2IyIn0.LXx56psAFqaWKNqMKYdaPg';
+    const accessToken =
+      "pk.eyJ1Ijoiam9uYXRlbG85NiIsImEiOiJjbGI5cXZiem8wMTZwM29wa3oxMHEyd2IyIn0.LXx56psAFqaWKNqMKYdaPg";
     setToken(accessToken);
     config.accessToken = accessToken;
   }, []);
@@ -111,8 +117,7 @@ export default function FormReserve({image, keyImage, nameMoto, price, submitDat
       const result = await showConfirm();
       console.log(result);
       console.log(data);
-      const fullAddress = `${data.address_line1}, ${data?.address_line2}, ${data.zip} ${data.city}, ${
-        data.state}`;
+      const fullAddress = `${data.address_line1}, ${data?.address_line2}, ${data.zip} ${data.city}, ${data.state}`;
       const coordinatesAddress = `${handleSaveMarkerLocation()}`;
       const token = localStorage.getItem("token");
       if (token) {
@@ -145,145 +150,146 @@ export default function FormReserve({image, keyImage, nameMoto, price, submitDat
     } catch (error) {
       console.log("Error: ", error);
     }
-  }
+  };
 
-return (
-  <>
-    <form ref={formRef} onSubmit={handleSubmit(onSubmit)} className="row">
-      <div className="col-lg-6 border-1 position-relative">
-        {image ? (
-          <>
-            <Image
-              className="d-block d-md-none mx-md-auto"
-              loader={myLoader}
-              src={keyImage}
-              alt={`Scooter ${keyImage}`}
-              width={250}
-              height={250}
-            />
-            <Image
-              className="d-none d-md-block mx-auto mx-lg-0"
-              loader={myLoader}
-              src={keyImage}
-              alt={`Scooter ${keyImage}`}
-              width={400}
-              height={400}
-            />
-          </>
-        ) : (
-          <div className="d-flex h-100 align-items-center justify-content-center">
-            <div className="spinner-border" role="status">
-              <span className="visually-hidden">Loading...</span>
-            </div>
-          </div>
-        )}
-      </div>
-      <div className="col-lg-6 pb-4">
-        <div className="card p-3 shadow border-0">
-          {nameMoto ? (
+  return (
+    <>
+      <form ref={formRef} onSubmit={handleSubmit(onSubmit)} className="row">
+        <div className="col-lg-6 border-1 position-relative">
+          {image ? (
             <>
-              <h1 className="text-black-700 mv-h1">{nameMoto}</h1>
-              <input type="hidden" value={nameMoto} {...register("nameMoto")} />
-            </>
-          ) : (
-            <p className="placeholder-glow">
-              <span className="placeholder col-12"></span>
-            </p>
-          )}
-
-          {price ? (
-            <>
-              <h5 className="text-gray-400 mt-1">${price} MXN por día</h5>
-              <input type="hidden" value={price} {...register("price")} />
-            </>
-          ) : (
-            <p className="placeholder-glow">
-              <span className="placeholder col-12"></span>
-            </p>
-          )}
-          {price ? (
-            <FormControl fullWidth className="mt-4">
-              <InputLabel id="demo-simple-select-label">Ubicación</InputLabel>
-              <Controller
-                name="location"
-                control={control}
-                render={({ field: { onChange, onBlur, value, ref } }) => {
-                  return (
-                    <Select
-                      labelId="demo-simple-select-label"
-                      id="demo-simple-select"
-                      className="datepicker mb-2 mb-lg-0"
-                      label="Ubicación"
-                      onChange={onChange}
-                      onBlur={onBlur}
-                      value={value}
-                    >
-                      <MenuItem value={"Cancún, Quintana, Roo"}>
-                        Cancún, Quintana, Roo.
-                      </MenuItem>
-                      <MenuItem value={"Tulúm, Quintana, Roo"}>
-                        Tulúm, Quintana, Roo.
-                      </MenuItem>
-                    </Select>
-                  );
-                }}
-                rules={{ required: "This is required" }}
+              <Image
+                className="d-block d-md-none mx-md-auto"
+                loader={myLoader}
+                src={keyImage}
+                alt={`Scooter ${keyImage}`}
+                width={250}
+                height={250}
               />
-            </FormControl>
+              <Image
+                className="d-none d-md-block mx-auto mx-lg-0"
+                loader={myLoader}
+                src={keyImage}
+                alt={`Scooter ${keyImage}`}
+                width={400}
+                height={400}
+              />
+            </>
           ) : (
-            <p className="placeholder-glow">
-              <span className="placeholder col-12"></span>
-            </p>
-          )}
-
-          {errors.location?.type === "required" && (
-            <p className="text-danger" role="alert">
-              {errors.location?.message}
-            </p>
-          )}
-
-          <div className="row">
-            <div className="col-md-6">
-              {price ? (
-                <LocalizationProvider
-                  dateAdapter={AdapterDayjs}
-                  //adapterLocale={locale}
-                >
-                  <Controller
-                    name="dateTimeCheckIn"
-                    control={control}
-                    valueName="selected"
-                    rules={{ required: "This is required" }}
-                    render={({ field: { ref, ...rest } }) => {
-                      return (
-                        <DateTimePicker
-                          label="Fecha y hora de entrega"
-                          className="mt-4 w-100"
-                          minDate={value}
-                          renderInput={(params) => <TextField {...params} />}
-                          {...rest}
-                        />
-                      );
-                    }}
-                  />
-                </LocalizationProvider>
-              ) : (
-                <p className="placeholder-glow">
-                  <span className="placeholder col-12"></span>
-                </p>
-              )}
-
-              {errors.dateTimeCheckIn?.type === "required" && (
-                <p className="text-danger" role="alert">
-                  {errors.dateTimeCheckIn?.message}
-                </p>
-              )}
+            <div className="d-flex h-100 align-items-center justify-content-center">
+              <div className="spinner-border" role="status">
+                <span className="visually-hidden">Loading...</span>
+              </div>
             </div>
-            <div className="col-md-6">
-              {
-                price
-                ? 
-                (
+          )}
+        </div>
+        <div className="col-lg-6 pb-4">
+          <div className="card p-3 shadow border-0">
+            {nameMoto ? (
+              <>
+                <h1 className="text-black-700 mv-h1">{nameMoto}</h1>
+                <input
+                  type="hidden"
+                  value={nameMoto}
+                  {...register("nameMoto")}
+                />
+              </>
+            ) : (
+              <p className="placeholder-glow">
+                <span className="placeholder col-12"></span>
+              </p>
+            )}
+
+            {price ? (
+              <>
+                <h5 className="text-gray-400 mt-1">${price} MXN por día</h5>
+                <input type="hidden" value={price} {...register("price")} />
+              </>
+            ) : (
+              <p className="placeholder-glow">
+                <span className="placeholder col-12"></span>
+              </p>
+            )}
+            {price ? (
+              <FormControl fullWidth className="mt-4">
+                <InputLabel id="demo-simple-select-label">Ubicación</InputLabel>
+                <Controller
+                  name="location"
+                  control={control}
+                  render={({ field: { onChange, onBlur, value, ref } }) => {
+                    return (
+                      <Select
+                        labelId="demo-simple-select-label"
+                        id="demo-simple-select"
+                        className="datepicker mb-2 mb-lg-0"
+                        label="Ubicación"
+                        onChange={onChange}
+                        onBlur={onBlur}
+                        value={value}
+                      >
+                        <MenuItem value={"Cancún, Quintana, Roo"}>
+                          Cancún, Quintana, Roo.
+                        </MenuItem>
+                        <MenuItem value={"Tulúm, Quintana, Roo"}>
+                          Tulúm, Quintana, Roo.
+                        </MenuItem>
+                      </Select>
+                    );
+                  }}
+                  rules={{ required: "This is required" }}
+                />
+              </FormControl>
+            ) : (
+              <p className="placeholder-glow">
+                <span className="placeholder col-12"></span>
+              </p>
+            )}
+
+            {errors.location?.type === "required" && (
+              <p className="text-danger" role="alert">
+                {errors.location?.message}
+              </p>
+            )}
+
+            <div className="row">
+              <div className="col-md-6">
+                {price ? (
+                  <LocalizationProvider
+                    dateAdapter={AdapterDayjs}
+                    //adapterLocale={locale}
+                  >
+                    <Controller
+                      name="dateTimeCheckIn"
+                      control={control}
+                      valueName="selected"
+                      rules={{ required: "This is required" }}
+                      render={({ field: { ref, ...rest } }) => {
+                        return (
+                          <DateTimePicker
+                            label="Fecha y hora de entrega"
+                            className="mt-4 w-100"
+                            minDate={value}
+                            renderInput={(params) => <TextField {...params} />}
+                            {...rest}
+                          />
+                        );
+                      }}
+                    />
+                  </LocalizationProvider>
+                ) : (
+                  <p className="placeholder-glow">
+                    <span className="placeholder col-12"></span>
+                  </p>
+                )}
+
+                {errors.dateTimeCheckIn?.type === "required" && (
+                  <p className="text-danger" role="alert">
+                    {errors.dateTimeCheckIn?.message}
+                  </p>
+                )}
+              </div>
+              <div className="col-md-6">
+                {price ? (
                   <LocalizationProvider
                     dateAdapter={AdapterDayjs}
                     //adapterLocale={locale}
@@ -307,69 +313,68 @@ return (
                       }}
                     />
                   </LocalizationProvider>
-                )
-                :
-                (
+                ) : (
                   <p className="placeholder-glow">
                     <span className="placeholder col-12"></span>
                   </p>
-                )
-              }
-
-              {errors.dateTimeCheckOut?.type === "required" && (
-                <p className="text-danger" role="alert">
-                  {errors.dateTimeCheckOut?.message}
-                </p>
-              )}
-            </div>
-          </div>
-          {price ? (
-            <FormControl className="mt-4 text-center">
-              <FormLabel id="demo-row-radio-buttons-group-label">
-                ¿Dónde recoges?
-              </FormLabel>
-              <Controller
-                control={control}
-                name="pickup"
-                rules={{ required: "This is required" }}
-                render={({ field }) => (
-                  <RadioGroup
-                    row
-                    aria-labelledby="demo-row-radio-buttons-group-label"
-                    name="row-radio-buttons-group"
-                    className="d-flex justify-content-evenly"
-                    onChange={setRadio(field.value)}
-                    {...field}
-                  >
-                    <FormControlLabel
-                      value="hotel"
-                      control={<Radio />}
-                      label="Mi hotel"
-                    />
-                    <FormControlLabel
-                      value="sucursal"
-                      control={<Radio />}
-                      label="Sucursal"
-                    />
-                  </RadioGroup>
                 )}
-              />
-            </FormControl>
-          ) : (
-            <p className="placeholder-glow">
-              <span className="placeholder col-12"></span>
-            </p>
-          )}
 
-          {errors.pickup?.type === "required" && (
-            <p className="text-danger text-center " role="alert">
-              {errors.pickup?.message}
-            </p>
-          )}
+                {errors.dateTimeCheckOut?.type === "required" && (
+                  <p className="text-danger" role="alert">
+                    {errors.dateTimeCheckOut?.message}
+                  </p>
+                )}
 
-          {radio === "hotel" && (
-            <>
-              {/* <div className="mb-2">
+                
+              </div>
+            </div>
+            {price ? (
+              <FormControl className="mt-4 text-center">
+                <FormLabel id="demo-row-radio-buttons-group-label">
+                  ¿Dónde recoges?
+                </FormLabel>
+                <Controller
+                  control={control}
+                  name="pickup"
+                  rules={{ required: "This is required" }}
+                  render={({ field }) => (
+                    <RadioGroup
+                      row
+                      aria-labelledby="demo-row-radio-buttons-group-label"
+                      name="row-radio-buttons-group"
+                      className="d-flex justify-content-evenly"
+                      onChange={setRadio(field.value)}
+                      {...field}
+                    >
+                      <FormControlLabel
+                        value="hotel"
+                        control={<Radio />}
+                        label="Mi hotel"
+                      />
+                      <FormControlLabel
+                        value="sucursal"
+                        control={<Radio />}
+                        label="Sucursal"
+                      />
+                    </RadioGroup>
+                  )}
+                />
+              </FormControl>
+            ) : (
+              <p className="placeholder-glow">
+                <span className="placeholder col-12"></span>
+              </p>
+            )}
+
+            {errors.pickup?.type === "required" && (
+              <p className="text-danger text-center " role="alert">
+                {errors.pickup?.message}
+              </p>
+            )}
+
+            {radio === "hotel" && (
+              <>
+                {/* <div className="mb-2">
                 <label className="form-label">
                   Ingresa Ubicación del Hotel
                 </label>
@@ -388,7 +393,7 @@ return (
               </div> */}
                 <div className="flex flex--column">
                   <div>
-                  <div className="col col--auto-mm w-full">
+                    <div className="col col--auto-mm w-full">
                       {/* Input form */}
                       <label className="txt-s txt-bold color-gray mb3">
                         Address
@@ -418,9 +423,7 @@ return (
                     </div>
                   </div>
                   <div className="grid grid--gut24 mb60">
-                    
                     <div className="col col--auto-mm w-full">
-                      
                       <div
                         className="secondary-inputs"
                         style={{
@@ -482,49 +485,55 @@ return (
                     </div>
                   </div>
                 </div>
-            </>
-          )}
+              </>
+            )}
 
-          {radio === "sucursal" && <p>MOVEBIKE APP</p>}
+            {radio === "sucursal" && <p>MOVEBIKE APP</p>}
 
-          {/* Form buttons */}
-          {showFormExpanded && (
-            <div className="mb30 submit-btns">
-              <button
-                type="submit"
-                className="btn btn-movebike contained mt-4 w-100"
-                id="btn-confirm"
-              >
-                Reservar ahora
-              </button>
-              <button
-                type="button"
-                className="btn round btn--gray-light ml3"
-                id="btn-reset"
-                onClick={resetForm}
-              >
-                Reset
-              </button>
-            </div>
-          )}
-          {/* Validation text */}
-          {showValidationText && (
-            <div id="validation-msg" className="mt24 txt-m txt-bold">
-              Order successfully submitted.
-            </div>
-          )}
+            <button
+              type="submit"
+              className="btn btn-movebike contained mt-4 w-100"
+              id="btn-confirm"
+            >
+              Reservar ahora
+            </button>
+
+            {/* Form buttons */}
+            {showFormExpanded && (
+              <div className="mb30 submit-btns">
+                <button
+                  type="button"
+                  className="btn round btn--gray-light ml3"
+                  id="btn-reset"
+                  onClick={resetForm}
+                >
+                  Reset
+                </button>
+              </div>
+            )}
+            {/* Validation text */}
+            {showValidationText && (
+              <div id="validation-msg" className="mt24 txt-m txt-bold">
+                Order successfully submitted.
+              </div>
+            )}
+          </div>
         </div>
-      </div>
-    </form>
+      </form>
 
-    <ToastContainer position="top-end" className="mt-2 me-2">
-      <Toast onClose={() => setLogin(false)} show={login} delay={3000} autohide>
-        <Toast.Header>
-          <strong className={`me-auto text-warning`}>Notificación</strong>
-        </Toast.Header>
-        <Toast.Body>Debes iniciar sesión</Toast.Body>
-      </Toast>
-    </ToastContainer>
-  </>
-  )
+      <ToastContainer position="top-end" className="mt-2 me-2">
+        <Toast
+          onClose={() => setLogin(false)}
+          show={login}
+          delay={3000}
+          autohide
+        >
+          <Toast.Header>
+            <strong className={`me-auto text-warning`}>Notificación</strong>
+          </Toast.Header>
+          <Toast.Body>Debes iniciar sesión</Toast.Body>
+        </Toast>
+      </ToastContainer>
+    </>
+  );
 }
