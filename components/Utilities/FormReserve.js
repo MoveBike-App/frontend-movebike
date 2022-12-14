@@ -85,7 +85,6 @@ export default function FormReserve({
 
   function handleSaveMarkerLocation(coordinate) {
     const coor = JSON.stringify(coordinate);
-    console.log(`Marker moved to ${JSON.stringify(coordinate)}.`);
     return coor;
   }
 
@@ -112,11 +111,8 @@ export default function FormReserve({
   } = useForm();
 
   const onSubmit = async (data) => {
-    console.log(handleSaveMarkerLocation());
     try {
       const result = await showConfirm();
-      console.log(result);
-      console.log(data);
       const fullAddress = `${data.address_line1}, ${data?.address_line2}, ${data.zip} ${data.city}, ${data.state}`;
       const coordinatesAddress = `${handleSaveMarkerLocation()}`;
       const token = localStorage.getItem("token");
@@ -148,7 +144,6 @@ export default function FormReserve({
         setLogin(true);
       }
     } catch (error) {
-      console.log("Error: ", error);
     }
   };
 
@@ -503,7 +498,7 @@ export default function FormReserve({
               <div className="mb30 submit-btns">
                 <button
                   type="button"
-                  className="btn round btn--gray-light ml3"
+                  className="btn text-center round btn--gray-light ml3"
                   id="btn-reset"
                   onClick={resetForm}
                 >

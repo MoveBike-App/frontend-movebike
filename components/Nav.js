@@ -105,7 +105,6 @@ export default function Nav() {
       //setValidEmail(dataJson.userCurrent.validEmail);
 
       // if (validEmail === false) {
-      //   console.log('validEmail');
       //   setLogin(false);
       //   reset({ emailL: "", passwordL: "" });
       //   setVerify(true);
@@ -140,7 +139,6 @@ export default function Nav() {
         toggleShowA();
       }
     } catch (error) {
-      console.log('Entro en el CATCH: ', error);
     }
   };
 

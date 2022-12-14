@@ -27,7 +27,21 @@ function getById(id) {
     return fetch(URL, options)
 }
 
+function getBikesAvailable(initialDate, finalDate) {
+    const URL = `${URL_BASE}reserves/vailable-vehicles?initialDate=${initialDate}&finalDate=${finalDate}`
+    const options = {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        mode: 'cors'
+    }
+
+    return fetch(URL, options)
+}
+
 export {
     getAllMotos,
-    getById
+    getById,
+    getBikesAvailable
 }

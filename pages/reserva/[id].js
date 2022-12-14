@@ -22,9 +22,7 @@ export default function Detail() {
     const token = localStorage.getItem("token");
     try {
       const response = await getReserveById(id, token);
-      console.log(response);
       const dataJson = await response.json();
-      console.log(dataJson);
       setData(dataJson.data.reserves);
       setFechaI(dataJson.data.reserves.initialDate);
       setStatus(dataJson.data.reserves.status);
@@ -112,110 +110,111 @@ export default function Detail() {
                 <p className="text-center text-gray-600 h5 mb-lg-3">
                   Sigue de cerca el estado de tu reserva
                 </p>
-                {
-                  status != 'canceled'
-                  ? (
-                    <>
+                {status != "canceled" && status != 'backInStock' ? (
+                  <>
                     <div className="d-flex wrapper-status justify-content-between">
-                  <div className="msg-status">Procesando</div>
-                  <div className="msg-status">Reservada</div>
-                  <div className="msg-status">En ruta</div>
-                  <div className="msg-status">Entregada</div>
-                </div>
-                <div className="reserve__tracking steps mx-auto d-flex flex-column flex-md-row justify-content-between align-items-center">
-                  <div className="round-step round-step--fill d-flex justify-content-center align-items-center">
-                    <Image
-                      src="/assets/icons/icon-check-step.webp"
-                      alt="Icon check step"
-                      width={32}
-                      height={32}
-                    />
-                  </div>
-                  <div className="conector" />
-                  <div
-                    className={`round-step ${
-                      status === "reserved" ||
-                      status === "onWay" ||
-                      status === "delivered"
-                        ? "round-step--fill"
-                        : "round-step--border"
-                    }  d-flex justify-content-center align-items-center`}
-                  >
-                    {status === "reserved" ||
-                    status === "onWay" ||
-                    status === "delivered" ? (
-                      <Image
-                        src="/assets/icons/icon-check-step.webp"
-                        alt="Icon check step"
-                        width={32}
-                        height={32}
-                      />
-                    ) : (
-                      ""
-                    )}
-                  </div>
-                  <div
-                    className={`conector ${
-                      status === "reserved" ||
-                      status === "onWay" ||
-                      status === "delivered"
-                        ? ""
-                        : "conector--disabled"
-                    }`}
-                  />
-                  <div
-                    className={`round-step ${
-                      status === "reserved"
-                        ? "round-step--border"
-                        : status === "onWay" || status === "delivered"
-                        ? "round-step--fill"
-                        : "round-step--disabled"
-                    } d-flex justify-content-center align-items-center`}
-                  >
-                    {status === "onWay" || status === "delivered" ? (
-                      <Image
-                        src="/assets/icons/icon-check-step.webp"
-                        alt="Icon check step"
-                        width={32}
-                        height={32}
-                      />
-                    ) : ''}
-                  </div>
-                  <div
-                    className={`conector ${
-                      status === "onWay" || status === "delivered"
-                        ? ""
-                        : "conector--disabled"
-                    }`}
-                  />
-                  <div
-                    className={`round-step ${
-                      status === "delivered"
-                        ? "round-step--fill"
-                        : status === "onWay" 
-                        ? "round-step--border"
-                        : "round-step--disabled"
-                    } d-flex justify-content-center align-items-center`}
-                  >
-                    {status === "delivered" && (
-                      <Image
-                        src="/assets/icons/icon-check-step.webp"
-                        alt="Icon check step"
-                        width={32}
-                        height={32}
-                      />
-                    )}
-                  </div>
-                </div>
-                    </>
-                  )
-                  : (
-                    <div className="alert alert-danger" role="alert">
-                      ¡Lo sentimos, tu reserva ha sido cancelada!
+                      <div className="msg-status">Procesando</div>
+                      <div className="msg-status">Reservada</div>
+                      <div className="msg-status">En ruta</div>
+                      <div className="msg-status">Entregada</div>
                     </div>
-                  )
-                }
-                
+                    <div className="reserve__tracking steps mx-auto d-flex flex-column flex-md-row justify-content-between align-items-center">
+                      <div className="round-step round-step--fill d-flex justify-content-center align-items-center">
+                        <Image
+                          src="/assets/icons/icon-check-step.webp"
+                          alt="Icon check step"
+                          width={32}
+                          height={32}
+                        />
+                      </div>
+                      <div className="conector" />
+                      <div
+                        className={`round-step ${
+                          status === "reserved" ||
+                          status === "onWay" ||
+                          status === "delivered"
+                            ? "round-step--fill"
+                            : "round-step--border"
+                        }  d-flex justify-content-center align-items-center`}
+                      >
+                        {status === "reserved" ||
+                        status === "onWay" ||
+                        status === "delivered" ? (
+                          <Image
+                            src="/assets/icons/icon-check-step.webp"
+                            alt="Icon check step"
+                            width={32}
+                            height={32}
+                          />
+                        ) : (
+                          ""
+                        )}
+                      </div>
+                      <div
+                        className={`conector ${
+                          status === "reserved" ||
+                          status === "onWay" ||
+                          status === "delivered"
+                            ? ""
+                            : "conector--disabled"
+                        }`}
+                      />
+                      <div
+                        className={`round-step ${
+                          status === "reserved"
+                            ? "round-step--border"
+                            : status === "onWay" || status === "delivered"
+                            ? "round-step--fill"
+                            : "round-step--disabled"
+                        } d-flex justify-content-center align-items-center`}
+                      >
+                        {status === "onWay" || status === "delivered" ? (
+                          <Image
+                            src="/assets/icons/icon-check-step.webp"
+                            alt="Icon check step"
+                            width={32}
+                            height={32}
+                          />
+                        ) : (
+                          ""
+                        )}
+                      </div>
+                      <div
+                        className={`conector ${
+                          status === "onWay" || status === "delivered"
+                            ? ""
+                            : "conector--disabled"
+                        }`}
+                      />
+                      <div
+                        className={`round-step ${
+                          status === "delivered"
+                            ? "round-step--fill"
+                            : status === "onWay"
+                            ? "round-step--border"
+                            : "round-step--disabled"
+                        } d-flex justify-content-center align-items-center`}
+                      >
+                        {status === "delivered" && (
+                          <Image
+                            src="/assets/icons/icon-check-step.webp"
+                            alt="Icon check step"
+                            width={32}
+                            height={32}
+                          />
+                        )}
+                      </div>
+                    </div>
+                  </>
+                ) : status === 'backInStock' ? (
+                  <div className="text-center fw-bold alert alert-success" role="alert">
+                    Motocicleta entregada
+                  </div>
+                ) : (
+                  <div className="alert alert-danger" role="alert">
+                    ¡Lo sentimos, tu reserva ha sido cancelada!
+                  </div>
+                )}
               </section>
 
               <section className=" text-center mt-5 mb-4">
