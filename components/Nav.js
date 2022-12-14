@@ -183,6 +183,22 @@ export default function Nav() {
     //router.reload()
   };
 
+  const handleLogin = () => {
+    const canvas = document.querySelector('.offcanvas')
+    const canvasBackdrop = document.querySelector('.offcanvas-backdrop')
+    canvas.classList.remove('show')
+    canvasBackdrop.remove()
+    setLogin(true)
+  }
+
+  const handleRegister = () => {
+    const canvas = document.querySelector('.offcanvas')
+    const canvasBackdrop = document.querySelector('.offcanvas-backdrop')
+    canvas.classList.remove('show')
+    canvasBackdrop.remove()
+    setRegisterModal(true)
+  }
+
   return (
     <>
       <ToastContainer position="top-end" className="mt-2 me-2">
@@ -289,7 +305,7 @@ export default function Nav() {
                         aria-expanded="false"
                       >
                         <div className="btn-avatar d-flex align-items-center justify-content-center">
-                          JA
+                        {isLogged && nameLetter}
                         </div>
                       </button>
                       <ul className="dropdown-menu mm-2">
@@ -331,14 +347,14 @@ export default function Nav() {
                     <li className="option">
                       <button
                         className="btn btn-movebike link"
-                        onClick={() => setLogin(true)}
+                        onClick={handleLogin}
                       >
                         Iniciar sesión
                       </button>
                     </li>
                     <li className="option">
                       <button
-                        onClick={() => setRegisterModal(true)}
+                        onClick={handleRegister}
                         className="btn btn-movebike contained"
                       >
                         Crear cuenta
@@ -581,19 +597,7 @@ export default function Nav() {
               </div>
 
               <div className="col-12 d-flex justify-content-between login__remember">
-                <div className="form-check">
-                  <input
-                    className="form-check-input"
-                    type="checkbox"
-                    value=""
-                    id="invalidCheck3"
-                    aria-describedby="invalidCheck3Feedback"
-                  />
-                  <label className="form-check-label" htmlFor="invalidCheck3">
-                    Recuérdame
-                  </label>
-                </div>
-                <div>
+                <div className="ms-auto">
                   <Link className="login__forgot text-black-800" href="/">
                     ¿No tienes cuenta?
                   </Link>
@@ -622,20 +626,6 @@ export default function Nav() {
         body={
           <>
             <form onSubmit={handleSubmit(onCreateAccount)} className="row g-3">
-              {messageError ? (
-                <div
-                  className="alert alert-warning alert-dismissible fade show"
-                  role="alert"
-                >
-                  <strong>{messageError}</strong>
-                  <button
-                    type="button"
-                    className="btn-close"
-                    data-bs-dismiss="alert"
-                    aria-label="Close"
-                  ></button>
-                </div>
-              ) : null}
               <div className="col-12">
                 <label className="form-label login__label">
                   Nombre completo
