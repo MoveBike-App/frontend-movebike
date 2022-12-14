@@ -88,7 +88,7 @@ export default function Places() {
                 <div className="col-12">
                   <article className="places-section__card d-flex flex-column justify-content-between">
                     <img className="img-fluid bg-route" src={`${route.image}`} alt="bg-routes" />
-                    <header className="d-flex justify-content-end">
+                    <header className="d-flex header-heart justify-content-end">
                       <button className="icon-heart">
                         <Image
                           className=""

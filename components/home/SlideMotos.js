@@ -21,9 +21,8 @@ export default function SlideMotos({
 }) {
   return (
     <>
-      <div className="col-md-6 col-lg-4 mb-5">
         <article
-          className={`flotebikes__card mt-3 ${(isClickBook = false
+          className={`flotebikes__card mb-5 ${(isClickBook = false
             ? "d-none"
             : "d-block")}`}
         >
@@ -107,7 +106,6 @@ export default function SlideMotos({
             </Link>
           </footer>
         </article>
-      </div>
     </>
   );
 }

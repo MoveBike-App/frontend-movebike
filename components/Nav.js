@@ -75,6 +75,7 @@ export default function Nav() {
   const [messageError, setMessageError] = useState("");
   const [validEmail, setValidEmail] = useState("");
   const [nameLetter, setNameLetter] = useState('')
+  const [usuario, setUsuario] = useState({})
   const handleClose = () => setLogin(false);
   const handleCloseRegister = () => setRegisterModal(false);
   const handleClickRegister = () => setRegisterModal(true);
@@ -104,7 +105,6 @@ export default function Nav() {
       //setValidEmail(dataJson.userCurrent.validEmail);
 
       // if (validEmail === false) {
-      //   console.log('validEmail');
       //   setLogin(false);
       //   reset({ emailL: "", passwordL: "" });
       //   setVerify(true);
@@ -139,7 +139,6 @@ export default function Nav() {
         toggleShowA();
       }
     } catch (error) {
-      console.log('Entro en el CATCH: ', error);
     }
   };
 
@@ -496,7 +495,7 @@ export default function Nav() {
                     aria-expanded="false"
                   >
                     <div className="btn-avatar d-flex align-items-center justify-content-center">
-                      {isLogged && nameLetter}
+                      {(isLogged && nameLetter)}
                     </div>
                   </button>
                   <ul className="dropdown-menu translate-middle-x">

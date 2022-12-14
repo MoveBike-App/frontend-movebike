@@ -30,14 +30,15 @@ export default function Rutas() {
         </h1>
       </header>
       <main className="container-fluid routes">
+      
         <section className="container">
           <div className="row">
             <div className="col-12">
-              <h2 className="mv-h2 mt-5 text-center text-gray-600">
+              <h2 className="mv-h2 mt-5 text-center text-gray-600 routes__headding">
                 Le damos la bienvenida a Cancún
               </h2>
               <div className="line"></div>
-              <p className="mt-4 text-center routes__subtitle">
+              <p className="mt-4 text-center text-gray-600 routes__subtitle">
                 Cancún es más que un destino de fiesta con hoteles de lujo
                 (aunque uno bueno). Es la puerta de entrada de la península de
                 Yucatán a un mundo de pirámides mayas cubiertas de jungla, las
@@ -48,7 +49,7 @@ export default function Rutas() {
           </div>
           <div className="row mb-5">
             <div className="col-12">
-              <h3 className="mv-h2 text-center text-gray-600 mt-5 mb-4">
+              <h3 className="mv-h2 text-center routes__headding text-gray-600 mt-5 mb-4">
                 Las mejores atracciones en Cancún
               </h3>
             </div>
@@ -67,7 +68,7 @@ export default function Rutas() {
                     </header>
                     <main className="card-body">
                       <h4>{route.title}</h4>
-                      <p>{showMore ? route.description : `${(route.description).substring(0, 118)}...`}</p>
+                      <p className={`routes__text`}>{showMore ? route.description : `${(route.description).substring(0, 118)}...`}</p>
                       <button className="btn" onClick={() => setShowMore(!showMore)}>
                         {showMore ? 'Ver menos...' : 'Ver más...'}
                       </button>

@@ -28,48 +28,11 @@ const locales = ["en", "ru", "ar-sa"];
 
 
 export default function Bike() {
-  // const [locale, setLocale] = useState("es");
-  // const [ampm, setAmpm] = useState(undefined);
-  // const [ampmOption, setAmpmOption] = useState("undefined");
-  // const { user, isLogged, setIsLogged } = useContext(AuthContext);
   const router = useRouter();
   const [moto, setMoto] = useState({});
   const [features, setFeatures] = useState([]);
   const { slug } = router.query;
-  // const [checkIn, setCheckIn] = useState(null);
-  // const [checkOut, setCheckOut] = useState(null);
-  // const [dateNow, setDateNow] = useState("");
-  // const [selectedDate, setselectedDate] = useState(null);
-  // const [value, setValue] = useState(dayjs(new Date()));
-  // const [minTime, setMinTime] = useState(dayjs(new Date()));
-  // const [location, setLocation] = useState();
-  // const [counter, setCounter] = useState(null);
-  // const [login, setLogin] = useState(false);
-  
-  // const handleClose = () => setLogin(false);
   const [idMoto, setIdMoto] = useState("");
-
-
-
-
-  // const getMoto = async () => {
-  //   try {
-  //     const response = await getById(slug);
-  //     if (response.status === 200) {
-  //       const {
-  //         data: { moto },
-  //       } = await response.json();
-
-  //       setMoto(moto);
-  //       setFeatures(moto.features);
-  //       setIdMoto(moto._id);
-  //     }
-
-  //     // if (response.status >= 400 || response.status <= 599) {
-  //     //   router.push("/404");
-  //     // }
-  //   } catch (error) {}
-  // };
 
   useEffect(() => {
     async function getMoto() {
