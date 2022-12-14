@@ -38,6 +38,7 @@
     "react-bootstrap": "^2.6.0",
     "react-dom": "18.2.0",
     "react-hook-form": "^7.38.0",
+    "react-show-more-text": "^1.6.2",
     "react-slick": "^0.29.0",
     "slick-carousel": "^1.8.1",
     "stripe": "^11.1.0",

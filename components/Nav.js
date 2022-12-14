@@ -82,13 +82,6 @@ export default function Nav() {
 
   const [showA, setShowA] = useState(false);
   const toggleShowA = () => setShowA(!showA);
-
-  useEffect(() => {
-    setUsername(user?.username);
-    setRole(user?.role);
-    setNameLetter(user?.letterName)
-  }, [user]);
-
   const {
     register,
     formState: { errors },
@@ -108,39 +101,46 @@ export default function Nav() {
         password: data.passwordL,
       });
       const dataJson = await response.json();
+      //setValidEmail(dataJson.userCurrent.validEmail);
 
-      setValidEmail(dataJson.userCurrent.validEmail);
-
-      if (validEmail === "false" || "") {
-        setLogin(false);
-        reset({ emailL: "", passwordL: "" });
-        setVerify(true);
-        return;
-      } else if (response.status === 200) {
+      // if (validEmail === false) {
+      //   console.log('validEmail');
+      //   setLogin(false);
+      //   reset({ emailL: "", passwordL: "" });
+      //   setVerify(true);
+      //   return;
+      // } 
+      
+      if (response.status === 200) {
+        setIsLogged(true);
         const { token } = dataJson;
         const { id, name, role, slug } = dataJson.userCurrent;
+        setUsername(name);
+        setRole(role);
         const splitName = name.split(' ')
         const InitialName = (splitName[0] ? splitName[0]?.charAt(0) : 'M') + (splitName[1] ? splitName[1]?.charAt(0) : 'B')
-
+        setNameLetter(InitialName)
         const userCurrent = { id, username: name, role, slug, letterName: InitialName  };
         localStorage.setItem("token", token);
         localStorage.setItem("userCurrent", JSON.stringify(userCurrent));
-
         setLogin(false);
-        setIsLogged(true);
-
-        setShowA(dataJson.success);
-        setIsError(dataJson.success);
+        setShowA(true);
+        setIsError(!dataJson.status);
         setMessageError(dataJson.message);
         toggleShowA();
         reset({ emailL: "", passwordL: "" });
-      } else if (response.status >= 400 || response.status <= 599) {
-        setShowA(dataJson.success);
-        setIsError(dataJson.success);
+        return;
+      }
+
+      if (response.status >= 400 || response.status <= 599) {
+        setShowA(true);
+        setIsError(dataJson.status);
         setMessageError(dataJson.message);
         toggleShowA();
       }
-    } catch (error) {}
+    } catch (error) {
+      console.log('Entro en el CATCH: ', error);
+    }
   };
 
   const onCreateAccount = async ({
@@ -180,8 +180,24 @@ export default function Nav() {
     localStorage.removeItem("userCurrent");
     localStorage.clear();
     setIsLogged(false);
-    router.reload()
+    //router.reload()
   };
+
+  const handleLogin = () => {
+    const canvas = document.querySelector('.offcanvas')
+    const canvasBackdrop = document.querySelector('.offcanvas-backdrop')
+    canvas.classList.remove('show')
+    canvasBackdrop.remove()
+    setLogin(true)
+  }
+
+  const handleRegister = () => {
+    const canvas = document.querySelector('.offcanvas')
+    const canvasBackdrop = document.querySelector('.offcanvas-backdrop')
+    canvas.classList.remove('show')
+    canvasBackdrop.remove()
+    setRegisterModal(true)
+  }
 
   return (
     <>
@@ -289,7 +305,7 @@ export default function Nav() {
                         aria-expanded="false"
                       >
                         <div className="btn-avatar d-flex align-items-center justify-content-center">
-                          JA
+                        {isLogged && nameLetter}
                         </div>
                       </button>
                       <ul className="dropdown-menu mm-2">
@@ -331,14 +347,14 @@ export default function Nav() {
                     <li className="option">
                       <button
                         className="btn btn-movebike link"
-                        onClick={() => setLogin(true)}
+                        onClick={handleLogin}
                       >
                         Iniciar sesión
                       </button>
                     </li>
                     <li className="option">
                       <button
-                        onClick={() => setRegisterModal(true)}
+                        onClick={handleRegister}
                         className="btn btn-movebike contained"
                       >
                         Crear cuenta
@@ -480,13 +496,13 @@ export default function Nav() {
                     aria-expanded="false"
                   >
                     <div className="btn-avatar d-flex align-items-center justify-content-center">
-                      {isLogged && nameLetter }
+                      {isLogged && nameLetter}
                     </div>
                   </button>
                   <ul className="dropdown-menu translate-middle-x">
                     <li>
                       <a className="dropdown-item" href="#">
-                        <p className="mb-0 fw-bold">{isLogged && username}</p>
+                        {isLogged && <p className="mb-0 fw-bold">{username}</p>}
                         <span className="text-capitalize">{isLogged && role}</span>
                       </a>
                     </li>
@@ -581,19 +597,7 @@ export default function Nav() {
               </div>
 
               <div className="col-12 d-flex justify-content-between login__remember">
-                <div className="form-check">
-                  <input
-                    className="form-check-input"
-                    type="checkbox"
-                    value=""
-                    id="invalidCheck3"
-                    aria-describedby="invalidCheck3Feedback"
-                  />
-                  <label className="form-check-label" htmlFor="invalidCheck3">
-                    Recuérdame
-                  </label>
-                </div>
-                <div>
+                <div className="ms-auto">
                   <Link className="login__forgot text-black-800" href="/">
                     ¿No tienes cuenta?
                   </Link>
@@ -622,20 +626,6 @@ export default function Nav() {
         body={
           <>
             <form onSubmit={handleSubmit(onCreateAccount)} className="row g-3">
-              {messageError ? (
-                <div
-                  className="alert alert-warning alert-dismissible fade show"
-                  role="alert"
-                >
-                  <strong>{messageError}</strong>
-                  <button
-                    type="button"
-                    className="btn-close"
-                    data-bs-dismiss="alert"
-                    aria-label="Close"
-                  ></button>
-                </div>
-              ) : null}
               <div className="col-12">
                 <label className="form-label login__label">
                   Nombre completo
