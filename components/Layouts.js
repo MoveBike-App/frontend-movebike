@@ -18,7 +18,7 @@ export default function Layouts ({ children, title, description }) {
           name='viewport'
           content='width=device-width, initial-scale=1.0'
         />
-        <title>{title}</title>
+        <title>{`${title} - MoveBike`}</title>
         {/* <!-- Primary Meta Tags --> */}
         <meta name="title" content={`${title} | MoveBike`} />
         <meta name="description" content={description} />
