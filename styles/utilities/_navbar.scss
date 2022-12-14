@@ -23,6 +23,10 @@
             width: 200px;
             height: 100vh;
             border: none;
+
+            @include  mixins.responsive(variables.$medium){
+                width: 230px;
+            }
         }
 
         .offcanvas-body {

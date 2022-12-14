@@ -3,6 +3,10 @@
 
 .routes{
     
+    &__subtitle {
+        max-width: 650px;
+        margin: 0 auto;
+    }
     &__atractions {
         background-color: variables.$white-background;
     }
