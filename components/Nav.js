@@ -82,13 +82,6 @@ export default function Nav() {
 
   const [showA, setShowA] = useState(false);
   const toggleShowA = () => setShowA(!showA);
-
-  useEffect(() => {
-    setUsername(user?.username);
-    setRole(user?.role);
-    setNameLetter(user?.letterName)
-  }, [user]);
-
   const {
     register,
     formState: { errors },
@@ -108,39 +101,46 @@ export default function Nav() {
         password: data.passwordL,
       });
       const dataJson = await response.json();
+      //setValidEmail(dataJson.userCurrent.validEmail);
 
-      setValidEmail(dataJson.userCurrent.validEmail);
-
-      if (validEmail === "false" || "") {
-        setLogin(false);
-        reset({ emailL: "", passwordL: "" });
-        setVerify(true);
-        return;
-      } else if (response.status === 200) {
+      // if (validEmail === false) {
+      //   console.log('validEmail');
+      //   setLogin(false);
+      //   reset({ emailL: "", passwordL: "" });
+      //   setVerify(true);
+      //   return;
+      // } 
+      
+      if (response.status === 200) {
+        setIsLogged(true);
         const { token } = dataJson;
         const { id, name, role, slug } = dataJson.userCurrent;
+        setUsername(name);
+        setRole(role);
         const splitName = name.split(' ')
         const InitialName = (splitName[0] ? splitName[0]?.charAt(0) : 'M') + (splitName[1] ? splitName[1]?.charAt(0) : 'B')
-
+        setNameLetter(InitialName)
         const userCurrent = { id, username: name, role, slug, letterName: InitialName  };
         localStorage.setItem("token", token);
         localStorage.setItem("userCurrent", JSON.stringify(userCurrent));
-
         setLogin(false);
-        setIsLogged(true);
-
-        setShowA(dataJson.success);
-        setIsError(dataJson.success);
+        setShowA(true);
+        setIsError(!dataJson.status);
         setMessageError(dataJson.message);
         toggleShowA();
         reset({ emailL: "", passwordL: "" });
-      } else if (response.status >= 400 || response.status <= 599) {
-        setShowA(dataJson.success);
-        setIsError(dataJson.success);
+        return;
+      }
+
+      if (response.status >= 400 || response.status <= 599) {
+        setShowA(true);
+        setIsError(dataJson.status);
         setMessageError(dataJson.message);
         toggleShowA();
       }
-    } catch (error) {}
+    } catch (error) {
+      console.log('Entro en el CATCH: ', error);
+    }
   };
 
   const onCreateAccount = async ({
@@ -180,7 +180,7 @@ export default function Nav() {
     localStorage.removeItem("userCurrent");
     localStorage.clear();
     setIsLogged(false);
-    router.reload()
+    //router.reload()
   };
 
   return (
@@ -480,13 +480,13 @@ export default function Nav() {
                     aria-expanded="false"
                   >
                     <div className="btn-avatar d-flex align-items-center justify-content-center">
-                      {isLogged && nameLetter }
+                      {isLogged && nameLetter}
                     </div>
                   </button>
                   <ul className="dropdown-menu translate-middle-x">
                     <li>
                       <a className="dropdown-item" href="#">
-                        <p className="mb-0 fw-bold">{isLogged && username}</p>
+                        {isLogged && <p className="mb-0 fw-bold">{username}</p>}
                         <span className="text-capitalize">{isLogged && role}</span>
                       </a>
                     </li>
