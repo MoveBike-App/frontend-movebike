@@ -17,9 +17,9 @@ export default function Footer () {
               height={57}
             />
             <p className='text-center footer__subtitle text-lg-start'>
-              Una lista de los 75 mejores lugares <br className='d-md-none' /> turísticos <br className='d-none d-lg-flex' /> del mundo
-              para unas <br className='d-md-none' />
-              vacaciones o un viaje perfecto
+              Una lista de los lugares más visitados <br className='d-md-none' /> en Cancún <br className='d-none d-lg-flex' />
+              para un <br className='d-md-none' />
+              viaje inolvidable
             </p>
             <div className='footer__social mx-auto mx-lg-0'>
               <a href='https://www.facebook.com/movebikemx/' target='_blank' rel='noreferrer'>

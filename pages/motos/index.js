@@ -33,13 +33,8 @@ export default function Motos () {
       const response = await getAllMotos()
       const dataJson = await response.json()
       setMotos(dataJson.data.motos)
+      setValue(initialDate)
     } catch (error) {}
-  }
-
-  const getMotosAvailables = async () => {
-    const response = await getBikesAvailable(initialDate, finalDate)
-    const dataJson = await response.json()
-    console.log(dataJson.data)
   }
 
   const {
