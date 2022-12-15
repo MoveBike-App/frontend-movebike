@@ -21,6 +21,7 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
 import { DatePicker, DateTimePicker } from '@mui/x-date-pickers'
 import { useRouter } from 'next/router'
+import { getBikesAvailable } from '../../services/bikes/motos'
 
 export default function Motos () {
   const router = useRouter()
@@ -44,7 +45,11 @@ export default function Motos () {
   } = useForm()
 
   useEffect(() => {
-    getMotos()
+    if (initialDate) {
+      getMotosAvailables()
+    } else {
+      getMotos()
+    }
   }, [])
   return (
     <Layout title='¡Encuentra tu moto favorita!'>

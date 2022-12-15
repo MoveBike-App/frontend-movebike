@@ -38,8 +38,8 @@ export default function Places () {
       {
         breakpoint: 992,
         settings: {
-          slidesToShow: 3,
-          slidesToScroll: 3,
+          slidesToShow: 2,
+          slidesToScroll: 2,
           infinite: true,
           dots: false
         }
@@ -65,7 +65,7 @@ export default function Places () {
     <div className='container'>
       <div className='row'>
         <div className='col-12 col-lg-4 d-flex flex-column justify-content-center'>
-          <div>
+          <div className='text center'>
             <h2 className='text-center text-lg-start places-section__title'>
               ¡Encuentra tu sitio ideal!
             </h2>

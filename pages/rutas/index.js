@@ -2,6 +2,11 @@ import React, { useCallback, useEffect, useState } from 'react'
 import Layout from 'components/Layouts.js'
 import { getAllRoutes } from 'services/routes'
 import Link from 'next/link'
+
+const myLoader = ({ src }) => {
+  return `${src}`
+}
+
 import Image from 'next/image'
 import { addAReaction, deleteAReaction } from '../../services/routes'
 import VerifyModal from '../../components/Utilities/VerifyModal'
@@ -99,7 +104,7 @@ export default function Rutas () {
           </div>
           <div className='row mb-5'>
             <div className='col-12'>
-              <h3 className='mv-h2 text-center text-gray-600 mt-5 mb-4'>
+              <h3 className='mv-h2 text-center routes__headding text-gray-600 mt-5 mb-4'>
                 Las mejores atracciones en Cancún
               </h3>
             </div>

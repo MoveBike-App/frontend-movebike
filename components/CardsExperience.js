@@ -28,7 +28,6 @@ export default function CardsExperience () {
             <Image
               src='/assets/landing/moto.png'
               alt='Experience image'
-
               width={122}
               height={122}
             />
@@ -44,7 +43,6 @@ export default function CardsExperience () {
             <Image
               src='/assets/landing/umbrella.png'
               alt='Experience image'
-
               width={122}
               height={122}
             />
