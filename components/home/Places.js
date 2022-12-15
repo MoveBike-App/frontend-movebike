@@ -38,8 +38,8 @@ export default function Places () {
       {
         breakpoint: 992,
         settings: {
-          slidesToShow: 3,
-          slidesToScroll: 3,
+          slidesToShow: 2,
+          slidesToScroll: 2,
           infinite: true,
           dots: false
         }
@@ -65,18 +65,18 @@ export default function Places () {
     <div className='container'>
       <div className='row'>
         <div className='col-12 col-lg-4 d-flex flex-column justify-content-center'>
-          <div>
+          <div className='text center'>
             <h2 className='text-center text-lg-start places-section__title'>
               ¡Encuentra tu sitio ideal!
             </h2>
-            <p className='text-center footer__subtitle text-lg-start'>
-              Una lista de los lugares <strong>más visitados</strong>  <br className='d-md-none' /> en Cancún <br className='d-none d-lg-flex' />
-              para un <br className='d-md-none' />
+            <p className='text-center text-lg-start'>
+              Una lista de los lugares <strong>más visitados</strong>  <br className='d-md-none' /> en Cancún <br className='d-none d-lg-none' />
+              para un <br className='d-none d-md-block d-lg-none' />
               viaje inolvidable.
             </p>
-            <strong className='text-center footer__subtitle text-lg-start'>
+            <p className='text-center fw-bold text-lg-start'>
               Vive la experiencia ahora
-            </strong>
+            </p>
             <Link
               href='/rutas'
               className='btn btn-movebike contained d-none d-lg-flex justify-content-lg-center text-center btn-place-book'

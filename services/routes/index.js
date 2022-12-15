@@ -12,6 +12,19 @@ function getAllRoutes () {
   return fetch(URL, options)
 }
 
+function getBySlug (slug) {
+  const URL = `${URL_BASE}routes/${slug}`
+  const options = {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      typeSearch: 'BY_SLUG'
+    },
+    mode: 'cors'
+  }
+  return fetch(URL, options)
+}
+
 function getAllReactions (idRoute) {
   const URL = `${URL_BASE}reactions/${idRoute}`
   const options = {
@@ -50,4 +63,4 @@ function deleteAReaction (idReaction, token) {
   return fetch(URL, options)
 }
 
-export { getAllRoutes, getAllReactions, addAReaction, deleteAReaction }
+export { getAllRoutes, getAllReactions, addAReaction, deleteAReaction, getBySlug }

@@ -305,14 +305,14 @@ export default function Nav () {
                           aria-expanded='false'
                         >
                           <div className='btn-avatar d-flex align-items-center justify-content-center'>
-                            {isLogged && nameLetter}
+                            MB
                           </div>
                         </button>
                         <ul className='dropdown-menu mm-2'>
                           <li>
                             <a className='dropdown-item' href='#'>
                               <p className='mb-0 fw-bold'>{isLogged && username}</p>
-                              <span className='text-capitalize'>{isLogged && role}</span>
+                              <span className='text-capitalize'>Usuario</span>
                             </a>
                           </li>
                           <li>
@@ -497,14 +497,14 @@ export default function Nav () {
                     aria-expanded='false'
                   >
                     <div className='btn-avatar d-flex align-items-center justify-content-center'>
-                      {(isLogged && nameLetter)}
+                      MB
                     </div>
                   </button>
                   <ul className='dropdown-menu translate-middle-x'>
                     <li>
                       <a className='dropdown-item' href='#'>
                         {isLogged && <p className='mb-0 fw-bold'>{username}</p>}
-                        <span className='text-capitalize'>{isLogged && role}</span>
+                        <span className='text-capitalize'>Usuario</span>
                       </a>
                     </li>
                     <li>
