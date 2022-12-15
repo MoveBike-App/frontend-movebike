@@ -24,4 +24,30 @@ function getAllReactions (idRoute) {
   return fetch(URL, options)
 }
 
-export { getAllRoutes, getAllReactions }
+function addAReaction (idRoute, token) {
+  const URL = `${URL_BASE}reactions/${idRoute}`
+  const options = {
+    method: 'PATCH',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: token,
+    },
+    mode: 'cors'
+  }
+  return fetch(URL, options)
+}
+
+function deleteAReaction (idReaction, token) {
+  const URL = `${URL_BASE}reactions/${idReaction}`
+  const options = {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: token,
+    },
+    mode: 'cors'
+  }
+  return fetch(URL, options)
+}
+
+export { getAllRoutes, getAllReactions, addAReaction, deleteAReaction }

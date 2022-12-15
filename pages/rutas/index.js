@@ -1,46 +1,84 @@
 import React, { useCallback, useEffect, useState } from "react";
 import Layout from "components/Layouts.js";
 import { getAllRoutes } from "services/routes";
-import { getAllReactions } from "../../services/routes";
 import Link from "next/link";
 import Image from "next/image";
-import { useRouter } from 'next/router'
+import { addAReaction, deleteAReaction } from "../../services/routes";
 
-const myLoader = ({ src }) => {
-  return `${src}`;
-};
 
 export default function Rutas() {
-  const router = useRouter()
-  const [routes, setRoutes] = useState([]);
-  const [reactions, setReactions] = useState([]);
+  const [routes, setRoutes] = useState([])
   const [showMore, setShowMore] = useState(false)
-  const { id } = router.query
+
 
   const fetchRoutes = useCallback(async () => {
     const user = JSON.parse(localStorage.getItem("userCurrent"));
     const response = await getAllRoutes();
     const dataJson = await response.json();
-    let routesList  = dataJson.data.routes
-    routesList.map(route=>{
-      route.hasOwnReaction = route.reactions.find(reaction => (reaction.author!=null && reaction.author._id == user.id))!=null 
-      console.log(route);
-      return route
-    });
+    if(user){
+      let routesList  = dataJson.data.routes
+      routesList.map(route=>{
+        route.currentReaction = 
+          route.reactions.find(reaction => 
+            (reaction.author!=null && reaction.author._id == user.id)
+          )
+        route.hasOwnReaction = route.currentReaction !=null
+        return route
+      })
+  }
     setRoutes(dataJson.data.routes);
   }, []);
 
+  function handleClick (hasOwnReaction,currentRoute) {
+    if (!localStorage.getItem("token")) {
+      alert('Login to have favorite routes!')
+      return
+    }
+    if (hasOwnReaction) {
+      deleteAFavorite(currentRoute)
+    } else {
+      addAFavorite(currentRoute._id)
+    }
+    
+  }
   useEffect(() => {
     fetchRoutes();
-  }, [fetchRoutes]);
+  }, [routes]);
 
+  const deleteAFavorite = async (route) => {
+    const token = localStorage.getItem("token");
+    try{
+      const response = await deleteAReaction(route.currentReaction._id,token)
+      const dataJson = await response.json();
+      if(dataJson.success){
+        const reactions = routes.find( r => r._id === route._id ).reactions
+        routes.find( r => r._id === route._id ).reactions = reactions.filter(r=>r._id!==route.currentReaction._id)
+        routes.find( r => r._id === route._id ).hasOwnReaction = false
+        routes.find( r => r._id === route._id ).currentReaction = null
+        setRoutes(routes)
+      }
+    }catch(error){}
+  }
+  const addAFavorite = async (idRoute) => {
+    const token = localStorage.getItem("token");
+    try{
+      const response = await addAReaction(idRoute,token)
+      const dataJson = await response.json();
+      if(dataJson.success){
+        routes.find( r => r._id === idRoute ).reactions.push(dataJson.data.reaction)
+        routes.find( r => r._id === idRoute ).hasOwnReaction = true
+        routes.find( r => r._id === idRoute ).currentReaction = dataJson.data.reaction
+        setRoutes(routes)
+      }
+    }catch(error){}
+  }
 
   return (
-    <Layout title={"Que hacer en Cancún"}>
+    <Layout title={"¿Qué hacer en Cancún?"}>
       <header className="bg-header d-flex justify-content-center align-items-center">
-      <h2 className="mv-h2 text-white text-center mt-5">
-          Bienvenido a<br /> <h1 className="cancun-text mt-1">Cancún</h1>
-        </h2>
+      <h1 className="mv-h2 text-white text-center mt-5">
+          Bienvenido a<br /> <strong className="cancun-text mt-1">Cancún</strong>
+        </h1>
       </header>
       <main className="container-fluid routes">
         <section className="container">
@@ -82,7 +120,9 @@ export default function Rutas() {
                       <div className="d-flex justify-content-between">
                       <h4>{route.title}</h4>
                       <div className="d-flex align-items-center">
-                      <button className={route.hasOwnReaction?'btn-im btn':'icon-heart'}>
+                      <button onClick={()=>{
+                        return handleClick(route.hasOwnReaction,route)
+                      }} className={route.hasOwnReaction?'btn-im':'icon-heart'}>
                         <Image
                           className={route.hasOwnReaction?'icon-heart__active':''}
                           src='/assets/icons/icon-heart.webp'
@@ -91,7 +131,6 @@ export default function Rutas() {
                           height={26}
                         />
                       </button>
-                      <p>{route.reactions.length}</p>
                       </div>
 
                       </div>
