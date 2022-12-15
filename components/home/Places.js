@@ -70,11 +70,11 @@ export default function Places () {
               ¡Encuentra tu sitio ideal!
             </h2>
             <p className='text-center text-lg-start places-section__subtitle'>
-              Una lista de los lugares <strong>más visitados</strong>  <br className='d-md-none' /> en Cancún <br className='d-none d-lg-flex' />
-              para un <br className='d-md-none' />
+              Una lista de los lugares <strong>más visitados</strong>  <br className='d-lg-block' /> en Cancún
+              para un <br className='d-none d-lg-none' />
               viaje inolvidable.
             </p>
-            <p className='text-center fw-bold'>
+            <p className='text-center text-lg-start mt-3 mt-lg-2 fw-bold'>
               Vive la experiencia ahora
             </p>
             <Link
