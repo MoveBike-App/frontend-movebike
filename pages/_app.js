@@ -1,25 +1,23 @@
-import AuthContext from "context/AuthContext";
-import { useEffect, useState } from "react";
-import "bootstrap/dist/css/bootstrap.min.css";
+import AuthContext from 'context/AuthContext'
+import { useEffect, useState } from 'react'
+import 'bootstrap/dist/css/bootstrap.min.css'
 
-import "slick-carousel/slick/slick.css"; 
-import "slick-carousel/slick/slick-theme.css";
+import 'slick-carousel/slick/slick.css'
+import 'slick-carousel/slick/slick-theme.css'
 
 // Import Swiper styles
-import 'swiper/css';
-import 'swiper/css/navigation';
-import 'swiper/css/pagination';
+import 'swiper/css'
+import 'swiper/css/navigation'
+import 'swiper/css/pagination'
 
-import "styles/app.scss";
-function MyApp({ Component, pageProps }) {
-  const [isLogged, setIsLogged] = useState(false);
-  const [user, setUser] = useState({});
-
-  
+import 'styles/app.scss'
+function MyApp ({ Component, pageProps }) {
+  const [isLogged, setIsLogged] = useState(false)
+  const [user, setUser] = useState({})
 
   const handleGetUserFromStorage = () => {
-    const storage = localStorage.getItem("userCurrent");
-    if(storage){
+    const storage = localStorage.getItem('userCurrent')
+    if (storage) {
       setIsLogged(true)
     }
     const dataParse = JSON.parse(storage)
@@ -30,21 +28,20 @@ function MyApp({ Component, pageProps }) {
           role: dataParse.role,
           letterName: dataParse.letterName
         }
-      : null;
+      : null
 
-    return user;
-  };
-
+    return user
+  }
 
   useEffect(() => {
-    setUser(handleGetUserFromStorage());
-  }, []);
+    setUser(handleGetUserFromStorage())
+  }, [])
 
   return (
-    <AuthContext.Provider value={{user, isLogged, setIsLogged}}>
+    <AuthContext.Provider value={{ user, isLogged, setIsLogged }}>
       <Component {...pageProps} />
     </AuthContext.Provider>
-  );
+  )
 }
 
-export default MyApp;
+export default MyApp

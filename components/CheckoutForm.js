@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from 'react'
 import {
   PaymentElement,
   useStripe,
-  useElements,
-} from "@stripe/react-stripe-js";
-import { createReserve } from "../services/reserves/reserve";
+  useElements
+} from '@stripe/react-stripe-js'
+import { createReserve } from '../services/reserves/reserve'
 import { useRouter } from 'next/router'
 
-export default function CheckoutForm({
+export default function CheckoutForm ({
   vehicle,
   price,
   clientSecret,
@@ -15,20 +15,20 @@ export default function CheckoutForm({
   finalDate,
   totalDays,
   addressMap,
-  token,
+  token
 }) {
-  const stripe = useStripe();
-  const elements = useElements();
-  const router = useRouter();
+  const stripe = useStripe()
+  const elements = useElements()
+  const router = useRouter()
 
-  const [message, setMessage] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
-  const [statusPayment, setStatusPayment] = useState("");
+  const [message, setMessage] = useState(null)
+  const [isLoading, setIsLoading] = useState(false)
+  const [statusPayment, setStatusPayment] = useState('')
   const [idReserve, setIdReserve] = useState()
 
   useEffect(() => {
     if (!stripe) {
-      return;
+      return
     }
 
     // const clientSecret = new URLSearchParams(window.location.search).get(
@@ -36,119 +36,117 @@ export default function CheckoutForm({
     // );
 
     if (!clientSecret) {
-      return;
+      return
     }
 
     stripe.retrievePaymentIntent(clientSecret).then(({ paymentIntent }) => {
       switch (paymentIntent.status) {
-        case "succeeded":
-          setMessage("¡Pago realizado exitosamente!");
-          setStatusPayment("succeeded");
-          break;
-        case "processing":
-          setMessage("Your payment is processing.");
-          setStatusPayment("succeeded");
-          break;
-        case "requires_payment_method":
-          setMessage("Your payment was not successful, please try again.");
-          setStatusPayment("requires_payment_method");
-          break;
+        case 'succeeded':
+          setMessage('¡Pago realizado exitosamente!')
+          setStatusPayment('succeeded')
+          break
+        case 'processing':
+          setMessage('Your payment is processing.')
+          setStatusPayment('succeeded')
+          break
+        case 'requires_payment_method':
+          setMessage('Your payment was not successful, please try again.')
+          setStatusPayment('requires_payment_method')
+          break
         default:
-          setMessage("Something went wrong.");
-          break;
+          setMessage('Something went wrong.')
+          break
       }
-    });
-  }, [stripe, clientSecret]);
+    })
+  }, [stripe, clientSecret])
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
+    e.preventDefault()
 
     if (!stripe || !elements) {
       // Stripe.js has not yet loaded.
       // Make sure to disable form submission until Stripe.js has loaded.
-      return;
+      return
     }
 
-    setIsLoading(true);
-    //let idReserve = "";
+    setIsLoading(true)
+    // let idReserve = "";
 
     const response = await stripe.confirmPayment({
       elements,
-      redirect: "if_required",
+      redirect: 'if_required',
       confirmParams: {
         // Make sure to change this to your payment completion page
-        return_url: `http://localhost:3000/thanks?token=${token}&idReserve=${idReserve}`,
-      },
-    });
+        return_url: `http://localhost:3000/thanks?token=${token}&idReserve=${idReserve}`
+      }
+    })
 
     if (response?.paymentIntent?.amount !== price) {
       console.error(
-        "Amount mismatch",
+        'Amount mismatch',
         response?.paymentIntent?.amount,
-        "does not equal",
+        'does not equal',
         price,
-        "\n\nFull response:\n\n",
+        '\n\nFull response:\n\n',
         response
-      );
+      )
     }
 
-    setIsLoading(false);
+    setIsLoading(false)
 
-    const { error } = response;
+    const { error } = response
 
     if (error) {
-      if (error.type === "card_error" || error.type === "validation_error") {
-        setMessage(error.message);
+      if (error.type === 'card_error' || error.type === 'validation_error') {
+        setMessage(error.message)
       }
     } else {
-      setMessage("Tu pago ha sido realizado con éxito!");
+      setMessage('Tu pago ha sido realizado con éxito!')
 
-      const cartStorage = JSON.parse(localStorage.getItem("cartCurrent"));
+      const cartStorage = JSON.parse(localStorage.getItem('cartCurrent'))
       if (cartStorage) {
         const data = {
-          vehicle: vehicle,
+          vehicle,
           totalPrice: price / 100,
-          initialDate: initialDate,
-          finalDate: finalDate,
-          totalDays: totalDays,
+          initialDate,
+          finalDate,
+          totalDays,
           isPaid: true,
           address: addressMap,
           payment_id: response?.paymentIntent?.id
         }
 
-        const respReserve = await createReserve(data, token);
+        const respReserve = await createReserve(data, token)
         const dataJson = await respReserve.json()
-        ///setIdReserve(dataJson.data._id)
+        /// setIdReserve(dataJson.data._id)
         router.push(`/thanks?token=${token}&idReserve=${dataJson.data._id}&payment_intent=${response?.paymentIntent?.id}`)
-        localStorage.removeItem("cartCurrent");
+        localStorage.removeItem('cartCurrent')
       }
     }
 
     // if (error) {
     //   setMessage(error.message);
     // } else {
-      
+
     // }
 
-
-
-    setIsLoading(false);
-  };
+    setIsLoading(false)
+  }
 
   const paymentElementOptions = {
-    layout: "tabs",
-  };
+    layout: 'tabs'
+  }
 
   return (
-    <form id="payment-form" onSubmit={handleSubmit}>
-      <PaymentElement id="payment-element" options={paymentElementOptions} />
-      <button disabled={isLoading || !stripe || !elements} id="submit">
-        <span id="button-text">
-          {isLoading ? <div className="spinner" id="spinner"></div> : "Pagar ahora"}
+    <form id='payment-form' onSubmit={handleSubmit}>
+      <PaymentElement id='payment-element' options={paymentElementOptions} />
+      <button disabled={isLoading || !stripe || !elements} id='submit'>
+        <span id='button-text'>
+          {isLoading ? <div className='spinner' id='spinner' /> : 'Pagar ahora'}
         </span>
       </button>
       {/* Show any error or success messages */}
-      {message && <div id="payment-message">{message}</div>}
+      {message && <div id='payment-message'>{message}</div>}
     </form>
-  );
+  )
 }
