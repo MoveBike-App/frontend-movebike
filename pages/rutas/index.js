@@ -9,10 +9,13 @@ const myLoader = ({ src }) => {
 
 import Image from 'next/image'
 import { addAReaction, deleteAReaction } from '../../services/routes'
+import VerifyModal from '../../components/Utilities/VerifyModal'
 
 export default function Rutas () {
   const [routes, setRoutes] = useState([])
   const [showMore, setShowMore] = useState(false)
+  const [verify, setVerify] = useState(false)
+  const handleCloseVerify = () => setVerify(false)
 
   const fetchRoutes = useCallback(async () => {
     const user = JSON.parse(localStorage.getItem('userCurrent'))
@@ -34,7 +37,7 @@ export default function Rutas () {
 
   function handleClick (hasOwnReaction, currentRoute) {
     if (!localStorage.getItem('token')) {
-      // alert('Login to have favorite routes!')
+      setVerify(true)
       return
     }
     if (hasOwnReaction) {
@@ -105,6 +108,7 @@ export default function Rutas () {
                 Las mejores atracciones en Cancún
               </h3>
             </div>
+
             {routes.map((route) => (
               <>
                 <div key={route._id} className='col-md-6 col-lg-4'>
@@ -157,7 +161,24 @@ export default function Rutas () {
             ))}
           </div>
         </section>
+        <VerifyModal
+          show={verify}
+          onHide={() => setVerify(false)}
+          title='¡Inicia Sesión!'
+          body={
+            <>
+              <div className='col-12'>
+                <p className='mb-0 login__paragraph'>
+                  Inicia sesión o crea una cuenta para poder guardar tus lugares favoritos.
+                </p>
+              </div>
+            </>
+        }
+          handleClick={handleCloseVerify}
+          handleClose={handleCloseVerify}
+        />
       </main>
+
     </Layout>
   )
 }
