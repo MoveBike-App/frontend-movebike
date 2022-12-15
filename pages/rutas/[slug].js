@@ -39,7 +39,7 @@ export default function Ruta () {
         
       </header>
       <main className='container-fluid'>
-        <div className='container'>
+        <div className='container mb-5'>
           <div className='row'>
             <div className='col-12'>
             <h1 className='single-route__subheading text-black-700'>¡Comienza tu aventura!</h1>
