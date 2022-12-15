@@ -39,7 +39,7 @@ export default function Ruta () {
         
       </header>
       <main className='container-fluid'>
-        <div className='container vh-100'>
+        <div className='container'>
           <div className='row'>
             <div className='col-12'>
             <h1 className='single-route__subheading text-black-700'>¡Comienza tu aventura!</h1>
@@ -50,7 +50,7 @@ export default function Ruta () {
               <iframe src={`${routeData?.googleMapsLink}`} width='100%' height='100%' allowFullScreen='' loading='lazy' referrerpolicy='no-referrer-when-downgrade' />
             </div>
             <div className='col-lg-6'>
-              <p>{routeData?.description}</p>
+              <p className='single-route__description'>{routeData?.description}</p>
             </div>
           </div>
         </div>

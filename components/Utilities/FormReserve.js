@@ -504,10 +504,10 @@ export default function FormReserve ({
 
             {/* Form buttons */}
             {showFormExpanded && (
-              <div className='mb30 submit-btns'>
+              <div className='mb30 text-center mt-2 submit-btns'>
                 <button
                   type='button'
-                  className='btn text-center round btn--gray-light ml3'
+                  className='btn btn-movebike link round btn--gray-light ml3'
                   id='btn-reset'
                   onClick={resetForm}
                 >
