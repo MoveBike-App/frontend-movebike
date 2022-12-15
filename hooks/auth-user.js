@@ -2,7 +2,7 @@
 import { useContext } from 'react'
 
 /* Contexts */
-//import { AuthUserContext } from '../context/auth-user'
+// import { AuthUserContext } from '../context/auth-user'
 
 export const useAuthUser = () => {
   const { isLogged, user, setIsLogged } = useContext(AuthUserContext)
@@ -12,6 +12,6 @@ export const useAuthUser = () => {
   return {
     isLogged,
     user: uppercaseUser,
-    setIsLogged,
+    setIsLogged
   }
 }

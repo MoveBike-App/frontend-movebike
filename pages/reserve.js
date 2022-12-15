@@ -17,7 +17,7 @@ export default function bookings () {
                   <Image
                     src='/assets/landing/flotebikers/vitalia-125.webp'
                     alt='Scooter Vitalia 125'
-                    
+
                     width={130}
                     height={95}
                   />
@@ -53,7 +53,7 @@ export default function bookings () {
                   <Image
                     src='/assets/landing/flotebikers/vitalia-150.webp'
                     alt='Scooter Vitalia 125'
-                    
+
                     width={130}
                     height={95}
                   />
@@ -98,7 +98,7 @@ export default function bookings () {
                     <Image
                       src='/assets/icons/icon-check-step.webp'
                       alt='Icon check step'
-                      
+
                       width={32}
                       height={32}
                     />

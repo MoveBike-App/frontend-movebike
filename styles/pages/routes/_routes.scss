@@ -41,3 +41,54 @@
         background: radial-gradient(84.08% 95.9% at 32.79% 12.64%, rgba(238, 113, 21, 0.56) 40.58%, rgba(0, 0, 0, 0) 92.65%),  url(/assets/landing/routes/bg-header-routes.jpg);
     }
 }
+
+.btn-im{
+    padding: 0 !important
+        ;
+}
+.icon-heart {
+    border: none;
+    background: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    margin-right: 6px;
+    margin-bottom: 15px;
+    background-color: variables.$gray-background;
+    width: 32px;
+    height: 32px;
+
+    &:hover {
+        box-shadow: 2px 4px 12px rgba(0, 0, 0, 0.3);
+    }
+
+    &:focus-visible {
+        outline: transparent;
+    }
+
+    &__active {
+        
+    border: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+        background-color: #ff4f5a;
+        border-radius: 50%;   
+         margin-right: 6px !important;
+        margin-bottom: 15px !important;
+        width: 32px;
+        height: 32px;
+    }
+}
+
+.overlay {
+    z-index: 1;
+    position: relative;
+    width: 100%;
+    height: 52px;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.515625) 48.44%, #FFFFFF 99.99%, rgba(255, 255, 255, 0) 100%);
+    filter: blur(0.5px);
+
+}
