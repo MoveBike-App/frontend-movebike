@@ -1,7 +1,9 @@
 
 @use './abstract/variables';
 @use './abstract/mixins';
-
+html {
+    scroll-behavior: smooth;
+  }
 .landing{
     &__title{
         font-size: 24px;

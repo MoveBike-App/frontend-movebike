@@ -41,3 +41,50 @@
         background: radial-gradient(84.08% 95.9% at 32.79% 12.64%, rgba(238, 113, 21, 0.56) 40.58%, rgba(0, 0, 0, 0) 92.65%),  url(/assets/landing/routes/bg-header-routes.jpg);
     }
 }
+
+.single-route {
+    position: relative;
+    
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    @include mixins.responsive(variables.$large) {
+        min-height: 325px;
+    }
+
+    &__bg-image {
+        z-index: -1;
+        max-height: 425px;
+        width: 100%;
+        object-fit: cover;
+
+    }
+
+    &__title {
+        position: absolute;
+        
+        h1{
+            z-index: 15px;
+        color: variables.$white;
+        font-family: variables.$font-quicksand;
+        }
+
+        p {
+            max-width: 550px;
+            margin-bottom: 0;
+        }
+    }
+
+    &__subheading {
+        margin-top: 14px;
+        margin-bottom: 18px;
+        text-align: center;
+
+        @include mixins.responsive(variables.$large) {
+            margin-top: 32px;
+            margin-bottom: 32px;
+        }
+    }
+}

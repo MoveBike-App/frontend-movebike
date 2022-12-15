@@ -1,5 +1,5 @@
-import { URL_BASE } from "../config";
+import { URL_BASE } from '../config'
 
-function retrieveCharge() {
-    const URL = `${URL_BASE}`
+function retrieveCharge () {
+  const URL = `${URL_BASE}`
 }

@@ -12,7 +12,7 @@ export default function Footer () {
               className='text-center mx-auto mx-lg-0'
               src='/assets/logos/logo-movebike-black.webp'
               alt='Logo footer'
-              
+
               width={210}
               height={57}
             />
@@ -22,7 +22,7 @@ export default function Footer () {
               vacaciones o un viaje perfecto
             </p>
             <div className='footer__social mx-auto mx-lg-0'>
-              <a href="https://www.facebook.com/movebikemx/" target={'_blank'} rel="noreferrer">
+              <a href='https://www.facebook.com/movebikemx/' target='_blank' rel='noreferrer'>
                 <Image
                   src='/assets/icons/icon-facebook-movebike.webp'
                   alt='Facebook Movebike'
@@ -31,26 +31,26 @@ export default function Footer () {
                   className='footer__social--facebook'
                 />
               </a>
-              <a href="https://www.instagram.com/movebikemx/" target={'_blank'} rel="noreferrer">
-              <Image
-                src='/assets/icons/icon-instagram-movebike.webp'
-                alt='Instagram Movebike'
-                
-                width={32}
-                height={32}
-                className='footer__social--instagram'
-              />
+              <a href='https://www.instagram.com/movebikemx/' target='_blank' rel='noreferrer'>
+                <Image
+                  src='/assets/icons/icon-instagram-movebike.webp'
+                  alt='Instagram Movebike'
+
+                  width={32}
+                  height={32}
+                  className='footer__social--instagram'
+                />
               </a>
-              
-              <a href="https://wa.me/message/Y2CMRDDXMFB4G1" target={'_blank'} rel={'noreferrer '}>
-              <Image
-                src='/assets/icons/icon-whatsapp-movebike.webp'
-                alt='Whatsapp Movebike'
-                
-                width={32}
-                height={32}
-                className='footer__social--whatsapp'
-              />
+
+              <a href='https://wa.me/message/Y2CMRDDXMFB4G1' target='_blank' rel='noreferrer '>
+                <Image
+                  src='/assets/icons/icon-whatsapp-movebike.webp'
+                  alt='Whatsapp Movebike'
+
+                  width={32}
+                  height={32}
+                  className='footer__social--whatsapp'
+                />
               </a>
             </div>
           </div>
