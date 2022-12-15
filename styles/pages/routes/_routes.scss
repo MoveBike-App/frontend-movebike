@@ -67,9 +67,13 @@
   background-color: variables.$gray-background;
   width: 30px;
   height: 30px;
+  transition: all 0.2s ease;
 
   &:hover {
     box-shadow: 2px 4px 12px rgba(0, 0, 0, 0.3);
+    transition-delay: 0.08s;
+    cursor: pointer;
+
   }
 
   &:focus-visible {
@@ -78,11 +82,14 @@
 
   &__active {
     &:hover {
-      box-shadow: 2px 4px 12px rgba(255, 79, 90, 0.5);
+      box-shadow: 4px 4px 12px rgba(255, 79, 90, 0.7);
+      transition-delay: 0.08s;
+      cursor: pointer;
     }
     &:focus-visible {
-        outline: white;
+      outline: white;
     }
+    transition: all 0.2s ease;
     border: none;
     display: flex;
     justify-content: center;

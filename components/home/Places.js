@@ -69,10 +69,14 @@ export default function Places () {
             <h2 className='text-center text-lg-start places-section__title'>
               ¡Encuentra tu sitio ideal!
             </h2>
-            <p className='text-center text-lg-start places-section__subtitle'>
-              Una lista de los 75 mejores lugares del <br className='d-none d-lg-block' /> mundo para una
-              experiencia única
+            <p className='text-center footer__subtitle text-lg-start'>
+              Una lista de los lugares <strong>más visitados</strong>  <br className='d-md-none' /> en Cancún <br className='d-none d-lg-flex' />
+              para un <br className='d-md-none' />
+              viaje inolvidable.
             </p>
+            <strong className='text-center footer__subtitle text-lg-start'>
+              Vive la experiencia ahora
+            </strong>
             <Link
               href='/rutas'
               className='btn btn-movebike contained d-none d-lg-flex justify-content-lg-center text-center btn-place-book'
@@ -88,17 +92,7 @@ export default function Places () {
                 <div className='col-12'>
                   <article className='places-section__card d-flex flex-column justify-content-between'>
                     <img className='img-fluid bg-route' src={`${route.image}`} alt='bg-routes' />
-                    <header className='d-flex header-heart justify-content-end'>
-                      <button className='icon-heart'>
-                        <Image
-                          className=''
-                          src='/assets/icons/icon-heart.webp'
-                          alt='Icon heart'
-                          width={26}
-                          height={26}
-                        />
-                      </button>
-                    </header>
+                    <header className='d-flex header-heart justify-content-end' />
                     <section>
                       <div className='places-section__card-overlay d-flex align-items-center'>
                         <div className='waves d-flex align-items-center justify-content-around'>

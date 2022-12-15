@@ -58,62 +58,62 @@ export default function Thanks () {
                       />
                       <h1 className='thanks__card-title'>
                         ¡Hemos recibido tu reserva!
-                    </h1>
+                      </h1>
                       <div className='row'>
                         <div className='table-responsive'>
-                  <table className='table table-striped align-middle'>
-                          <thead>
-                            <tr>
-                              <th scope='col'>Concepto</th>
-                              <th scope='col'>Monto</th>
-                              <th scope='col'>Recibo</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            <tr>
-                              <th>{description}</th>
-                              <th>{amount}</th>
-                              <th>
-                                <a
-                                  className='btn btn-movebike link'
-                                  href={`${link}`}
-                                  target='_blank'
-                                  rel='noreferrer'
-                                >
-                                  Ver recibo de pago
-                                </a>
-                              </th>
-                            </tr>
-                          </tbody>
-                        </table>
-                </div>
+                          <table className='table table-striped align-middle'>
+                            <thead>
+                              <tr>
+                                <th scope='col'>Concepto</th>
+                                <th scope='col'>Monto</th>
+                                <th scope='col'>Recibo</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr>
+                                <th>{description}</th>
+                                <th>{amount}</th>
+                                <th>
+                                  <a
+                                    className='btn btn-movebike link'
+                                    href={`${link}`}
+                                    target='_blank'
+                                    rel='noreferrer'
+                                  >
+                                    Ver recibo de pago
+                                  </a>
+                                </th>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
                       </div>
                       <strong className='thanks__card-subtitle'>
                         Tu reserva se ha realizado con éxito
-                    </strong>
+                      </strong>
                       <p className='thanks__card-subtitle mt-2 mb-0'>
                         En breve recibirás un correo con la información <br /> del
                         contacto encargado de entregar tu reserva
-                    </p>
+                      </p>
                       <Link
                         className='btn btn-movebike contained me-bookings'
                         href={`/reserva/${idReserve}`}
                       >
-                      Ver reserva
+                        Ver reserva
                       </Link>
 
                       <div className='thanks__card-tracking steps mx-auto d-flex flex-column flex-md-row justify-content-between align-items-center'>
                         <div className='round-step round-step--fill d-flex justify-content-center align-items-center'>
-                  <span className='position-absolute msg-status'>
-                          Reservada
-                        </span>
-                  <Image
-                          src='/assets/icons/icon-check-step.webp'
-                          alt='Icon check step'
-                          width={32}
-                          height={32}
-                        />
-                </div>
+                          <span className='position-absolute msg-status'>
+                            Reservada
+                          </span>
+                          <Image
+                            src='/assets/icons/icon-check-step.webp'
+                            alt='Icon check step'
+                            width={32}
+                            height={32}
+                          />
+                        </div>
                         <div className='conector' />
                         <div className='round-step round-step--border d-flex justify-content-center align-items-center' />
                         <div className='conector conector--disabled' />
