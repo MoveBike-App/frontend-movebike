@@ -69,14 +69,14 @@ export default function Places () {
             <h2 className='text-center text-lg-start places-section__title'>
               ¡Encuentra tu sitio ideal!
             </h2>
-            <p className='text-center footer__subtitle text-lg-start'>
+            <p className='text-center text-lg-start places-section__subtitle'>
               Una lista de los lugares <strong>más visitados</strong>  <br className='d-md-none' /> en Cancún <br className='d-none d-lg-flex' />
               para un <br className='d-md-none' />
               viaje inolvidable.
             </p>
-            <strong className='text-center footer__subtitle text-lg-start'>
+            <p className='text-center fw-bold'>
               Vive la experiencia ahora
-            </strong>
+            </p>
             <Link
               href='/rutas'
               className='btn btn-movebike contained d-none d-lg-flex justify-content-lg-center text-center btn-place-book'

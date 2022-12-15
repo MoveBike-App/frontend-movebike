@@ -81,6 +81,13 @@
   }
 
   &__active {
+    &--dropdown {
+      width: 16px;
+      height: 16px;
+      margin-bottom: 0 !important;
+      margin-top: 4px !important;
+
+    }
     &:hover {
       box-shadow: 4px 4px 12px rgba(255, 79, 90, 0.7);
       transition-delay: 0.08s;
@@ -101,6 +108,7 @@
     width: 30px;
     height: 30px;
   }
+ 
 }
 
 .overlay {
@@ -115,4 +123,9 @@
     rgba(255, 255, 255, 0) 100%
   );
   filter: blur(0.5px);
+}
+
+.white-heart{
+  font-size: 24px;
+  align-items: end;
 }

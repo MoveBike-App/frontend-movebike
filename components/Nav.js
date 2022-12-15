@@ -324,8 +324,18 @@ export default function Nav () {
                             </Link>
                           </li>
                           <li>
-                            <Link className='dropdown-item' href='/settings'>
-                              Settings
+                            <Link className='dropdown-item' href='/favorites'>
+                              <div className='d-flex'>
+
+                                Favoritos
+                                <Image
+                                  className='icon-heart__active icon-heart__active--dropdown ms-2 mt-1'
+                                  src='/assets/icons/icon-heart.webp'
+                                  alt='Icon heart'
+                                  width={12}
+                                  height={12}
+                                />
+                              </div>
                             </Link>
                           </li>
                           <li>
@@ -526,8 +536,18 @@ export default function Nav () {
                       </a>
                     </li> */}
                     <li>
-                      <Link className='dropdown-item' href='/settings'>
-                        Settings
+                      <Link className='dropdown-item' href='/favorites'>
+                        <div className='d-flex'>
+
+                          Favoritos
+                          <Image
+                            className='icon-heart__active icon-heart__active--dropdown ms-2 mt-1'
+                            src='/assets/icons/icon-heart.webp'
+                            alt='Icon heart'
+                            width={12}
+                            height={12}
+                          />
+                        </div>
                       </Link>
                     </li>
                     <li>
