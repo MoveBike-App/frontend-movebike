@@ -39,7 +39,7 @@
   background-repeat: no-repeat;
   background-size: cover;
   min-height: 325px;
-  object-fit: cover;
+  //object-fit: cover;
 
   @include mixins.responsive(variables.$large) {
     background: radial-gradient(
@@ -48,6 +48,10 @@
         rgba(0, 0, 0, 0) 92.65%
       ),
       url(/assets/landing/routes/bg-header-routes.jpg);
+      background-repeat: no-repeat;
+      background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
   }
 }
 
