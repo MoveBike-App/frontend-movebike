@@ -1,7 +1,9 @@
 
 @use './abstract/variables';
 @use './abstract/mixins';
-
+html {
+    scroll-behavior: smooth;
+  }
 .landing{
     &__title{
         font-size: 24px;
@@ -28,7 +30,12 @@
         }
     }
 }
-
+		
+.cancun-text{
+    letter-spacing: 1px;
+    font-size: 65px;
+    font-weight: 700;
+}
 
 .expCard{
     padding-top: 20px;

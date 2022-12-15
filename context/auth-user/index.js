@@ -2,10 +2,9 @@ import React, { createContext, useEffect, useState } from 'react'
 
 const AuthUserContext = React.createContext()
 
-
 const AuthUserProvider = ({ children }) => {
-    const [isLogged, setIsLogged] = useState(false)
-    /*const [user, setUser] = useState({})
+  const [isLogged, setIsLogged] = useState(false)
+  /* const [user, setUser] = useState({})
 
     const handleGetUserFromStorage = () => {
         const storage = window.localStorage.getItem('userCurrent')
@@ -16,26 +15,24 @@ const AuthUserProvider = ({ children }) => {
                 role: storage.role
             }
             : null
-        
+
         return user
     }
 
-    
-
     useEffect(() => {
         setUser(handleGetUserFromStorage())
-    }, [])*/
+    }, []) */
 
-    const user = {
-        name: 'Samuel',
-        email: 'samuel@mail.com'
-      }
+  const user = {
+    name: 'Samuel',
+    email: 'samuel@mail.com'
+  }
 
-    return (
-        <AuthUserContext.Provider value={{ isLogged, setIsLogged, user}}>
-            {children}
-        </AuthUserContext.Provider>
-    )
+  return (
+    <AuthUserContext.Provider value={{ isLogged, setIsLogged, user }}>
+      {children}
+    </AuthUserContext.Provider>
+  )
 }
 
 export default AuthUserContext

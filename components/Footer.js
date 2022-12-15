@@ -12,17 +12,17 @@ export default function Footer () {
               className='text-center mx-auto mx-lg-0'
               src='/assets/logos/logo-movebike-black.webp'
               alt='Logo footer'
-              
+
               width={210}
               height={57}
             />
             <p className='text-center footer__subtitle text-lg-start'>
-              Una lista de los 75 mejores lugares <br className='d-md-none' /> turísticos <br className='d-none d-lg-flex' /> del mundo
-              para unas <br className='d-md-none' />
-              vacaciones o un viaje perfecto
+              Una lista de los lugares más visitados <br className='d-md-none' /> en Cancún <br className='d-none d-lg-flex' />
+              para un <br className='d-md-none' />
+              viaje inolvidable
             </p>
             <div className='footer__social mx-auto mx-lg-0'>
-              <a href="https://www.facebook.com/movebikemx/" target={'_blank'} rel="noreferrer">
+              <a href='https://www.facebook.com/movebikemx/' target='_blank' rel='noreferrer'>
                 <Image
                   src='/assets/icons/icon-facebook-movebike.webp'
                   alt='Facebook Movebike'
@@ -31,26 +31,26 @@ export default function Footer () {
                   className='footer__social--facebook'
                 />
               </a>
-              <a href="https://www.instagram.com/movebikemx/" target={'_blank'} rel="noreferrer">
-              <Image
-                src='/assets/icons/icon-instagram-movebike.webp'
-                alt='Instagram Movebike'
-                
-                width={32}
-                height={32}
-                className='footer__social--instagram'
-              />
+              <a href='https://www.instagram.com/movebikemx/' target='_blank' rel='noreferrer'>
+                <Image
+                  src='/assets/icons/icon-instagram-movebike.webp'
+                  alt='Instagram Movebike'
+
+                  width={32}
+                  height={32}
+                  className='footer__social--instagram'
+                />
               </a>
-              
-              <a href="https://wa.me/message/Y2CMRDDXMFB4G1" target={'_blank'} rel={'noreferrer '}>
-              <Image
-                src='/assets/icons/icon-whatsapp-movebike.webp'
-                alt='Whatsapp Movebike'
-                
-                width={32}
-                height={32}
-                className='footer__social--whatsapp'
-              />
+
+              <a href='https://wa.me/message/Y2CMRDDXMFB4G1' target='_blank' rel='noreferrer '>
+                <Image
+                  src='/assets/icons/icon-whatsapp-movebike.webp'
+                  alt='Whatsapp Movebike'
+
+                  width={32}
+                  height={32}
+                  className='footer__social--whatsapp'
+                />
               </a>
             </div>
           </div>

@@ -1,7 +1,7 @@
-import { URL_BASE } from "../config";
+import { URL_BASE } from '../config'
 
-function createReserve(data, token) {
-  const URL = `${URL_BASE}reserves`;
+function createReserve (data, token) {
+  const URL = `${URL_BASE}reserves`
   const options = {
     method: 'POST',
     body: JSON.stringify(data),
@@ -9,14 +9,14 @@ function createReserve(data, token) {
       'Content-Type': 'application/json',
       Authorization: token,
       mode: 'cors'
-    },
+    }
   }
 
   return fetch(URL, options)
 }
 
-function getReserveByCustomer(user, token) {
-  const URL = `${URL_BASE}customers/${user}`;
+function getReserveByCustomer (user, token) {
+  const URL = `${URL_BASE}customers/${user}`
   const options = {
     method: 'GET',
     headers: {
@@ -28,13 +28,13 @@ function getReserveByCustomer(user, token) {
   return fetch(URL, options)
 }
 
-function getReserveById(id, token){
+function getReserveById (id, token) {
   const URL = `${URL_BASE}reserves/${id}`
   const options = {
     method: 'GET',
     headers: {
       Authorization: token,
-      'typeSearch': 'BY_SLUG',
+      typeSearch: 'BY_SLUG',
       mode: 'cors'
     }
   }
@@ -42,4 +42,4 @@ function getReserveById(id, token){
   return fetch(URL, options)
 }
 
-export { createReserve, getReserveByCustomer, getReserveById };
+export { createReserve, getReserveByCustomer, getReserveById }

@@ -1,6 +1,10 @@
 @use './mixins';
 @use './variables';
 
+html {
+   scroll-behavior: smooth;
+}
+
 * {
    margin: 0;
    padding: 0;
@@ -40,6 +44,7 @@ a {
       color: variables.$orange-900 !important;
    }
 }
+
 .form-control {
    box-shadow: 2px 4px 32px rgba(0, 0, 0, 0.08);
    border: 1px solid #FE5F3B;
@@ -56,14 +61,14 @@ a {
 }
 
 .form-check-input {
-   &:checked{
+   &:checked {
       background-color: variables.$orange-900;
       border-color: variables.$orange-600
    }
 }
 
 .img-not-found {
-   @include mixins.responsive(variables.$large){
+   @include mixins.responsive(variables.$large) {
       max-width: 800px;
       margin: 0 auto;
    }
