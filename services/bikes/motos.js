@@ -28,7 +28,7 @@ function getById (id) {
 }
 
 function getBikesAvailable (initialDate, finalDate) {
-  const URL = `${URL_BASE}reserves/vailable-vehicles?initialDate=${initialDate}&finalDate=${finalDate}`
+  const URL = `${URL_BASE}reserves/available-vehicles?initialDate=${initialDate}&finalDate=${finalDate}`
   const options = {
     method: 'GET',
     headers: {

@@ -290,7 +290,7 @@ export default function Nav () {
                   </ul>
                 </li> */}
                 <li className='option'>
-                  <Link href={router.pathname !== '/' ? '/#places' : '#places'}>
+                  <Link href='/rutas'>
                     Rutas
                   </Link>
                 </li>
@@ -418,7 +418,7 @@ export default function Nav () {
                   </li>
                   <li className='option'>
                     <Link
-                      href={router.pathname !== '/' ? '/#places' : '#places'}
+                      href='/rutas'
                     >
                       Rutas
                     </Link>
