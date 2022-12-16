@@ -47,7 +47,7 @@ export default function Ruta () {
           </div>
           <div className='row'>
             <div className='col-lg-6'>
-              <iframe src={`${routeData?.googleMapsLink}`} width='100%' height='100%' allowFullScreen='' loading='lazy' referrerpolicy='no-referrer-when-downgrade' />
+              <iframe src={`${routeData?.googleMapsLink}`} width='100%' height='100%' allowFullScreen='' loading='lazy' referrerPolicy='no-referrer-when-downgrade' />
             </div>
             <div className='col-lg-6'>
               <p className='single-route__description'>{routeData?.description}</p>

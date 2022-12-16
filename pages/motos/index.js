@@ -37,6 +37,18 @@ export default function Motos () {
     } catch (error) {}
   }
 
+
+  const getMotosAvailables = async () => {
+    try {
+      const response = await getBikesAvailable(initialDate, finalDate)
+      const dataJson = await response.json()
+      console.log(dataJson.data.motos);
+      setMotos(dataJson.data.motos)
+    } catch (error) {
+      
+    }
+  }
+
   const {
     register,
     formState: { errors },
@@ -50,7 +62,7 @@ export default function Motos () {
     } else {
       getMotos()
     }
-  }, [])
+  }, [initialDate])
   return (
     <Layout title='¡Encuentra tu moto favorita!'>
       <main>
