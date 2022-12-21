@@ -1,4 +1,5 @@
 import AuthContext from 'context/AuthContext'
+import Script from "next/script";
 import { useEffect, useState } from 'react'
 import 'bootstrap/dist/css/bootstrap.min.css'
 
@@ -38,9 +39,30 @@ function MyApp ({ Component, pageProps }) {
   }, [])
 
   return (
+    <>
+    {process.env.NODE_ENV === "production" && (
+        <>
+          <Script
+            src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS}`}
+            strategy="afterInteractive"
+          />
+          <Script id="google-analytics" strategy="afterInteractive">
+            {`
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){window.dataLayer.push(arguments);}
+          gtag('js', new Date());
+
+          gtag('config', '${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS}');
+        `}
+          </Script>
+        </>
+      )}
+
     <AuthContext.Provider value={{ user, isLogged, setIsLogged }}>
       <Component {...pageProps} />
     </AuthContext.Provider>
+    </>
+    
   )
 }
 
