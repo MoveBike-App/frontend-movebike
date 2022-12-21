@@ -40,10 +40,10 @@ function MyApp ({ Component, pageProps }) {
 
   return (
     <>
-    {process.env.NODE_ENV === "production" && (
-        <>
-          <Script
-            src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS}`}
+
+    <AuthContext.Provider value={{ user, isLogged, setIsLogged }}>
+      <Script
+          src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS}`}
             strategy="afterInteractive"
           />
           <Script id="google-analytics" strategy="afterInteractive">
@@ -54,11 +54,7 @@ function MyApp ({ Component, pageProps }) {
 
           gtag('config', '${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS}');
         `}
-          </Script>
-        </>
-      )}
-
-    <AuthContext.Provider value={{ user, isLogged, setIsLogged }}>
+      </Script>
       <Component {...pageProps} />
     </AuthContext.Provider>
     </>
